@@ -25,11 +25,11 @@ const principles = [
 
 const colors = [
   { name: 'Tidal ink', token: '--bard-ink-950', value: '#082F2E', className: 'ink', note: 'Primary text and decisive actions' },
-  { name: 'Mineral paper', token: '--bard-paper', value: '#F7F9F3', className: 'paper', note: 'The principal reading surface' },
-  { name: 'Pale mint', token: '--bard-mint-200', value: '#D9E9DC', className: 'mint', note: 'Quiet grouping and selection' },
-  { name: 'Still aqua', token: '--bard-aqua-200', value: '#C4E2DF', className: 'aqua', note: 'Informational accents and diagrams' },
-  { name: 'Iris lilac', token: '--bard-lilac-200', value: '#DCD3E4', className: 'lilac', note: 'Expressive highlights, not body text' },
-  { name: 'Burnished gold', token: '--bard-gold-500', value: '#AA7838', className: 'gold', note: 'Sparse ceremonial details' },
+  { name: 'Pearlescent paper', token: '--bard-paper', value: '#F7FAF4', className: 'paper', note: 'The principal reading surface' },
+  { name: 'Opal mint', token: '--bard-mint-200', value: '#CBE8D5', className: 'mint', note: 'Quiet grouping and selection' },
+  { name: 'Glacial aqua', token: '--bard-aqua-200', value: '#B6E2E5', className: 'aqua', note: 'Iridescent accents and diagrams' },
+  { name: 'Iris lilac', token: '--bard-lilac-200', value: '#DCD2ED', className: 'lilac', note: 'Spectral highlights, not body text' },
+  { name: 'Spectral violet', token: '--bard-violet-700', value: '#65507D', className: 'violet', note: 'Fine rules and secondary emphasis' },
 ];
 
 export function IdentitySection() {
@@ -59,7 +59,7 @@ export function IdentitySection() {
 export function ColorSection() {
   return (
     <section id="color" className="bard-section" aria-labelledby="color-title">
-      <Reveal><SectionHeader number="02" eyebrow="Color" title="Mineral light. Tidal depth." description="A cool, iridescent palette with a firmly grounded ink. Color organizes meaning; pale tints carry atmosphere while deep green carries language." /></Reveal>
+      <Reveal><SectionHeader number="02" eyebrow="Color" title="Prismatic light. Tidal depth." description="Mint, glacial aqua, and iris lilac move like light across foil. Pale tints carry atmosphere while deep green keeps language firmly grounded." /></Reveal>
       <div className="bard-color-grid">
         {colors.map((color) => (
           <Reveal className="bard-color" key={color.token}>
@@ -69,8 +69,8 @@ export function ColorSection() {
         ))}
       </div>
       <Reveal className="bard-color-guidance">
-        <div><span className="bard-color-guidance__ratio">14.6:1</span><p><strong>Ink on mineral paper</strong><br />Primary copy exceeds WCAG AA for all text sizes.</p></div>
-        <div><span className="bard-color-guidance__ratio">4.8:1</span><p><strong>Muted ink on mineral paper</strong><br />Secondary copy retains readable contrast.</p></div>
+        <div><span className="bard-color-guidance__ratio">13.7:1</span><p><strong>Ink on pearlescent paper</strong><br />Primary copy exceeds WCAG AA for all text sizes.</p></div>
+        <div><span className="bard-color-guidance__ratio">7.1:1</span><p><strong>Muted ink on pearlescent paper</strong><br />Secondary copy retains readable contrast.</p></div>
         <p className="bard-color-guidance__note">Use pale lilac and mint as surfaces, never as a substitute for legible text. Verify any new pairing rather than relying on token names alone.</p>
       </Reveal>
     </section>

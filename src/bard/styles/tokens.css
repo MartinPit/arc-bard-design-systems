@@ -4,19 +4,21 @@
   --bard-ink-800: #174d47;
   --bard-ink-700: #285e57;
   --bard-ink-600: #44736b;
-  --bard-mint-50: #f4f8f1;
-  --bard-mint-100: #e9f2e9;
-  --bard-mint-200: #d9e9dc;
-  --bard-mint-300: #bfd9ca;
-  --bard-aqua-100: #e1f0ee;
-  --bard-aqua-200: #c4e2df;
-  --bard-lilac-100: #eeeaf2;
-  --bard-lilac-200: #dcd3e4;
-  --bard-lilac-400: #9a82aa;
-  --bard-pearl: #fbfcf8;
-  --bard-paper: #f7f9f3;
-  --bard-gold-500: #aa7838;
-  --bard-gold-700: #805a28; /* Text-role gold: AA contrast on paper surfaces. */
+  --bard-mint-50: #f4faf2;
+  --bard-mint-100: #e7f3e8;
+  --bard-mint-200: #cbe8d5;
+  --bard-mint-300: #a9d6c5;
+  --bard-aqua-100: #def3f2;
+  --bard-aqua-200: #b6e2e5;
+  --bard-aqua-400: #4e9da7;
+  --bard-lilac-100: #efebf5;
+  --bard-lilac-200: #dcd2ed;
+  --bard-lilac-400: #8b73aa;
+  --bard-violet-700: #65507d;
+  --bard-pearl: #fdfef9;
+  --bard-paper: #f7faf4;
+  --bard-spectral: linear-gradient(105deg, #87cdb2 0%, #8ed4dd 26%, #d0e9ec 42%, #b3a4d4 64%, #d0b9dd 79%, #8fd4c8 100%);
+  --bard-foil-surface: linear-gradient(125deg, #edf6e8 0%, #f8fcf7 35%, #eff7f7 53%, #f2edf8 75%, #eef9ef 100%);
   --bard-success-700: #23634e;
   --bard-success-100: #dfeee2;
   --bard-warning-700: #76501f;
@@ -48,7 +50,7 @@
   --bard-shadow-low: 0 1px 0 rgb(8 47 46 / 5%), 0 8px 24px rgb(8 47 46 / 5%);
   --bard-shadow-mid: 0 2px 0 rgb(8 47 46 / 5%), 0 20px 50px rgb(8 47 46 / 10%);
   --bard-shadow-high: 0 30px 90px rgb(8 47 46 / 18%);
-  --bard-border: 1px solid rgb(12 59 56 / 16%);
+  --bard-border: 1px solid rgb(76 92 118 / 18%);
   --bard-ease: cubic-bezier(0.22, 1, 0.36, 1);
   --bard-content: 1200px;
 }

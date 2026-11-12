@@ -21,7 +21,10 @@ body.bard-body {
   min-width: 0;
   overflow: clip;
   color: var(--bard-ink-950);
-  background: var(--bard-paper);
+  background:
+    radial-gradient(ellipse at 3% 6%, rgb(182 226 229 / 16%), transparent 28rem),
+    radial-gradient(ellipse at 96% 28%, rgb(220 210 237 / 18%), transparent 34rem),
+    var(--bard-paper);
   font-family: var(--bard-font-body);
   font-size: 1rem;
   line-height: 1.6;

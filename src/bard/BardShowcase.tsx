@@ -58,12 +58,14 @@ export function BardShowcase() {
               <div className="bard-hero__actions"><a href="#components" className="bard-button bard-button--primary">Explore components <ArrowDown size={16} aria-hidden="true" /></a><a href="#identity" className="bard-text-link">Read the principles <ArrowUpRight size={15} aria-hidden="true" /></a></div>
               <div className="bard-hero__footnote"><span>19 components</span><i /><span>9 foundations &amp; guides</span><i /><span>WCAG 2.2 AA oriented</span></div>
             </div>
-            <div className="bard-hero__art" aria-label="Bard identity: a dark spiral over pale mint, aqua, and lilac guilloché lines" role="img">
+            <div className="bard-hero__art" aria-label="Bard membership card: a dark spiral beside a fully legible Bard wordmark over mint, aqua, and lilac fan guilloché" role="img">
               <GuillocheField />
-              <div className="bard-hero__art-top"><span>THE BARD STANDARD</span><span>EST. MMXXVI</span></div>
+              <div className="bard-hero__emboss" aria-hidden="true" />
+              <div className="bard-hero__art-top"><span>BARD · CIRCLE OF EXPRESSION</span><span>MMXXVI</span></div>
               <SpiralSigil className="bard-hero__sigil" animated />
+              <span className="bard-hero__member">LIFE MEMBER <i aria-hidden="true" /> № 0001</span>
               <span className="bard-hero__word" aria-hidden="true">Bard</span>
-              <div className="bard-hero__art-bottom"><span>Expression, with exactitude.</span><span>№ 001</span></div>
+              <div className="bard-hero__art-bottom"><span>EXPRESSION, WITH EXACTITUDE.</span><span>FIRST EDITION</span></div>
             </div>
             <a className="bard-hero__scroll" href="#identity"><span>Follow the line</span><i aria-hidden="true" /></a>
           </section>
