@@ -1,0 +1,61 @@
+:root {
+  font-family: 'Inter Variable', Inter, sans-serif;
+  color: #252421;
+  background: #f2f0e9;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; min-width: 320px; }
+a { color: inherit; }
+button, a { -webkit-tap-highlight-color: transparent; }
+a:focus-visible { outline: 2px solid #252421; outline-offset: 6px; }
+::selection { color: #fffdf0; background: #532c63; }
+
+.portal-shell { width: min(1280px, calc(100% - 80px)); margin: 0 auto; }
+.portal-header { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; min-height: 104px; border-bottom: 1px solid #c9c5ba; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.11em; }
+.portal-header p { margin: 0; }
+.wordmark { width: fit-content; color: #252421; font-size: 1.25rem; font-weight: 750; letter-spacing: -0.08em; text-decoration: none; }
+.wordmark span { margin: 0 0.18em; font-family: Georgia, serif; font-size: 0.85em; font-weight: 400; }
+.edition { justify-self: end; color: #69665e; }
+
+.portal-intro { display: grid; grid-template-columns: minmax(0, 1fr) minmax(260px, 0.37fr); column-gap: 64px; padding: clamp(64px, 8vw, 120px) 0 clamp(56px, 7vw, 96px); }
+.eyebrow { grid-column: 1 / -1; margin: 0 0 24px; color: #69665e; font-size: 0.69rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.16em; }
+h1 { margin: 0; font-size: clamp(3.2rem, 7.4vw, 7.4rem); font-weight: 520; letter-spacing: -0.072em; line-height: 0.9; }
+h1 em { font-family: Georgia, 'Times New Roman', serif; font-weight: 400; }
+.intro-copy { align-self: end; max-width: 31rem; margin: 0 0 0.5rem; color: #666259; font-size: clamp(0.95rem, 1.4vw, 1.08rem); line-height: 1.75; }
+
+.system-index { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(24px, 4vw, 56px); }
+.system-entry > a { display: block; text-decoration: none; }
+.preview-frame { overflow: hidden; border: 1px solid #d4d0c5; }
+.preview-art { display: block; width: 100%; height: auto; transition: transform 350ms cubic-bezier(.2,.75,.25,1); }
+.system-entry a:hover .preview-art { transform: scale(1.012); }
+.entry-heading { display: flex; align-items: center; justify-content: space-between; margin-top: 28px; }
+.entry-heading > div { display: flex; align-items: baseline; gap: 16px; }
+.entry-number { color: #69665e; font-family: monospace; font-size: 0.66rem; }
+.entry-heading h2 { margin: 0; font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 520; letter-spacing: -0.055em; }
+.bard-entry .entry-heading h2 { font-family: Georgia, serif; font-weight: 400; letter-spacing: -0.04em; }
+.entry-heading svg { width: 25px; height: 25px; stroke-width: 1.25; transition: transform 180ms ease; }
+.system-entry a:hover .entry-heading svg { transform: translate(3px, -3px); }
+.system-entry > a > p { max-width: 32rem; margin: 10px 0 22px; color: #615e56; font-size: 0.9rem; line-height: 1.6; }
+.system-entry ul { display: flex; flex-wrap: wrap; gap: 8px 20px; margin: 0; padding: 16px 0 0; border-top: 1px solid #d4d0c5; list-style: none; color: #6d6960; font-family: monospace; font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.06em; }
+
+.portal-footer { display: flex; justify-content: space-between; gap: 24px; margin-top: clamp(72px, 10vw, 144px); padding: 28px 0 36px; border-top: 1px solid #c9c5ba; color: #69665e; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.08em; }
+.portal-footer p { margin: 0; }
+.portal-footer span { margin: 0 8px; }
+
+@media (max-width: 760px) {
+  .portal-shell { width: min(100% - 36px, 620px); }
+  .portal-header { grid-template-columns: 1fr auto; min-height: 80px; }
+  .portal-header p { display: none; }
+  .portal-intro { grid-template-columns: 1fr; gap: 30px; padding: 54px 0; }
+  h1 { font-size: clamp(3.3rem, 14.6vw, 6rem); }
+  .intro-copy { max-width: 28rem; }
+  .system-index { grid-template-columns: 1fr; gap: 64px; }
+  .portal-footer { flex-direction: column; gap: 10px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; }
+}

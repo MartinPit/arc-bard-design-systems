@@ -1,0 +1,54 @@
+:root {
+  --bard-ink-950: #082f2e;
+  --bard-ink-900: #0c3b38;
+  --bard-ink-800: #174d47;
+  --bard-ink-700: #285e57;
+  --bard-ink-600: #44736b;
+  --bard-mint-50: #f4f8f1;
+  --bard-mint-100: #e9f2e9;
+  --bard-mint-200: #d9e9dc;
+  --bard-mint-300: #bfd9ca;
+  --bard-aqua-100: #e1f0ee;
+  --bard-aqua-200: #c4e2df;
+  --bard-lilac-100: #eeeaf2;
+  --bard-lilac-200: #dcd3e4;
+  --bard-lilac-400: #9a82aa;
+  --bard-pearl: #fbfcf8;
+  --bard-paper: #f7f9f3;
+  --bard-gold-500: #aa7838;
+  --bard-gold-700: #805a28; /* Text-role gold: AA contrast on paper surfaces. */
+  --bard-success-700: #23634e;
+  --bard-success-100: #dfeee2;
+  --bard-warning-700: #76501f;
+  --bard-warning-100: #f3ead7;
+  --bard-error-700: #8b3738;
+  --bard-error-100: #f5e4e2;
+  --bard-focus: #75518c;
+
+  --bard-font-display: 'Cormorant Garamond Variable', 'Iowan Old Style', 'Palatino Linotype', serif;
+  --bard-font-body: 'Manrope Variable', 'Avenir Next', 'Segoe UI', sans-serif;
+
+  --bard-space-1: 0.25rem;
+  --bard-space-2: 0.5rem;
+  --bard-space-3: 0.75rem;
+  --bard-space-4: 1rem;
+  --bard-space-5: 1.5rem;
+  --bard-space-6: 2rem;
+  --bard-space-7: 3rem;
+  --bard-space-8: 4rem;
+  --bard-space-9: 6rem;
+  --bard-space-10: 8rem;
+
+  --bard-radius-sm: 0.625rem;
+  --bard-radius-md: 1rem;
+  --bard-radius-lg: 1.75rem;
+  --bard-radius-xl: 2.75rem;
+  --bard-radius-pill: 999px;
+
+  --bard-shadow-low: 0 1px 0 rgb(8 47 46 / 5%), 0 8px 24px rgb(8 47 46 / 5%);
+  --bard-shadow-mid: 0 2px 0 rgb(8 47 46 / 5%), 0 20px 50px rgb(8 47 46 / 10%);
+  --bard-shadow-high: 0 30px 90px rgb(8 47 46 / 18%);
+  --bard-border: 1px solid rgb(12 59 56 / 16%);
+  --bard-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --bard-content: 1200px;
+}
