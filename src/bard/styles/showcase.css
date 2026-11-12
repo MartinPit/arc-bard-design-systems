@@ -730,10 +730,9 @@
 .bard-type-scale,
 .bard-ui-type {
   padding: clamp(1.5rem, 3vw, 2.5rem);
-  border: 1px solid rgb(101 80 125 / 16%);
-  border-radius: var(--bard-radius-lg);
-  background: var(--bard-foil-surface);
-  box-shadow: 0 1px 0 rgb(255 255 255 / 80%) inset;
+  border: 1px solid rgb(12 59 56 / 16%);
+  border-radius: var(--bard-radius-md);
+  background: var(--bard-pearl);
 }
 
 .bard-type-sample {
@@ -814,7 +813,7 @@
   min-width: 0;
   padding: clamp(1.5rem, 3vw, 2.5rem);
   border: var(--bard-border);
-  border-radius: var(--bard-radius-lg);
+  border-radius: var(--bard-radius-md);
   background: var(--bard-pearl);
 }
 
@@ -933,7 +932,7 @@
 .bard-motion-preview {
   padding: clamp(1rem, 2vw, 1.5rem);
   border: var(--bard-border);
-  border-radius: var(--bard-radius-xl) var(--bard-radius-xl) var(--bard-radius-xl) 0.75rem;
+  border-radius: var(--bard-radius-md);
   background: var(--bard-mint-100);
 }
 
@@ -953,7 +952,7 @@
   width: min(100%, 22rem);
   padding: clamp(2rem, 4vw, 3.5rem);
   overflow: hidden;
-  border-radius: var(--bard-radius-lg) var(--bard-radius-lg) var(--bard-radius-lg) 0.5rem;
+  border-radius: var(--bard-radius-md);
   color: var(--bard-pearl);
   background: var(--bard-ink-950);
   box-shadow: var(--bard-shadow-mid);
@@ -985,10 +984,10 @@
   height: 100%;
   flex-direction: column;
   overflow: hidden;
-  border: var(--bard-border);
-  border-radius: var(--bard-radius-lg) var(--bard-radius-lg) var(--bard-radius-lg) 0.5rem;
-  background: var(--bard-foil-surface);
-  box-shadow: 0 1px 0 rgb(255 255 255 / 85%) inset, var(--bard-shadow-low);
+  border: 1px solid rgb(12 59 56 / 17%);
+  border-radius: var(--bard-radius-md);
+  background: var(--bard-pearl);
+  box-shadow: var(--bard-shadow-low);
 }
 
 .bard-specimen__header {
@@ -1000,17 +999,6 @@
   gap: 1rem;
   padding: 1.5rem;
   border-bottom: 1px solid rgb(12 59 56 / 12%);
-}
-
-.bard-specimen__header::before {
-  position: absolute;
-  top: 0;
-  right: 1.5rem;
-  left: 1.5rem;
-  height: 2px;
-  background: var(--bard-spectral);
-  content: '';
-  opacity: 0.75;
 }
 
 .bard-specimen__header h3 {
@@ -1029,18 +1017,13 @@
 }
 
 .bard-specimen__index {
-  display: grid;
-  width: 2rem;
-  height: 2rem;
-  flex: 0 0 2rem;
-  place-items: center;
-  border: 1px solid rgb(101 80 125 / 35%);
-  border-radius: 50%;
-  color: var(--bard-violet-700);
-  background: linear-gradient(135deg, rgb(182 226 229 / 22%), rgb(220 210 237 / 30%));
-  font-family: var(--bard-font-display);
-  font-size: 0.65rem;
-  letter-spacing: 0.03em;
+  flex: 0 0 auto;
+  padding-top: 0.25rem;
+  color: var(--bard-ink-600);
+  font-family: var(--bard-font-body);
+  font-size: 0.59rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
 }
 
 .bard-specimen__stage {
@@ -1051,9 +1034,7 @@
   align-items: center;
   justify-content: center;
   padding: clamp(1.25rem, 3vw, 2.25rem);
-  background:
-    radial-gradient(circle at 8% 8%, rgb(182 226 229 / 22%), transparent 42%),
-    linear-gradient(145deg, rgb(220 210 237 / 15%), transparent 68%);
+  background: var(--bard-paper);
 }
 
 .bard-specimen--wide .bard-specimen__stage {
@@ -1097,7 +1078,7 @@
   height: 100%;
   padding: clamp(1.5rem, 3vw, 2.25rem);
   border: var(--bard-border);
-  border-radius: var(--bard-radius-lg);
+  border-radius: var(--bard-radius-md);
   background: var(--bard-pearl);
   box-shadow: var(--bard-shadow-low);
 }
@@ -1201,7 +1182,7 @@
   min-width: 0;
   padding: clamp(1.5rem, 3vw, 2.5rem);
   border: var(--bard-border);
-  border-radius: var(--bard-radius-lg);
+  border-radius: var(--bard-radius-md);
 }
 
 .bard-usage-card--do { background: var(--bard-mint-100); }
@@ -1256,7 +1237,7 @@
   gap: 1px;
   overflow: hidden;
   border: var(--bard-border);
-  border-radius: var(--bard-radius-lg);
+  border-radius: var(--bard-radius-md);
   background: rgb(12 59 56 / 14%);
 }
 
@@ -1271,7 +1252,7 @@
 
 .bard-keyboard-guide {
   padding: clamp(1.5rem, 3vw, 2.25rem);
-  border-radius: var(--bard-radius-lg);
+  border-radius: var(--bard-radius-md);
   color: var(--bard-pearl);
   background: var(--bard-ink-950);
 }

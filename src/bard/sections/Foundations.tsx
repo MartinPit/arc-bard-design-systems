@@ -108,7 +108,7 @@ export function TypographySection() {
 export function FormSection() {
   return (
     <section id="form" className="bard-section" aria-labelledby="form-title">
-      <Reveal><SectionHeader number="04" eyebrow="Space, shape & elevation" title="Soft geometry, exact intervals." description="A four-pixel rhythm sets the underlying order. Broad curves and fine borders make surfaces feel held, while shadows remain close to the page." /></Reveal>
+      <Reveal><SectionHeader number="04" eyebrow="Space, shape & elevation" title="Soft geometry, exact intervals." description="A four-pixel rhythm sets the underlying order. Compact foil-cut controls, quiet rounded work surfaces, and broad identity arches give every curve a clear role." /></Reveal>
       <div className="bard-form-grid">
         <Reveal className="bard-space-study">
           <div className="bard-study-heading"><h3>Spatial rhythm</h3><span>Base unit · 4px</span></div>
@@ -117,8 +117,8 @@ export function FormSection() {
         </Reveal>
         <Reveal className="bard-shape-study">
           <div className="bard-study-heading"><h3>Curvature</h3><span>Four purposeful radii</span></div>
-          <div className="bard-radius-examples"><div className="radius-sm"><span>10</span></div><div className="radius-md"><span>16</span></div><div className="radius-lg"><span>28</span></div><div className="radius-pill"><span>∞</span></div></div>
-          <p>Compact controls use compact radii. Reserve expansive curves for containers that can hold them without distortion.</p>
+          <div className="bard-radius-examples"><div className="radius-sm"><span>12</span></div><div className="radius-md"><span>16</span></div><div className="radius-lg"><span>28</span></div><div className="radius-pill"><span>∞</span></div></div>
+          <p>Use 12px foil cuts for controls and 16px corners for work surfaces. Reserve broad curves for identity; pills belong to status and toggles.</p>
         </Reveal>
         <Reveal className="bard-elevation-study">
           <div className="bard-study-heading"><h3>Elevation</h3><span>Three quiet planes</span></div>
