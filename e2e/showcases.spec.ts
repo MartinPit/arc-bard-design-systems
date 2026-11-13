@@ -114,6 +114,16 @@ for (const system of ['arc', 'bard'] as const) {
   });
 }
 
+test('arc tabs do not create vertical overflow or a scrollbar', async ({ page }) => {
+  await page.goto('./arc/');
+  const tabList = page.locator('.arc-tabs__list');
+  const dimensions = await tabList.evaluate((element) => ({
+    clientHeight: element.clientHeight,
+    scrollHeight: element.scrollHeight,
+  }));
+  expect(dimensions.scrollHeight).toBeLessThanOrEqual(dimensions.clientHeight);
+});
+
 test('the Portal has no detectable WCAG AA violations', async ({ page }) => {
   await page.goto('./');
   const results = await new AxeBuilder({ page })
