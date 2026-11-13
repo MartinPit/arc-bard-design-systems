@@ -22,6 +22,19 @@ describe('ArcShowcase', () => {
     expect(screen.getByRole('navigation', { name: 'Design system sections' })).toBeTruthy();
   });
 
+  it('keeps button icons and labels in the shared content wrapper', () => {
+    render(<ArcShowcase />);
+    const create = screen.getByRole('button', { name: 'Create a collection' });
+    const createContent = create.querySelector(':scope > .arc-button__content');
+    expect(createContent).toBeTruthy();
+    expect(createContent?.querySelector('svg')).toBeTruthy();
+    expect(screen.getByRole('link', { name: 'Explore components' }).querySelector('.arc-button__content svg')).toBeTruthy();
+    fireEvent.click(screen.getByRole('button', { name: 'Save changes' }));
+    const saving = screen.getByRole('button', { name: 'Saving changes' });
+    expect(saving.querySelector(':scope > .arc-button__loader')).toBeTruthy();
+    expect(saving.querySelector(':scope > .arc-button__content')).toBeTruthy();
+  });
+
   it('selects tabs by click and arrow keys', () => {
     render(<ArcShowcase />);
     const overview = screen.getByRole('tab', { name: 'Overview' });

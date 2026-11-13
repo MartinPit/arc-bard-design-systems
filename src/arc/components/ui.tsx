@@ -52,7 +52,7 @@ export function Button({
       {...props}
     >
       {loading && <LoaderCircle className="arc-button__loader" size={16} aria-hidden="true" />}
-      <span>{children}</span>
+      <span className="arc-button__content">{children}</span>
     </button>
   );
 }

@@ -38,8 +38,6 @@ body.arc-body { margin: 0; background: var(--arc-paper); }
 .arc-hero__subtitle em { color: var(--arc-magenta-deep); font-variation-settings: 'SOFT' 80, 'WONK' 1; font-weight: 430; }
 .arc-hero__intro { max-width: 34rem; margin-bottom: var(--arc-space-6); color: var(--arc-ink-soft); font-size: var(--arc-text-lg); line-height: 1.65; }
 .arc-hero__actions { display: flex; align-items: center; flex-wrap: wrap; gap: var(--arc-space-5); }
-.arc-text-link { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.55rem 0; border-bottom: 1px solid var(--arc-purple); font-weight: 650; text-decoration: none; }
-.arc-text-link:hover { color: var(--arc-magenta-deep); border-color: var(--arc-magenta-deep); }
 .arc-hero__art { position: relative; display: grid; place-items: center; min-width: 0; border-left: 1px solid var(--arc-purple); background-image: linear-gradient(var(--arc-rule) 1px, transparent 1px), linear-gradient(90deg, var(--arc-rule) 1px, transparent 1px); background-size: 4rem 4rem; }
 .arc-hero__art::before { content: ''; position: absolute; width: 78%; aspect-ratio: 1; border: 1px solid var(--arc-rule-strong); border-radius: 50%; opacity: 0.4; }
 .arc-hero__art > .arc-leaf, .arc-hero__art > svg:first-of-type { width: min(83%, 440px); max-height: 550px; filter: drop-shadow(10px 14px 0 rgba(60,25,73,0.09)); transform: rotate(3deg); }

@@ -45,7 +45,7 @@ export function ArcShowcase() {
             <p className="arc-hero__subtitle">Grounded in <em>clarity.</em><br />Curious by nature.</p>
             <p className="arc-hero__intro">A design system of warm paper, dark ink, and expressive botanical gestures—translated into precise, accessible interface foundations.</p>
             <div className="arc-hero__actions">
-              <a className="arc-button arc-button--primary" href="#components">Explore components <ArrowDown size={16} aria-hidden="true" /></a>
+              <a className="arc-button arc-button--primary" href="#components"><span className="arc-button__content">Explore components <ArrowDown size={16} aria-hidden="true" /></span></a>
               <a className="arc-text-link" href="#identity">Read the principles <ArrowUpRight size={15} aria-hidden="true" /></a>
             </div>
           </div>
