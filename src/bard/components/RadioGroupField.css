@@ -1,0 +1,10 @@
+.bard-radio-group { display: flex; min-width: 0; flex-direction: column; gap: 0.75rem; margin: 0; padding: 0; border: 0; }
+.bard-radio-group > legend { color: var(--bard-ink-900); font-size: 0.78rem; font-weight: 650; line-height: 1.45; }
+.bard-radio-group > legend { margin-bottom: 0.85rem; }
+.bard-radio { position: relative; display: flex; align-items: flex-start; gap: 0.7rem; cursor: pointer; }
+.bard-radio input { position: absolute; width: 1.2rem; height: 1.2rem; margin: 0; opacity: 0; }
+.bard-radio__mark { width: 1.2rem; height: 1.2rem; flex: 0 0 1.2rem; margin-top: 0.15rem; border: 1px solid var(--bard-ink-600); border-radius: 50%; background: var(--bard-pearl); }
+.bard-radio input:checked + .bard-radio__mark { border: 3px solid transparent; background: radial-gradient(circle, var(--bard-ink-900) 0 26%, var(--bard-pearl) 30% 100%) padding-box, linear-gradient(135deg, #a8dbc4, #b6dfe9 50%, #cdbbdf) border-box; box-shadow: 0 0 0 2px rgb(101 80 125 / 10%), inset 0 0 0 1px rgb(255 255 255 / 85%); }
+.bard-radio input:focus-visible + .bard-radio__mark { outline: 3px solid var(--bard-focus); outline-offset: 3px; }
+.bard-radio > span:last-child { display: flex; min-width: 0; flex-direction: column; font-size: 0.78rem; font-weight: 600; }
+.bard-radio small { color: var(--bard-ink-700); font-size: 0.7rem; font-weight: 400; }

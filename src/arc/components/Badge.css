@@ -1,0 +1,5 @@
+.arc-badge { display: inline-flex; align-items: center; gap: 0.3rem; max-width: 100%; padding: 0.22rem 0.55rem; border: 1px solid var(--arc-rule-strong); border-radius: 2px; background: var(--arc-paper-deep); color: var(--arc-ink); font: 500 0.68rem/1.4 var(--arc-font-mono); letter-spacing: 0.02em; }
+.arc-badge--accent { border-color: #c99724; background: #fae8b8; color: #4f3400; }
+.arc-badge--success { border-color: #79a58c; background: var(--arc-success-bg); color: #174c32; }
+.arc-badge--danger { border-color: #d79a9f; background: var(--arc-danger-bg); color: #822432; }
+.arc-badge--info { border-color: #96acc4; background: var(--arc-info-bg); color: #28486b; }

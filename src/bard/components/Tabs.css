@@ -1,0 +1,7 @@
+.bard-tabs { width: 100%; min-width: 0; }
+.bard-tabs__list { position: relative; display: flex; gap: 1.25rem; border-bottom: 1px solid rgb(12 59 56 / 16%); }
+.bard-tabs__tab { min-height: 2.8rem; padding: 0 0 0.65rem; border: 0; color: var(--bard-ink-700); background: transparent; font-size: 0.78rem; font-weight: 650; cursor: pointer; }
+.bard-tabs__tab[data-selected] { color: var(--bard-ink-950); }
+.bard-tabs__indicator { position: absolute; bottom: -1px; left: 0; height: 2px; background: var(--bard-ink-800); transition: width 240ms var(--bard-ease), left 240ms var(--bard-ease), transform 240ms var(--bard-ease); }
+.bard-tabs__panel { padding: 1.25rem 0 0.2rem; color: var(--bard-ink-800); font-size: 0.84rem; line-height: 1.7; }
+.bard-tabs__panel[hidden] { display: none; }

@@ -1,0 +1,4 @@
+.bard-popover { width: 19rem; max-width: calc(100vw - 2rem); padding: 1.25rem; border: var(--bard-border); border-radius: var(--bard-radius-md); color: var(--bard-ink-950); background: var(--bard-pearl); box-shadow: var(--bard-shadow-mid); animation: bard-popup-in 200ms var(--bard-ease) both; }
+.bard-popover__title { margin-bottom: 0.45rem; font-family: var(--bard-font-display); font-size: 1.45rem; font-weight: 600; }
+.bard-popover__copy { color: var(--bard-ink-700); font-size: 0.75rem; line-height: 1.65; }
+@keyframes bard-popup-in { from { opacity: 0; transform: translateY(4px); } }

@@ -1,0 +1,17 @@
+.arc-field { min-width: 0; width: 100%; }
+.arc-field__label { display: block; margin-bottom: 0.4rem; color: var(--arc-ink); font-size: var(--arc-text-sm); font-weight: 650; line-height: 1.4; }
+.arc-field__label > span { color: var(--arc-danger); }
+.arc-input { width: 100%; min-height: 2.85rem; padding: 0.7rem 0.85rem; border: 1px solid var(--arc-rule-strong); border-radius: var(--arc-radius-sm); background: var(--arc-paper-raised); color: var(--arc-ink); font-size: var(--arc-text-sm); line-height: 1.4; transition: border-color var(--arc-duration-fast), box-shadow var(--arc-duration-fast); }
+.arc-input::placeholder { color: #74667a; opacity: 1; }
+.arc-input:hover:not(:disabled) { border-color: var(--arc-purple); }
+.arc-input:focus { border-color: var(--arc-focus); box-shadow: inset 3px 0 0 var(--arc-focus); }
+.arc-input--invalid { border-color: var(--arc-danger); box-shadow: inset 3px 0 0 var(--arc-danger); }
+.arc-input--success { border-color: var(--arc-success); padding-right: 2.5rem; }
+.arc-input:disabled { background: var(--arc-paper-deep); color: var(--arc-ink-soft); cursor: not-allowed; opacity: 0.72; }
+.arc-field__message { display: flex; align-items: flex-start; gap: 0.35rem; margin-top: 0.4rem; color: var(--arc-ink-soft); font-size: 0.75rem; line-height: 1.45; }
+.arc-field__message svg { margin-top: 0.1rem; }
+.arc-field__message--error { color: var(--arc-danger); }
+.arc-field__message--success { color: var(--arc-success); }
+.arc-choice { position: relative; display: flex; align-items: flex-start; gap: 0.7rem; min-width: 0; color: var(--arc-ink); cursor: pointer; }
+.arc-choice__label { display: block; font-size: var(--arc-text-sm); font-weight: 600; line-height: 1.5; }
+.arc-choice__description { display: block; margin-top: 0.18rem; color: var(--arc-ink-soft); font-size: 0.77rem; line-height: 1.45; }

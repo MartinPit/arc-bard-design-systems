@@ -36,7 +36,7 @@ import {
   TextInput,
   Toast,
   Tooltip,
-} from '../components/ui';
+} from '../components';
 
 function ButtonSpecimen() {
   const [status, setStatus] = useState<'idle' | 'loading' | 'saved' | 'preview' | 'details'>('idle');

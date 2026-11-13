@@ -1,0 +1,5 @@
+.bard-card { width: 100%; overflow: hidden; padding: 1.5rem; border: var(--bard-border); border-radius: var(--bard-radius-md); background: var(--bard-pearl); box-shadow: var(--bard-shadow-low); }
+.bard-card h4 { margin: 0.55rem 0 0.75rem; font-family: var(--bard-font-display); font-size: 1.75rem; font-weight: 550; line-height: 1.08; }
+.bard-card__body { color: var(--bard-ink-700); font-size: 0.76rem; line-height: 1.75; }
+.bard-card__footer { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; margin-top: 1.25rem; padding-top: 0.6rem; border-top: 1px solid rgb(12 59 56 / 12%); color: var(--bard-ink-700); font-size: 0.68rem; }
+.bard-card__footer .bard-icon-button { width: 2.4rem; height: 2.4rem; flex-basis: 2.4rem; background: transparent; }

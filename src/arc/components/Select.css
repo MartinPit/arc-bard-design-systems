@@ -1,0 +1,3 @@
+.arc-select-wrap { position: relative; }
+.arc-select { appearance: none; padding-right: 2.6rem; cursor: pointer; }
+.arc-select-wrap > svg { position: absolute; top: 50%; right: 0.8rem; pointer-events: none; transform: translateY(-50%); }

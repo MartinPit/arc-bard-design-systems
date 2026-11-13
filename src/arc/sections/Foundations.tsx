@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { ArrowRight, Check, MoveRight, Pause, Play } from 'lucide-react';
 import { ArcLeaf, ArcStamp, RegistrationMark } from '../components/Brand';
-import { Button } from '../components/ui';
+import { Button } from '../components';
 import { CopyToken } from '../components/Specimen';
 import { SectionHeading } from '../components/SectionHeading';
 

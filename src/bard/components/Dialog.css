@@ -1,0 +1,9 @@
+.bard-overlay { position: fixed; z-index: 1000; inset: 0; background: rgb(5 29 28 / 58%); animation: bard-overlay-in 240ms ease both; }
+.bard-dialog { position: fixed; z-index: 1001; top: 50%; left: 50%; width: min(31rem, calc(100vw - 2rem)); max-height: calc(100dvh - 2rem); overflow-y: auto; padding: 3rem; border: 1px solid rgb(255 255 255 / 45%); border-radius: var(--bard-radius-md); color: var(--bard-ink-950); background: var(--bard-paper); box-shadow: var(--bard-shadow-high); transform: translate(-50%, -50%); animation: bard-dialog-in 350ms var(--bard-ease) both; }
+.bard-dialog__close { position: absolute; top: 1.15rem; right: 1.15rem; }
+.bard-dialog__ornament { width: 4rem; height: 4rem; margin-bottom: 1.5rem; border: 1px solid var(--bard-ink-600); border-radius: 50% 50% 50% 0; background: repeating-radial-gradient(circle at 100% 100%, transparent 0 5px, rgb(12 59 56 / 12%) 6px 7px); }
+.bard-dialog__title { max-width: 21rem; margin: 0.75rem 0 1rem; font-family: var(--bard-font-display); font-size: 2.4rem; font-weight: 500; line-height: 1.03; }
+.bard-dialog__description { color: var(--bard-ink-700); font-size: 0.85rem; line-height: 1.75; }
+.bard-dialog__actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 0.6rem; margin-top: 2rem; }
+@keyframes bard-overlay-in { from { opacity: 0; } }
+@keyframes bard-dialog-in { from { opacity: 0; transform: translate(-50%, -47%) scale(0.97); } }

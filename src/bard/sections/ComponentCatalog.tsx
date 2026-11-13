@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { createPortal } from 'react-dom';
 import { ArrowUpRight, Bell, BellOff, Bookmark, Check, Search, Star } from 'lucide-react';
-import { Button, IconButton, TextInput, Textarea, SelectField, CheckboxField, RadioGroupField, SwitchField, SliderField, Tabs, Dialog, Popover, Tooltip, Toast, Badge, Avatar, Card, Table, Pagination, type ToastMessage } from '../components/Primitives';
+import { Button, IconButton, TextInput, Textarea, SelectField, CheckboxField, RadioGroupField, SwitchField, SliderField, Tabs, Dialog, Popover, Tooltip, Toast, Badge, Avatar, Card, Table, Pagination, type ToastMessage } from '../components';
 import { Reveal, SectionHeader, Specimen } from '../components/Specimen';
 
 function ButtonDemo() {

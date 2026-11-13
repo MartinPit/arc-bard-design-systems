@@ -1,0 +1,7 @@
+.bard-toast { display: flex; align-items: flex-start; gap: 0.75rem; padding: 0.8rem; border: 1px solid var(--bard-mint-300); border-radius: var(--bard-radius-md); color: var(--bard-ink-950); background: var(--bard-pearl); box-shadow: var(--bard-shadow-mid); animation: bard-toast-in 350ms var(--bard-ease) both; }
+.bard-toast__mark { display: flex; width: 1.8rem; height: 1.8rem; flex: 0 0 1.8rem; align-items: center; justify-content: center; margin-top: 0.15rem; border-radius: 50%; color: var(--bard-pearl); background: var(--bard-success-700); }
+.bard-toast > div { min-width: 0; flex: 1; }
+.bard-toast strong { font-family: var(--bard-font-display); font-size: 1.25rem; font-weight: 600; }
+.bard-toast p { color: var(--bard-ink-700); font-size: 0.72rem; }
+.bard-toast .bard-icon-button { width: 2.25rem; height: 2.25rem; flex-basis: 2.25rem; border-color: transparent; background: transparent; }
+@keyframes bard-toast-in { from { opacity: 0; transform: translateY(12px); } }

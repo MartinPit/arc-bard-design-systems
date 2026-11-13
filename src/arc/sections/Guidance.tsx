@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { ArrowDownUp, ArrowRight, Bell, Check, FileText, Leaf, Search, X } from 'lucide-react';
 import { SectionHeading } from '../components/SectionHeading';
-import { Badge, Button, Checkbox, RadioGroup, Switch, TextInput } from '../components/ui';
+import { Badge, Button, Checkbox, RadioGroup, Switch, TextInput } from '../components';
 
 export function CompositionSection() {
   const [digest, setDigest] = useState('weekly');

@@ -1,0 +1,9 @@
+.bard-table-wrap { max-width: 100%; overflow-x: auto; border: var(--bard-border); border-radius: var(--bard-radius-md); background: var(--bard-pearl); }
+.bard-table { width: 100%; min-width: 32rem; border-collapse: collapse; text-align: left; }
+.bard-table caption { padding: 0.8rem 1rem; color: var(--bard-ink-700); font-size: 0.68rem; text-align: left; }
+.bard-table th,
+.bard-table td { padding: 0.85rem 1rem; border-top: 1px solid rgb(12 59 56 / 10%); font-size: 0.73rem; }
+.bard-table thead th { color: var(--bard-ink-700); background: var(--bard-mint-100); font-size: 0.64rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+.bard-table tbody th { font-weight: 650; }
+.bard-table tbody td { color: var(--bard-ink-700); }
+.bard-table tbody tr:hover { background: #f2f6ef; }

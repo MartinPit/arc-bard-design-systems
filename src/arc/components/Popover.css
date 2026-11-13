@@ -1,0 +1,5 @@
+.arc-popover-layer { font-size: var(--arc-text-md); }
+.arc-popover-layer { position: relative; z-index: 150; }
+.arc-popover { position: fixed; z-index: 151; width: min(316px,calc(100vw - 24px)); padding: var(--arc-space-5); border: 1px solid var(--arc-aubergine); background: var(--arc-paper-raised); color: var(--arc-ink); box-shadow: var(--arc-shadow-md); animation: arc-dialog-in var(--arc-duration-fast) both; }
+@keyframes arc-dialog-in { from { opacity: 0; transform: translateY(12px); } }
+.arc-popover__rule { position: absolute; top: 0; left: 1rem; width: 50px; height: 4px; background: var(--arc-magenta); }

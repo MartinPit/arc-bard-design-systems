@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { motion, useReducedMotion } from 'motion/react';
 import { ArrowRight, Check, Eye, Keyboard, MousePointer2, Play, RotateCcw, ShieldCheck, Volume2, X } from 'lucide-react';
-import { Button, Badge, SelectField, SwitchField } from '../components/Primitives';
+import { Button, Badge, SelectField, SwitchField } from '../components';
 import { Reveal, SectionHeader } from '../components/Specimen';
 
 function MotionPreview() {

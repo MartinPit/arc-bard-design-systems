@@ -13,7 +13,9 @@ The project contains exactly three website entries:
 | Arc | `/arc-bard-design-systems/arc/` | Complete Arc design-system showcase |
 | Bard | `/arc-bard-design-systems/bard/` | Complete Bard design-system showcase |
 
-There are no example product applications, backend services, remote assets, or shared styled components. Arc and Bard were implemented independently by separate agents with disjoint file ownership. They demonstrate the same 19-component inventory without sharing component implementations, tokens, CSS Modules, or visual composition.
+There are no example product applications, backend services, remote assets, or shared styled components. Arc and Bard were implemented independently by separate agents with disjoint file ownership. They demonstrate the same 19-component inventory without sharing component implementations, tokens, styles, or visual composition.
+
+Each public component lives in its own TypeScript file with a colocated stylesheet and explicit style dependencies. `src/arc/components/index.ts` and `src/bard/components/index.ts` are the respective public entry points. System tokens and small private utilities may be shared within a system, but never across Arc and Bard.
 
 ## Stack
 
@@ -21,7 +23,7 @@ There are no example product applications, backend services, remote assets, or s
 - Vite multi-page build
 - Base UI for unstyled interaction primitives where useful
 - Motion for selected choreography
-- Plain CSS, CSS Modules, and system-local custom-property tokens
+- Plain colocated CSS and system-local custom-property tokens
 - Lucide functional icons, original inline SVG signatures, and self-hosted Fontsource fonts
 
 ## Develop

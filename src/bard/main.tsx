@@ -4,9 +4,8 @@ import '@fontsource-variable/cormorant-garamond';
 import '@fontsource-variable/manrope';
 import './styles/tokens.css';
 import './styles/global.css';
-import './styles/components.css';
-import './styles/showcase.css';
 import { BardShowcase } from './BardShowcase';
+import './styles/showcase.css';
 
 document.documentElement.classList.add('bard-document');
 document.body.classList.add('bard-body');

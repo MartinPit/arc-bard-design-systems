@@ -1,0 +1,2 @@
+.bard-tooltip { padding: 0.5rem 0.7rem; border-radius: 0.5rem; color: var(--bard-pearl); background: var(--bard-ink-950); box-shadow: var(--bard-shadow-low); font-size: 0.7rem; animation: bard-popup-in 180ms ease both; }
+@keyframes bard-popup-in { from { opacity: 0; transform: translateY(4px); } }

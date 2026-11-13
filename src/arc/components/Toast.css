@@ -1,0 +1,13 @@
+.arc-toast { position: fixed; z-index: 220; right: var(--arc-space-5); bottom: calc(var(--arc-space-5) + var(--arc-toast-index) * 96px); width: min(390px,calc(100vw - 32px)); display: grid; grid-template-columns: auto 1fr auto; align-items: start; gap: 0.75rem; padding: 1rem; border: 1px solid var(--arc-aubergine); border-left: 5px solid var(--arc-info); background: var(--arc-paper-raised); color: var(--arc-ink); box-shadow: var(--arc-shadow-md); animation: arc-toast-in var(--arc-duration-base) var(--arc-ease-print) both; }
+.arc-toast--success { border-left-color: var(--arc-success); }
+.arc-toast--danger { border-left-color: var(--arc-danger); }
+@keyframes arc-toast-in { from { opacity: 0; transform: translateX(16px); } }
+.arc-toast__icon { margin-top: 0.1rem; color: var(--arc-info); }
+.arc-toast--success .arc-toast__icon { color: var(--arc-success); }
+.arc-toast--danger .arc-toast__icon { color: var(--arc-danger); }
+.arc-toast strong { display: block; font-size: var(--arc-text-sm); }
+.arc-toast p { margin: 0.2rem 0 0; color: var(--arc-ink-soft); font-size: 0.77rem; line-height: 1.45; }
+.arc-toast .arc-icon-button { width: 2rem; height: 2rem; margin: -0.25rem -0.25rem 0 0; }
+@media (max-width: 560px) {
+  .arc-toast { right: 1rem; bottom: calc(1rem + var(--arc-toast-index) * 100px); }
+}

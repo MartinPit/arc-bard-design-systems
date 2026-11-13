@@ -1,0 +1,4 @@
+.arc-avatar { position: relative; display: inline-grid; place-items: center; flex: 0 0 auto; width: 2.8rem; height: 2.8rem; border: 1px solid var(--arc-aubergine); border-radius: 50% 50% 46% 54% / 44% 52% 48% 56%; background: var(--arc-marigold); color: var(--arc-ink); font: 600 0.75rem var(--arc-font-mono); }
+.arc-avatar--small { width: 2rem; height: 2rem; font-size: 0.6rem; background: var(--arc-paper-deep); }
+.arc-avatar--large { width: 4rem; height: 4rem; font-size: 1rem; background: var(--arc-coral); }
+.arc-avatar__mark { position: absolute; right: -1px; bottom: 2px; width: 0.7rem; height: 0.7rem; border: 2px solid var(--arc-paper-raised); border-radius: 50%; background: var(--arc-success); }

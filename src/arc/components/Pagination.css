@@ -1,0 +1,13 @@
+.arc-pagination { display: flex; align-items: center; justify-content: center; gap: 0.65rem; }
+.arc-pagination__pages { display: flex; align-items: center; }
+.arc-pagination__item { display: inline-flex; align-items: center; }
+.arc-pagination__button { min-width: 2.4rem; min-height: 2.4rem; border: 0; background: transparent; color: var(--arc-ink); font: 500 0.75rem var(--arc-font-mono); cursor: pointer; }
+.arc-pagination__button:hover { background: var(--arc-paper-deep); }
+.arc-pagination__button--current { background: var(--arc-aubergine); color: var(--arc-paper-raised); }
+.arc-pagination__button--current:hover { background: #512360; }
+.arc-pagination__ellipsis { padding: 0 0.2rem; }
+@media (max-width: 560px) {
+  .arc-pagination { gap: 0.25rem; }
+  .arc-pagination .arc-icon-button { width: 2.5rem; height: 2.5rem; }
+  .arc-pagination__button { min-width: 2.1rem; }
+}

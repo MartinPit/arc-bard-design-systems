@@ -1,0 +1,12 @@
+.arc-card { position: relative; min-width: 0; display: flex; flex-direction: column; border: 1px solid var(--arc-purple); background: var(--arc-paper-raised); box-shadow: var(--arc-shadow-sm); overflow: hidden; }
+.arc-card--accent { border-radius: 0 3.5rem 0 0; }
+.arc-card--accent::after { content: ''; position: absolute; top: 0; right: 0; width: 70px; height: 70px; background: var(--arc-gradient); border-radius: 0 0 0 100%; pointer-events: none; }
+.arc-card__header, .arc-card__content, .arc-card__footer { position: relative; z-index: 1; padding: var(--arc-space-5); }
+.arc-card__header { padding-bottom: 0; }
+.arc-card__header h3 { max-width: 85%; margin: 0; font: 500 1.5rem/1.15 var(--arc-font-display); }
+.arc-card__content { flex: 1; color: var(--arc-ink-soft); }
+.arc-card__content p:last-child { margin-bottom: 0; }
+.arc-card__footer { padding-top: 0; }
+@media (max-width: 560px) {
+  .arc-card--accent::after { width: 55px; height: 55px; }
+}

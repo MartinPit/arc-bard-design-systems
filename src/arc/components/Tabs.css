@@ -1,0 +1,9 @@
+.arc-tabs { min-width: 0; width: 100%; }
+.arc-tabs__list { display: flex; gap: 0; overflow-x: auto; border-bottom: 1px solid var(--arc-purple); }
+.arc-tabs__list button { position: relative; flex: 0 0 auto; min-height: 3rem; padding: 0 0.65rem; border: 0; background: transparent; color: var(--arc-ink-soft); font-size: 0.75rem; font-weight: 600; cursor: pointer; }
+.arc-tabs__list button::after { content: ''; position: absolute; inset: auto 0 -1px; height: 3px; background: var(--arc-magenta); transform: scaleX(0); transform-origin: left; transition: transform var(--arc-duration-fast) var(--arc-ease-print); }
+.arc-tabs__list button[aria-selected='true'] { background: transparent; color: var(--arc-magenta-deep); }
+.arc-tabs__list button[aria-selected='true']::after, .arc-tabs__list button:hover:not(:disabled)::after { transform: scaleX(1); }
+.arc-tabs__list button:hover:not(:disabled) { background: transparent; color: var(--arc-ink); }
+.arc-tabs__list button:disabled { opacity: 0.43; cursor: not-allowed; }
+.arc-tabs__panel { min-height: 120px; padding: var(--arc-space-5); border: 1px solid var(--arc-rule-strong); border-top: 0; background: var(--arc-paper-raised); }

@@ -1,0 +1,2 @@
+.arc-field__control { position: relative; }
+.arc-field__status { position: absolute; top: 50%; right: 0.8rem; color: var(--arc-success); transform: translateY(-50%); }

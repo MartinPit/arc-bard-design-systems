@@ -1,0 +1,4 @@
+.arc-radio-group { min-width: 0; margin: 0; padding: 0; border: 0; }
+.arc-radio-group > .arc-choice { margin-top: 0.85rem; }
+.arc-radio-group .arc-choice__mark { border-radius: 50%; }
+.arc-radio-group .arc-choice input:checked + .arc-choice__mark { border: 5px solid var(--arc-aubergine); background: var(--arc-paper-raised); }

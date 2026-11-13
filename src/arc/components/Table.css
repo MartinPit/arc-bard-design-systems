@@ -1,0 +1,10 @@
+.arc-table-scroll { max-width: 100%; overflow-x: auto; border: 1px solid var(--arc-purple); background: var(--arc-paper-raised); }
+.arc-table { width: 100%; min-width: 650px; border-collapse: collapse; font-size: var(--arc-text-sm); text-align: left; }
+.arc-table caption { padding: 0.8rem 1rem; border-bottom: 1px solid var(--arc-purple); color: var(--arc-ink-soft); font: var(--arc-text-xs) var(--arc-font-mono); letter-spacing: 0.08em; text-align: left; text-transform: uppercase; }
+.arc-table th, .arc-table td { padding: 0.85rem 1rem; border-bottom: 1px solid var(--arc-rule); vertical-align: middle; white-space: nowrap; }
+.arc-table thead th { background: var(--arc-paper-deep); color: var(--arc-aubergine); font: 500 0.7rem var(--arc-font-mono); letter-spacing: 0.05em; text-transform: uppercase; }
+.arc-table tbody th { font-weight: 650; }
+.arc-table tbody tr:last-child > * { border-bottom: 0; }
+.arc-table tbody tr:hover { background: #f4ead8; }
+.arc-numeric { text-align: right; font-variant-numeric: tabular-nums; }
+.arc-table__empty { padding: 2.5rem 1rem !important; color: var(--arc-ink-soft); text-align: center; white-space: normal !important; }

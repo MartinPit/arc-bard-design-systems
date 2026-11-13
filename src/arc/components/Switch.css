@@ -1,0 +1,9 @@
+.arc-switch { position: relative; display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-width: 0; cursor: pointer; }
+.arc-switch > input { position: absolute; right: 0; width: 2.9rem; height: 1.65rem; opacity: 0; }
+.arc-switch__track { position: relative; flex: 0 0 auto; width: 2.9rem; height: 1.65rem; border: 1px solid var(--arc-purple); border-radius: 2rem; background: var(--arc-paper-deep); transition: background var(--arc-duration-fast); }
+.arc-switch__track > span { position: absolute; top: 3px; left: 3px; width: 1.05rem; height: 1.05rem; border-radius: 50%; background: var(--arc-purple-deep); transition: transform var(--arc-duration-fast) var(--arc-ease-print), background var(--arc-duration-fast); }
+.arc-switch input:checked + .arc-switch__track { background: var(--arc-aubergine); }
+.arc-switch input:checked + .arc-switch__track > span { background: var(--arc-paper-raised); transform: translateX(1.22rem); }
+.arc-switch input:focus-visible + .arc-switch__track { outline: 3px solid var(--arc-focus); outline-offset: 3px; }
+.arc-switch--disabled { cursor: not-allowed; }
+.arc-switch--disabled > * { opacity: 0.52; }

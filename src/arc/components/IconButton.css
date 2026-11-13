@@ -1,0 +1,8 @@
+.arc-icon-button { display: inline-grid; place-items: center; flex: 0 0 auto; width: 2.75rem; height: 2.75rem; padding: 0; border: 1px solid var(--arc-purple); border-radius: var(--arc-radius-sm); background: var(--arc-paper-raised); color: var(--arc-aubergine); cursor: pointer; transition: background var(--arc-duration-fast), transform var(--arc-duration-fast); }
+.arc-icon-button--ink { background: var(--arc-aubergine); color: var(--arc-paper-raised); }
+.arc-icon-button--quiet { border-color: transparent; background: transparent; }
+.arc-icon-button:hover:not(:disabled) { background: var(--arc-paper-deep); transform: translateY(-1px); }
+.arc-icon-button--ink:hover:not(:disabled) { background: #512360; }
+.arc-icon-button[aria-pressed='true'] { background: var(--arc-marigold); color: var(--arc-ink); }
+.arc-icon-button:active:not(:disabled) { transform: translateY(1px); }
+.arc-icon-button:disabled { opacity: 0.42; cursor: not-allowed; }
