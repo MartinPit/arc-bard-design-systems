@@ -1,0 +1,7 @@
+.arc-root .arc-theme-toggle { display: inline-flex; align-items: center; justify-content: center; flex: 0 0 auto; align-self: center; flex-wrap: nowrap; gap: 0.4rem; min-height: 2.75rem; margin: 0.375rem 0 0.375rem var(--arc-space-3); padding: 0.55rem 0.75rem; border: 1px solid var(--arc-purple); border-radius: var(--arc-radius-sm); background: var(--arc-paper-raised); color: var(--arc-aubergine); box-shadow: 2px 2px 0 var(--arc-button-shadow); font: 600 0.7rem/1 var(--arc-font-mono); white-space: nowrap; cursor: pointer; transition: background var(--arc-duration-fast), transform var(--arc-duration-fast); }
+.arc-root .arc-theme-toggle:hover { background: var(--arc-paper-deep); transform: translateY(-1px); }
+.arc-root .arc-theme-toggle:active { transform: translateY(1px); }
+@media (max-width: 700px) {
+  .arc-root .arc-theme-toggle { width: 2.5rem; min-height: 2.5rem; margin-left: var(--arc-space-2); padding: 0; }
+  .arc-root .arc-theme-toggle span { display: none; }
+}

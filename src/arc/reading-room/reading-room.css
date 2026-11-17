@@ -1,0 +1,278 @@
+.arc-reading-room { min-height: 100vh; }
+.arc-reading-room__masthead { position: relative; z-index: 2; max-width: 1440px; min-height: 5rem; margin: 0 auto; padding: 0.85rem 2rem; display: flex; align-items: center; gap: 2rem; }
+.arc-reading-room__identity { display: flex; align-items: center; flex: 0 0 auto; gap: 0.8rem; color: var(--arc-aubergine); }
+.arc-reading-room__mark { width: 34px; height: 39px; }
+.arc-reading-room__wordmark { display: block; font-family: var(--arc-font-display); font-size: 1.5rem; font-variation-settings: 'SOFT' 65, 'WONK' 0.5; font-weight: 590; line-height: 1.1; letter-spacing: -0.035em; }
+.arc-reading-room__tagline { display: block; margin-top: 0.25rem; color: var(--arc-ink-soft); font: 0.58rem/1.2 var(--arc-font-mono); letter-spacing: 0.1em; text-transform: uppercase; }
+.arc-reading-room__masthead-meta { display: flex; flex: 1; align-items: center; justify-content: center; gap: 2rem; color: var(--arc-ink-soft); font: var(--arc-text-xs)/1.4 var(--arc-font-mono); letter-spacing: 0.06em; }
+.arc-reading-room__masthead-meta span + span::before { content: '✦'; margin-right: 2rem; color: var(--arc-magenta); }
+.arc-reading-room__masthead-actions { display: flex; align-items: center; justify-content: flex-end; gap: 1.25rem; }
+.arc-reading-room__system-link { display: inline-flex; align-items: center; gap: 0.35rem; min-height: 2.75rem; font-size: 0.72rem; font-weight: 600; text-decoration-thickness: 1px; text-underline-offset: 0.25rem; }
+.arc-reading-room__system-link:hover { color: var(--arc-magenta-deep); }
+.arc-reading-room__shell { max-width: 1440px; min-height: calc(100vh - 5rem); margin: 0 auto; display: grid; grid-template-columns: 190px minmax(0, 1fr); border-top: 1px solid var(--arc-purple); border-bottom: 1px solid var(--arc-purple); }
+.arc-reading-room__rail { min-width: 0; padding: 2.2rem 1rem 1.5rem; display: flex; flex-direction: column; justify-content: space-between; border-right: 1px solid var(--arc-purple); background: var(--arc-nav-bg); }
+.arc-reading-room__rail-label { margin: 0 0 1rem 0.75rem; color: var(--arc-ink-soft); font: 0.6rem/1.4 var(--arc-font-mono); letter-spacing: 0.11em; text-transform: uppercase; }
+.arc-reading-room__nav { display: flex; flex-direction: column; gap: 0.4rem; }
+.arc-reading-room__nav > a { position: relative; width: 100%; min-height: 3.25rem; padding: 0.75rem 0.7rem; display: grid; grid-template-columns: 1.4rem 1.3rem 1fr auto; align-items: center; gap: 0.4rem; border: 0; border-bottom: 1px solid var(--arc-rule); background: transparent; color: var(--arc-ink-soft); font-size: var(--arc-text-sm); font-weight: 610; text-align: left; text-decoration: none; cursor: pointer; }
+.arc-reading-room__nav > a::before { content: ''; position: absolute; inset: 0 auto 0 -1rem; width: 3px; background: var(--arc-magenta); transform: scaleY(0); transition: transform var(--arc-duration-fast); }
+.arc-reading-room__nav > a[aria-current='page'] { color: var(--arc-magenta-deep); background: var(--arc-paper-deep); }
+.arc-reading-room__nav > a[aria-current='page']::before { transform: scaleY(1); }
+.arc-reading-room__nav > a:hover { color: var(--arc-magenta-deep); }
+.arc-reading-room__nav-index { color: var(--arc-ink-soft); font: 0.55rem var(--arc-font-mono); }
+.arc-reading-room__nav-count { min-width: 1.35rem; padding: 0.12rem 0.3rem; border: 1px solid var(--arc-rule-strong); border-radius: 50%; color: var(--arc-ink); font: 0.58rem var(--arc-font-mono); text-align: center; }
+.arc-reading-room__quiet-stats { padding: 1rem 0.75rem 1.4rem; border-bottom: 1px solid var(--arc-rule-strong); }
+.arc-reading-room__quiet-stats .arc-reading-room__rail-label { margin-left: 0; }
+.arc-reading-room__quiet-stats dl { margin: 0; }
+.arc-reading-room__quiet-stats dl > div { display: flex; align-items: baseline; justify-content: space-between; gap: 0.5rem; padding: 0.4rem 0; }
+.arc-reading-room__quiet-stats dt { color: var(--arc-ink-soft); font-size: 0.68rem; }
+.arc-reading-room__quiet-stats dd { margin: 0; font: 500 1.15rem var(--arc-font-display); }
+.arc-reading-room__member-note { position: relative; padding: 1.4rem 0.75rem 0; color: var(--arc-ink-soft); }
+.arc-reading-room__member-note .arc-reading-room__mark { width: 23px; height: 27px; margin-bottom: 0.75rem; color: var(--arc-magenta-deep); }
+.arc-reading-room__member-note p { margin: 0 0 0.8rem; font: italic 400 1rem/1.45 var(--arc-font-display); }
+.arc-reading-room__member-note span { font: 0.54rem/1.5 var(--arc-font-mono); letter-spacing: 0.04em; }
+.arc-reading-room__main { min-width: 0; padding: 2.6rem clamp(1.8rem, 4vw, 4.25rem) 1.5rem; outline: none; }
+.arc-reading-room__page-header { margin-bottom: 2.65rem; display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(230px, 0.65fr); align-items: end; gap: 3rem; }
+.arc-reading-room__eyebrow { margin: 0 0 0.85rem; color: var(--arc-magenta-deep); font: 500 var(--arc-text-xs)/1.4 var(--arc-font-mono); letter-spacing: 0.12em; text-transform: uppercase; }
+.arc-reading-room__page-header h1 { margin: 0; font-family: var(--arc-font-display); font-size: clamp(3.6rem, 5.5vw, 5.6rem); font-variation-settings: 'SOFT' 70, 'WONK' 0.6; font-weight: 440; line-height: 0.9; letter-spacing: -0.055em; }
+.arc-reading-room__page-header h1 em { color: var(--arc-magenta-deep); font-weight: 330; }
+.arc-reading-room__page-intro { padding: 0 0 0.45rem 1.3rem; border-left: 1px solid var(--arc-rule-strong); }
+.arc-reading-room__page-intro > p { margin: 0.85rem 0 0; color: var(--arc-ink-soft); font-size: var(--arc-text-md); line-height: 1.65; }
+.arc-reading-room__folio { color: var(--arc-ink-soft); font: 0.6rem/1.4 var(--arc-font-mono); letter-spacing: 0.1em; }
+.arc-reading-room__page-header--compact { align-items: center; margin-bottom: 2.4rem; }
+.arc-reading-room__page-header--compact h1 { font-size: clamp(3.5rem, 5vw, 5rem); }
+.arc-reading-room__page-header--compact .arc-reading-room__page-intro .arc-button { margin-top: 1.1rem; }
+.arc-reading-room-feature { position: relative; display: grid; grid-template-columns: minmax(245px, 0.78fr) minmax(0, 1.35fr); border: 1px solid var(--arc-art-ink); background: var(--arc-feature-bg); color: var(--arc-feature-ink); box-shadow: 7px 8px 0 var(--arc-art-shadow); }
+.arc-reading-room-feature::after { content: ''; position: absolute; inset: 0; opacity: 0.14; background-image: repeating-linear-gradient(0deg, transparent 0, transparent 4px, var(--arc-feature-rule) 5px); pointer-events: none; }
+.arc-reading-room-feature__art { position: relative; z-index: 1; min-width: 0; min-height: 450px; display: grid; place-items: center; padding: 3.8rem 1.5rem 3rem; border-right: 1px solid var(--arc-feature-rule); }
+.arc-reading-room-feature__art .arc-reading-room-book-cover { width: min(74%, 224px); transform: rotate(-3deg); box-shadow: 9px 12px 0 rgba(0,0,0,0.24); }
+.arc-reading-room-feature__plate { position: absolute; top: 1.2rem; left: 1.2rem; font: 0.55rem/1.4 var(--arc-font-mono); letter-spacing: 0.1em; }
+.arc-reading-room-feature__edition { position: absolute; right: 1.1rem; bottom: 1rem; color: var(--arc-feature-ink); font: 0.53rem/1.5 var(--arc-font-mono); text-align: right; text-transform: uppercase; opacity: 0.75; }
+.arc-reading-room-feature__copy { position: relative; z-index: 1; min-width: 0; padding: clamp(1.75rem, 3vw, 3rem); }
+.arc-reading-room-feature__eyebrow { display: flex; align-items: center; gap: 0.55rem; margin: 0 0 2.4rem; color: var(--arc-marigold); font: 500 var(--arc-text-xs)/1.4 var(--arc-font-mono); letter-spacing: 0.11em; text-transform: uppercase; }
+.arc-reading-room-feature__chapter { display: block; margin-bottom: 0.7rem; font: 0.66rem/1.4 var(--arc-font-mono); letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.8; }
+.arc-reading-room-feature h2 { max-width: 29rem; margin: 0; font-family: var(--arc-font-display); font-size: clamp(2.5rem, 4.4vw, 4.25rem); font-variation-settings: 'SOFT' 75, 'WONK' 0.6; font-weight: 430; line-height: 0.98; letter-spacing: -0.045em; }
+.arc-reading-room-feature__author { margin: 0.8rem 0 0; font-size: var(--arc-text-sm); opacity: 0.82; }
+.arc-reading-room-feature blockquote { max-width: 28rem; margin: 1.7rem 0; padding-left: 1rem; border-left: 1px solid var(--arc-marigold); font: italic 350 1.05rem/1.5 var(--arc-font-display); }
+.arc-reading-room-feature__reading-meta { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.5rem 1rem; margin-top: 1.5rem; font: 0.6rem/1.4 var(--arc-font-mono); letter-spacing: 0.045em; }
+.arc-reading-room-feature__reading-meta span { display: inline-flex; align-items: center; gap: 0.4rem; }
+.arc-reading-room-feature__actions { display: flex; align-items: center; flex-wrap: wrap; gap: 1rem 1.4rem; margin-top: 1.65rem; }
+.arc-root .arc-reading-room-feature .arc-button--primary { border-color: var(--arc-marigold); background: var(--arc-marigold); color: var(--arc-accent-ink); box-shadow: 3px 3px 0 var(--arc-magenta); }
+.arc-root .arc-reading-room-feature .arc-button--primary:hover:not(:disabled) { background: var(--arc-orange); box-shadow: 4px 4px 0 var(--arc-magenta); }
+.arc-root .arc-reading-room-feature .arc-button--primary:active:not(:disabled) { box-shadow: none; }
+.arc-reading-room-feature__save { min-height: 2.75rem; padding: 0.55rem 0; display: inline-flex; align-items: center; gap: 0.45rem; border: 0; border-bottom: 1px solid var(--arc-feature-rule); background: transparent; color: var(--arc-feature-ink); font-size: var(--arc-text-sm); cursor: pointer; }
+.arc-reading-room-feature__save:hover { border-bottom-color: var(--arc-marigold); color: var(--arc-marigold); }
+.arc-reading-room-progress { width: 100%; height: 4px; display: block; overflow: hidden; border: 0; border-radius: 0; appearance: none; background: var(--arc-paper-deep); color: var(--arc-magenta); accent-color: var(--arc-magenta); }
+.arc-reading-room-progress::-webkit-progress-bar { background: var(--arc-paper-deep); }
+.arc-reading-room-progress::-webkit-progress-value { background: var(--arc-gradient); }
+.arc-reading-room-progress::-moz-progress-bar { background: var(--arc-magenta); }
+.arc-reading-room-feature__copy .arc-reading-room-progress { margin-top: 0.65rem; background: var(--arc-feature-rule); }
+.arc-reading-room-feature__copy .arc-reading-room-progress::-webkit-progress-bar { background: var(--arc-feature-rule); }
+.arc-reading-room__today-grid { margin-top: 4rem; display: grid; grid-template-columns: minmax(0, 1fr) minmax(235px, 0.31fr); gap: clamp(1.8rem, 3.3vw, 3.5rem); }
+.arc-reading-room__section-heading { min-height: 2.2rem; margin-bottom: 0.7rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; border-bottom: 1px solid var(--arc-purple); }
+.arc-reading-room__section-label { margin: 0; display: flex; align-items: center; gap: 0.8rem; color: var(--arc-ink-soft); font: 500 0.61rem/1.4 var(--arc-font-mono); letter-spacing: 0.1em; text-transform: uppercase; }
+.arc-reading-room__section-label > span { color: var(--arc-magenta-deep); }
+.arc-reading-room__section-title-row { margin-bottom: 1.7rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.arc-reading-room__section-title-row h2 { margin: 0; font: 450 var(--arc-text-xl)/1.2 var(--arc-font-display); letter-spacing: -0.025em; }
+.arc-reading-room__text-button { min-height: 2.75rem; padding: 0.4rem 0; display: inline-flex; align-items: center; flex: 0 0 auto; gap: 0.4rem; border: 0; border-bottom: 1px solid var(--arc-purple); background: transparent; color: var(--arc-ink); font-size: 0.72rem; font-weight: 650; white-space: nowrap; text-decoration: none; cursor: pointer; }
+.arc-reading-room__text-button:hover { border-color: var(--arc-magenta-deep); color: var(--arc-magenta-deep); }
+.arc-reading-room__book-grid { display: grid; gap: clamp(1.1rem, 2.3vw, 2.1rem); }
+.arc-reading-room__book-grid--shelf { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.arc-reading-room-book-card { min-width: 0; }
+.arc-reading-room-book-card__cover-wrap { position: relative; }
+.arc-reading-room-book-card__cover-button { width: 100%; padding: 0; display: block; border: 0; background: transparent; color: var(--arc-ink); text-align: left; cursor: pointer; }
+.arc-reading-room-book-card__cover-button:hover .arc-reading-room-book-cover { transform: translate(-2px, -3px) rotate(-1deg); box-shadow: 7px 9px 0 var(--arc-art-shadow); }
+.arc-reading-room-book-card__save.arc-icon-button { position: absolute; top: 0.45rem; right: 0.45rem; width: 2.5rem; height: 2.5rem; border: 1px solid var(--arc-rule-strong); background: var(--arc-paper-raised); color: var(--arc-ink); box-shadow: 2px 2px 0 var(--arc-art-shadow); }
+.arc-reading-room-book-card__save.is-saved { color: var(--arc-magenta-deep); }
+.arc-reading-room-book-card__meta { padding-top: 1rem; }
+.arc-reading-room-book-card__category { margin: 0 0 0.35rem; color: var(--arc-magenta-deep); font: 0.56rem/1.4 var(--arc-font-mono); letter-spacing: 0.11em; text-transform: uppercase; }
+.arc-reading-room-book-card h3 { margin: 0; font: 520 1.3rem/1.15 var(--arc-font-display); letter-spacing: -0.02em; }
+.arc-reading-room-book-card h3 button { padding: 0; border: 0; background: transparent; color: inherit; font: inherit; letter-spacing: inherit; text-align: left; cursor: pointer; }
+.arc-reading-room-book-card h3 button:hover { color: var(--arc-magenta-deep); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.25rem; }
+.arc-reading-room-book-card__author { margin: 0.45rem 0 0.85rem; color: var(--arc-ink-soft); font-size: 0.73rem; }
+.arc-reading-room-book-card__progress-label { margin-bottom: 0.45rem; display: flex; justify-content: space-between; gap: 0.5rem; color: var(--arc-ink-soft); font: 0.55rem/1.4 var(--arc-font-mono); }
+.arc-reading-room-book-cover { position: relative; aspect-ratio: 12 / 17; border: 1px solid var(--arc-art-ink); background: var(--arc-paper-raised); box-shadow: 4px 5px 0 var(--arc-art-shadow); transition: transform var(--arc-duration-base) var(--arc-ease-print), box-shadow var(--arc-duration-base); }
+.arc-reading-room-book-cover svg { width: 100%; height: 100%; }
+.arc-reading-room-book-cover__paper { fill: var(--arc-paper-raised); stroke: var(--arc-art-ink); }
+.arc-reading-room-book-cover__spine { fill: none; stroke: var(--arc-art-ink); stroke-width: 1; opacity: 0.65; }
+.arc-reading-room-book-cover__imprint { fill: var(--arc-art-ink); font: 6.5px var(--arc-font-mono); letter-spacing: 0.65px; }
+.arc-reading-room-book-cover__title { fill: var(--arc-art-ink); font: 500 22px var(--arc-font-display); letter-spacing: -0.65px; }
+.arc-reading-room-book-cover__author { fill: var(--arc-art-ink); font: 500 8px var(--arc-font-mono); letter-spacing: 1px; }
+.arc-reading-room-book-cover__grid, .arc-reading-room-book-cover__lines, .arc-reading-room-book-cover__arch { fill: none; stroke: var(--arc-art-ink); stroke-width: 1; }
+.arc-reading-room-book-cover__grid { opacity: 0.34; }
+.arc-reading-room-book-cover__stem { fill: none; stroke: var(--arc-art-ink); stroke-width: 1.25; }
+.arc-reading-room-book-cover__cutout { fill: var(--arc-paper-raised); }
+.arc-reading-room-book-cover__night { fill: var(--arc-feature-bg); stroke: var(--arc-art-ink); }
+.arc-reading-room__companion { min-width: 0; }
+.arc-reading-room-club { padding: 0 0 1.8rem; border-bottom: 1px solid var(--arc-purple); }
+.arc-reading-room-club > svg { margin: 1.5rem 0 0.8rem; color: var(--arc-magenta-deep); }
+.arc-reading-room-club__date { margin: 0 0 0.8rem; display: flex; align-items: center; gap: 0.75rem; font: 0.57rem var(--arc-font-mono); letter-spacing: 0.08em; }
+.arc-reading-room-club__date strong { padding: 0 0.75rem; border-right: 1px solid var(--arc-rule-strong); border-left: 1px solid var(--arc-rule-strong); font: 400 2.8rem/1 var(--arc-font-display); }
+.arc-reading-room-club h2 { margin: 0 0 0.7rem; font: 500 1.65rem/1.1 var(--arc-font-display); letter-spacing: -0.025em; }
+.arc-reading-room-club > p:not(.arc-reading-room-club__date) { margin: 0; color: var(--arc-ink-soft); font-size: var(--arc-text-sm); }
+.arc-reading-room-club__attending { margin-top: 1.3rem; display: flex; align-items: center; gap: 0.55rem; color: var(--arc-success); font-size: 0.66rem; font-weight: 600; }
+.arc-reading-room-club__avatars { display: flex; padding-left: 0.4rem; }
+.arc-reading-room-club__avatars i { width: 1.75rem; height: 1.75rem; margin-left: -0.4rem; display: grid; place-items: center; border: 1px solid var(--arc-paper); border-radius: 50%; background: var(--arc-paper-deep); color: var(--arc-ink); font: normal 0.5rem var(--arc-font-mono); }
+.arc-reading-room-club__attending > span:nth-child(2) { flex: 1; }
+.arc-reading-room-recent-note { padding-top: 1.8rem; }
+.arc-reading-room-recent-note .arc-reading-room__section-heading > svg { color: var(--arc-magenta-deep); }
+.arc-reading-room-recent-note blockquote { margin: 1.5rem 0 0.75rem; font: italic 380 1.3rem/1.45 var(--arc-font-display); }
+.arc-reading-room-recent-note > p { color: var(--arc-ink-soft); font: 0.58rem var(--arc-font-mono); }
+.arc-reading-room-recent-note .arc-reading-room__text-button { margin-top: 0.75rem; }
+.arc-reading-room-library-tools { margin-bottom: 2.5rem; padding: 1.1rem 0; display: grid; grid-template-columns: minmax(220px, 1.5fr) minmax(190px, 0.8fr) auto; align-items: end; gap: 1.3rem; border-top: 1px solid var(--arc-purple); border-bottom: 1px solid var(--arc-purple); }
+.arc-reading-room-library-tools .arc-field { gap: 0.45rem; }
+.arc-reading-room-library-tools .arc-field__label { font: 500 0.63rem/1.4 var(--arc-font-mono); letter-spacing: 0.07em; text-transform: uppercase; }
+.arc-reading-room-library-tools__count { min-height: 2.875rem; padding-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem; color: var(--arc-ink-soft); font-size: 0.7rem; white-space: nowrap; }
+.arc-reading-room-library-tools__count svg { color: var(--arc-magenta-deep); }
+.arc-reading-room__book-grid--library { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 3rem clamp(1.5rem, 4vw, 4rem); }
+.arc-reading-room__empty { min-height: 360px; padding: 3.5rem 1.5rem; display: flex; flex-direction: column; align-items: center; justify-content: center; border-bottom: 1px solid var(--arc-purple); background: var(--arc-preview-bg); text-align: center; }
+.arc-reading-room__empty > svg { margin-bottom: 1rem; color: var(--arc-magenta-deep); }
+.arc-reading-room__empty .arc-reading-room__folio { margin: 0 0 0.7rem; }
+.arc-reading-room__empty h2 { margin: 0 0 0.8rem; font: 450 2rem/1.2 var(--arc-font-display); }
+.arc-reading-room__empty > p:not(.arc-reading-room__folio) { max-width: 31rem; margin: 0 0 1.5rem; color: var(--arc-ink-soft); }
+.arc-reading-room-notes { border-top: 1px solid var(--arc-purple); }
+.arc-reading-room-notes > .arc-reading-room__section-heading { border-top: 0; }
+.arc-reading-room-note { display: grid; grid-template-columns: 3.4rem minmax(0, 1fr) auto; gap: 1.5rem; padding: 2rem 0; border-bottom: 1px solid var(--arc-rule-strong); }
+.arc-reading-room-note__number { padding-top: 0.35rem; color: var(--arc-magenta-deep); font: italic 450 1.6rem/1 var(--arc-font-display); }
+.arc-reading-room-note__book { margin: 0 0 0.8rem; color: var(--arc-ink-soft); font: 500 0.62rem/1.4 var(--arc-font-mono); letter-spacing: 0.09em; text-transform: uppercase; }
+.arc-reading-room-note blockquote { max-width: 48rem; margin: 0; font: 380 clamp(1.35rem, 2.1vw, 1.8rem)/1.4 var(--arc-font-display); }
+.arc-reading-room-note__date { margin: 1rem 0 0; color: var(--arc-ink-soft); font: 0.6rem/1.5 var(--arc-font-mono); }
+.arc-reading-room-note > svg { margin-top: 0.3rem; color: var(--arc-purple); }
+.arc-reading-room-notes__colophon { padding: 3rem 0 2rem; display: flex; align-items: center; justify-content: center; gap: 1rem; color: var(--arc-ink-soft); }
+.arc-reading-room-notes__colophon .arc-reading-room__mark { color: var(--arc-magenta-deep); }
+.arc-reading-room-notes__colophon p { margin: 0; font: italic 400 1.2rem/1.4 var(--arc-font-display); }
+.arc-reading-room-notes__colophon span { color: var(--arc-magenta-deep); }
+.arc-reading-room__footer { margin-top: 4rem; padding: 1rem 0 0.25rem; display: flex; justify-content: space-between; gap: 1rem; border-top: 1px solid var(--arc-purple); color: var(--arc-ink-soft); font: 0.55rem/1.5 var(--arc-font-mono); letter-spacing: 0.06em; }
+.arc-reading-room__footer p { margin: 0; }
+.arc-reading-room__visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+.arc-root .arc-dialog:has(.arc-reading-room-reader) { width: min(100%, 720px); }
+.arc-reading-room-reader { color: var(--arc-ink); }
+.arc-reading-room-reader__opening { margin-bottom: 2rem; padding-bottom: 0.75rem; display: flex; align-items: center; gap: 0.75rem; border-bottom: 1px solid var(--arc-rule); color: var(--arc-ink-soft); font: 0.58rem/1.4 var(--arc-font-mono); letter-spacing: 0.08em; }
+.arc-reading-room-reader__opening > span:nth-child(2) { flex: 1; }
+.arc-reading-room-reader > p { font: 400 1.08rem/1.8 var(--arc-font-display); }
+.arc-reading-room-reader > p + p { margin-top: 1.3rem; }
+.arc-reading-room-reader__dropcap::first-letter { float: left; margin: 0.08em 0.12em 0 0; color: var(--arc-magenta-deep); font: 500 4.2em/0.77 var(--arc-font-display); }
+.arc-reading-room-reader__end { margin-top: 2rem; padding-top: 1rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; border-top: 1px solid var(--arc-rule); color: var(--arc-ink-soft); font: 0.58rem var(--arc-font-mono); }
+.arc-reading-room-reader__end > span:first-child { color: var(--arc-magenta-deep); font-size: 1.8rem; }
+.arc-reading-room-note-form { display: grid; gap: 1.25rem; }
+.arc-reading-room-note-form__actions { display: flex; align-items: center; justify-content: flex-end; flex-wrap: wrap; gap: 1rem; padding-top: 0.5rem; }
+
+@media (min-width: 1450px) {
+  .arc-reading-room__shell, .arc-reading-room__masthead { border-right: 1px solid var(--arc-rule); border-left: 1px solid var(--arc-rule); }
+}
+@media (max-width: 1180px) {
+  .arc-reading-room__masthead-meta { display: none; }
+  .arc-reading-room__masthead-actions { flex: 1; }
+  .arc-reading-room__shell { grid-template-columns: 168px minmax(0, 1fr); }
+  .arc-reading-room__rail { padding-right: 0.65rem; padding-left: 0.65rem; }
+  .arc-reading-room__rail-label { margin-left: 0.4rem; }
+  .arc-reading-room__nav > a { grid-template-columns: 1.15rem 1.2rem 1fr auto; padding-right: 0.45rem; padding-left: 0.45rem; }
+  .arc-reading-room__main { padding-right: 2rem; padding-left: 2rem; }
+  .arc-reading-room__today-grid { grid-template-columns: 1fr; }
+  .arc-reading-room__companion { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+  .arc-reading-room-club { padding-right: 2rem; border-right: 1px solid var(--arc-purple); border-bottom: 0; }
+  .arc-reading-room-recent-note { padding-top: 0; }
+  .arc-reading-room__book-grid--library { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 900px) {
+  .arc-reading-room-feature { grid-template-columns: minmax(200px, 0.65fr) minmax(0, 1fr); }
+  .arc-reading-room-feature__art { min-height: 420px; padding-right: 1rem; padding-left: 1rem; }
+  .arc-reading-room-feature__art .arc-reading-room-book-cover { width: 90%; }
+  .arc-reading-room-feature__copy { padding: 1.7rem; }
+  .arc-reading-room-feature h2 { font-size: clamp(2.2rem, 5vw, 3rem); }
+  .arc-reading-room-feature blockquote { margin: 1.25rem 0; font-size: 1rem; }
+  .arc-reading-room-feature__eyebrow { margin-bottom: 1.5rem; }
+  .arc-reading-room__page-header { gap: 1.5rem; }
+  .arc-reading-room__book-grid--shelf { gap: 1.1rem; }
+  .arc-reading-room-book-card h3 { font-size: 1.15rem; }
+  .arc-reading-room-library-tools { grid-template-columns: 1fr 1fr; }
+  .arc-reading-room-library-tools__count { grid-column: 1 / -1; min-height: 0; padding: 0; }
+}
+@media (max-width: 760px) {
+  .arc-reading-room__masthead { min-height: 4.4rem; padding: 0.75rem 1.5rem; gap: 1rem; }
+  .arc-reading-room__identity { flex: 1; }
+  .arc-reading-room__masthead-actions { flex: 0 0 auto; gap: 0.8rem; }
+  .arc-reading-room__shell { min-height: 0; display: block; }
+  .arc-reading-room__rail { padding: 0; border-right: 0; border-bottom: 1px solid var(--arc-purple); }
+  .arc-reading-room__rail-bottom, .arc-reading-room__rail-label { display: none; }
+  .arc-reading-room__nav { padding: 0 1.5rem; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; }
+  .arc-reading-room__nav > a { min-height: 3.5rem; display: flex; justify-content: center; gap: 0.55rem; padding: 0.65rem 1rem; border: 0; }
+  .arc-reading-room__nav > a::before { inset: auto 0.75rem -1px; width: auto; height: 3px; transform: scaleX(0); }
+  .arc-reading-room__nav > a[aria-current='page'] { background: transparent; }
+  .arc-reading-room__nav > a[aria-current='page']::before { transform: scaleX(1); }
+  .arc-reading-room__main { padding: 2.2rem 1.5rem 1.5rem; }
+  .arc-reading-room__page-header { grid-template-columns: 1fr; gap: 1.5rem; margin-bottom: 2rem; }
+  .arc-reading-room__page-header h1 { font-size: clamp(3.2rem, 10vw, 4.5rem); }
+  .arc-reading-room__page-intro { max-width: 36rem; }
+  .arc-reading-room-feature { grid-template-columns: minmax(200px, 0.75fr) minmax(0, 1fr); }
+  .arc-reading-room-feature__art { min-height: 400px; }
+  .arc-reading-room-feature__reading-meta { flex-direction: column; }
+  .arc-reading-room__book-grid--shelf { gap: 1.4rem; }
+  .arc-reading-room__footer { margin-top: 3rem; }
+}
+@media (max-width: 620px) {
+  .arc-reading-room__masthead { flex-wrap: wrap; padding: 0.75rem 1rem 0.6rem; }
+  .arc-reading-room__tagline { display: none; }
+  .arc-reading-room__wordmark { font-size: 1.35rem; }
+  .arc-reading-room__identity .arc-reading-room__mark { width: 29px; height: 33px; }
+  .arc-reading-room__masthead-actions { gap: 0.5rem; }
+  .arc-reading-room__system-link { font-size: 0.65rem; }
+  .arc-reading-room__nav { padding: 0 0.65rem; }
+  .arc-reading-room__nav > a { min-height: 3.25rem; padding: 0.65rem 0.35rem; }
+  .arc-reading-room__nav-index { display: none; }
+  .arc-reading-room__main { padding: 2rem 1rem 1.25rem; }
+  .arc-reading-room__eyebrow { font-size: 0.62rem; }
+  .arc-reading-room__page-header { gap: 1.2rem; }
+  .arc-reading-room__page-header h1 { font-size: clamp(3.1rem, 15vw, 4.3rem); }
+  .arc-reading-room-feature { grid-template-columns: 1fr; }
+  .arc-reading-room-feature__art { min-height: 345px; border-right: 0; border-bottom: 1px solid var(--arc-feature-rule); }
+  .arc-reading-room-feature__art .arc-reading-room-book-cover { width: 180px; }
+  .arc-reading-room-feature__copy { padding: 1.7rem 1.3rem; }
+  .arc-reading-room-feature h2 { font-size: clamp(2.45rem, 12vw, 3.4rem); }
+  .arc-reading-room-feature__eyebrow { margin-bottom: 1.7rem; }
+  .arc-reading-room-feature__reading-meta { flex-direction: row; }
+  .arc-reading-room-feature__actions { align-items: flex-start; flex-direction: column; gap: 0.7rem; }
+  .arc-reading-room__today-grid { margin-top: 3rem; }
+  .arc-reading-room__section-title-row { align-items: flex-start; }
+  .arc-reading-room__book-grid--shelf, .arc-reading-room__book-grid--library { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2rem 1.1rem; }
+  .arc-reading-room__companion { grid-template-columns: 1fr; gap: 2.2rem; }
+  .arc-reading-room-club { padding: 0 0 2rem; border-right: 0; border-bottom: 1px solid var(--arc-purple); }
+  .arc-reading-room-library-tools { grid-template-columns: 1fr; gap: 1rem; margin-bottom: 2rem; }
+  .arc-reading-room-library-tools__count { grid-column: auto; }
+  .arc-reading-room-library-tools .arc-input { min-height: 2.875rem; }
+  .arc-reading-room-note { grid-template-columns: 2.3rem minmax(0, 1fr); gap: 0.75rem; padding: 1.6rem 0; }
+  .arc-reading-room-note > svg { display: none; }
+  .arc-reading-room-note blockquote { font-size: 1.3rem; }
+  .arc-reading-room__footer { flex-wrap: wrap; }
+  .arc-reading-room__footer p { display: none; }
+  .arc-reading-room-book-card__save.arc-icon-button { width: 2.75rem; height: 2.75rem; }
+  .arc-reading-room-book-card h3 { font-size: 1.22rem; }
+  .arc-reading-room-book-card h3 button { min-height: 2.75rem; }
+  .arc-reading-room-book-card__progress-label span:last-child { display: none; }
+  .arc-reading-room-reader > p { font-size: 1rem; line-height: 1.75; }
+}
+@media (max-width: 390px) {
+  .arc-reading-room__masthead-actions { width: 100%; justify-content: space-between; padding-top: 0.25rem; border-top: 1px solid var(--arc-rule); }
+  .arc-reading-room__system-link { min-height: 2.75rem; }
+  .arc-reading-room__nav { padding: 0 0.45rem; }
+  .arc-reading-room__nav > a { gap: 0.4rem; font-size: 0.76rem; }
+  .arc-reading-room__nav-count { display: none; }
+  .arc-reading-room__page-intro { padding-left: 1rem; }
+  .arc-reading-room-feature__reading-meta { flex-direction: column; }
+  .arc-reading-room__section-title-row h2 { font-size: 1.2rem; }
+  .arc-reading-room__section-title-row .arc-reading-room__text-button { font-size: 0.66rem; }
+  .arc-reading-room__section-label { font-size: 0.57rem; }
+}
+@media (max-width: 340px) {
+  .arc-reading-room__book-grid--shelf, .arc-reading-room__book-grid--library { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .arc-reading-room-book-cover { transition: none; }
+}
+@media (forced-colors: active) {
+  .arc-reading-room-feature { background-image: none; border: 1px solid CanvasText; background: Canvas; color: CanvasText; }
+  .arc-reading-room-feature__eyebrow, .arc-reading-room-feature__save, .arc-reading-room-feature__edition { color: CanvasText; }
+  .arc-reading-room-feature__save:hover { color: Highlight; }
+  .arc-reading-room-book-cover svg { forced-color-adjust: none; }
+  .arc-reading-room__nav > a[aria-current='page']::before { background: Highlight; }
+  .arc-reading-room-progress { border: 1px solid CanvasText; }
+}
