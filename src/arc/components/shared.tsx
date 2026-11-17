@@ -12,23 +12,17 @@ interface FieldMessageProps {
 }
 
 export function FieldMessage({ id, error, success, hint }: FieldMessageProps) {
-  if (error) {
-    return (
-      <span className="arc-field__message arc-field__message--error" id={id}>
-        <CircleAlert size={14} aria-hidden="true" /> {error}
-      </span>
-    );
-  }
-  if (success) {
-    return (
-      <span className="arc-field__message arc-field__message--success" id={id}>
-        <CheckCircle2 size={14} aria-hidden="true" /> {success}
-      </span>
-    );
-  }
-  return hint ? (
-    <span className="arc-field__message" id={id}>
-      {hint}
+  return (
+    <span
+      className={join('arc-field__message', error && 'arc-field__message--error', !error && success && 'arc-field__message--success')}
+      id={id}
+      role="status"
+      aria-live="polite"
+      aria-atomic="true"
+    >
+      {error && <CircleAlert size={14} aria-hidden="true" />}
+      {!error && success && <CheckCircle2 size={14} aria-hidden="true" />}
+      {error || success || hint}
     </span>
-  ) : null;
+  );
 }

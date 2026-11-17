@@ -9,6 +9,7 @@
 .arc-input--success { border-color: var(--arc-success); padding-right: 2.5rem; }
 .arc-input:disabled { background: var(--arc-paper-deep); color: var(--arc-ink-soft); cursor: not-allowed; opacity: 0.72; }
 .arc-field__message { display: flex; align-items: flex-start; gap: 0.35rem; margin-top: 0.4rem; color: var(--arc-ink-soft); font-size: 0.75rem; line-height: 1.45; }
+.arc-field__message:empty { margin-top: 0; }
 .arc-field__message svg { margin-top: 0.1rem; }
 .arc-field__message--error { color: var(--arc-danger); }
 .arc-field__message--success { color: var(--arc-success); }

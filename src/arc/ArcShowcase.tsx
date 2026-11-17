@@ -14,6 +14,13 @@ export function ArcShowcase() {
   const [active, setActive] = useState('identity');
 
   useEffect(() => {
+    if (!window.location.hash) return;
+    try {
+      document.getElementById(decodeURIComponent(window.location.hash.slice(1)))?.scrollIntoView();
+    } catch { /* Ignore malformed fragments rather than blocking the Showcase. */ }
+  }, []);
+
+  useEffect(() => {
     if (!('IntersectionObserver' in window)) return;
     const observer = new IntersectionObserver(
       (entries) => {

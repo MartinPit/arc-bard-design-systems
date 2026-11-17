@@ -2,14 +2,14 @@ import { useMemo, useState } from 'react';
 import { ArrowDownUp, ArrowRight, Bell, Check, FileText, Leaf, Search, X } from 'lucide-react';
 import { SectionHeading } from '../components/SectionHeading';
 import { Badge, Button, Checkbox, RadioGroup, Switch, TextInput } from '../components';
+import { useShowcaseUrlState } from '../showcaseUrlState';
 
 export function CompositionSection() {
   const [digest, setDigest] = useState('weekly');
   const [mentions, setMentions] = useState(true);
   const [productNews, setProductNews] = useState(false);
   const [saved, setSaved] = useState(false);
-  const [query, setQuery] = useState('');
-  const [ascending, setAscending] = useState(true);
+  const { query, ascending, setQuery, setAscending } = useShowcaseUrlState();
   const resources = useMemo(() => {
     const items = [
       { title: 'Principles of clear revision', type: 'Guide', meta: '8 min read', icon: <FileText aria-hidden="true" /> },
@@ -37,12 +37,12 @@ export function CompositionSection() {
         </article>
         <article className="arc-fragment arc-resource-fragment">
           <div className="arc-fragment__header"><div><p className="arc-eyebrow">FRAGMENT B / COLLECTION</p><h3>Resource summary</h3></div><span className="arc-fragment__count">{resources.length} / 3</span></div>
-          <TextInput label="Filter resources" type="search" placeholder="Search by title" value={query} onChange={(event) => setQuery(event.target.value)} />
-          <Button variant="quiet" className="arc-sort-button" onClick={() => setAscending((value) => !value)}><ArrowDownUp size={15} aria-hidden="true" /> Title: {ascending ? 'A–Z' : 'Z–A'}</Button>
+          <TextInput label="Filter resources" name="resource-filter" autoComplete="off" type="search" placeholder="Try “clear revision”…" value={query} onChange={(event) => setQuery(event.target.value)} />
+          <Button variant="quiet" className="arc-sort-button" onClick={() => setAscending(!ascending)}><ArrowDownUp size={15} aria-hidden="true" /> Title: {ascending ? 'A–Z' : 'Z–A'}</Button>
           <div className="arc-resource-list" aria-live="polite">
             {resources.length ? resources.map((resource) => (
               <a href="#guidance" className="arc-resource-row" key={resource.title}>{resource.icon}<span><strong>{resource.title}</strong><span>{resource.meta}</span></span><Badge>{resource.type}</Badge><ArrowRight size={16} aria-hidden="true" /></a>
-            )) : <div className="arc-resource-empty"><Search aria-hidden="true" /><h4>No matching resources</h4><p>Try a broader title or clear the current filter.</p><Button variant="secondary" onClick={() => setQuery('')}>Clear filter</Button></div>}
+            )) : <div className="arc-resource-empty"><Search aria-hidden="true" /><h4>No matching resources</h4><p>Try a broader title or clear the current filter.</p><Button variant="secondary" onClick={() => setQuery('', 'push')}>Clear filter</Button></div>}
           </div>
         </article>
       </div>

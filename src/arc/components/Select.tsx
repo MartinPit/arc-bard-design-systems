@@ -25,7 +25,7 @@ export function Select({ label, hint, error, id: suppliedId, children, className
           id={id}
           className={join('arc-input', 'arc-select', error && 'arc-input--invalid')}
           aria-invalid={error ? true : undefined}
-          aria-describedby={hint || error ? messageId : undefined}
+          aria-describedby={messageId}
           {...props}
         >
           {children}

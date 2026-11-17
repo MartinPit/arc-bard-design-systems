@@ -1,16 +1,27 @@
-import { useRef, useState, type KeyboardEvent, type ReactNode } from 'react';
+import { useId, useRef, useState, type KeyboardEvent, type ReactNode } from 'react';
 import './Tabs.css';
 
 export interface TabsProps {
   label: string;
   items: Array<{ id: string; label: string; content: ReactNode; disabled?: boolean }>;
   defaultValue?: string;
+  value?: string;
+  onValueChange?: (value: string) => void;
 }
 
-export function Tabs({ label, items, defaultValue }: TabsProps) {
-  const [active, setActive] = useState(defaultValue || items.find((item) => !item.disabled)?.id || items[0]?.id);
+export function Tabs({ label, items, defaultValue, value, onValueChange }: TabsProps) {
+  const firstEnabled = items.find((item) => !item.disabled)?.id || items[0]?.id;
+  const [internalValue, setInternalValue] = useState(defaultValue || firstEnabled);
+  const instanceId = useId();
   const refs = useRef<Array<HTMLButtonElement | null>>([]);
-  const activeItem = items.find((item) => item.id === active) || items[0];
+  const selectedValue = value ?? internalValue;
+  const active = items.some((item) => item.id === selectedValue && !item.disabled) ? selectedValue : firstEnabled;
+  const activeItem = items.find((item) => item.id === active);
+
+  function activate(id: string) {
+    if (value === undefined) setInternalValue(id);
+    onValueChange?.(id);
+  }
 
   function onKeyDown(event: KeyboardEvent<HTMLButtonElement>, index: number) {
     let next = index;
@@ -22,7 +33,7 @@ export function Tabs({ label, items, defaultValue }: TabsProps) {
     } else return;
     event.preventDefault();
     if (!items[next]?.disabled) {
-      setActive(items[next].id);
+      activate(items[next].id);
       refs.current[next]?.focus();
     }
   }
@@ -36,12 +47,12 @@ export function Tabs({ label, items, defaultValue }: TabsProps) {
             ref={(node) => { refs.current[index] = node; }}
             type="button"
             role="tab"
-            id={`tab-${item.id}`}
+            id={`${instanceId}-tab-${item.id}`}
             aria-selected={active === item.id}
-            aria-controls={`panel-${item.id}`}
+            aria-controls={`${instanceId}-panel-${item.id}`}
             tabIndex={active === item.id ? 0 : -1}
             disabled={item.disabled}
-            onClick={() => setActive(item.id)}
+            onClick={() => activate(item.id)}
             onKeyDown={(event) => onKeyDown(event, index)}
           >
             {item.label}
@@ -52,8 +63,8 @@ export function Tabs({ label, items, defaultValue }: TabsProps) {
         <div
           className="arc-tabs__panel"
           role="tabpanel"
-          id={`panel-${activeItem.id}`}
-          aria-labelledby={`tab-${activeItem.id}`}
+          id={`${instanceId}-panel-${activeItem.id}`}
+          aria-labelledby={`${instanceId}-tab-${activeItem.id}`}
           tabIndex={0}
         >
           {activeItem.content}

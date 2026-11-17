@@ -1,4 +1,5 @@
 import { ArrowLeft, ArrowRight } from 'lucide-react';
+import type { MouseEvent, ReactNode } from 'react';
 import { IconButton } from './IconButton';
 import { join } from './shared';
 import './Pagination.css';
@@ -7,36 +8,57 @@ export interface PaginationProps {
   currentPage: number;
   totalPages: number;
   onPageChange: (page: number) => void;
+  getPageUrl: (page: number) => string;
 }
 
-export function Pagination({ currentPage, totalPages, onPageChange }: PaginationProps) {
-  const pages = Array.from({ length: totalPages }, (_, index) => index + 1).filter(
-    (page) => page === 1 || page === totalPages || Math.abs(page - currentPage) <= 1,
+export function Pagination({ currentPage, totalPages, onPageChange, getPageUrl }: PaginationProps) {
+  const pageCount = Math.max(0, Math.floor(totalPages) || 0);
+  const activePage = pageCount ? Math.min(pageCount, Math.max(1, Math.floor(currentPage) || 1)) : 0;
+  const pages = Array.from({ length: pageCount }, (_, index) => index + 1).filter(
+    (page) => page === 1 || page === pageCount || Math.abs(page - activePage) <= 1,
   );
+
+  function followLink(event: MouseEvent<HTMLAnchorElement>, page: number) {
+    if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    event.preventDefault();
+    onPageChange(page);
+  }
+
+  function boundary(label: string, page: number, disabled: boolean, icon: ReactNode) {
+    if (disabled) return <IconButton label={label} disabled>{icon}</IconButton>;
+    return (
+      <a
+        className="arc-icon-button arc-icon-button--outline"
+        href={getPageUrl(page)}
+        aria-label={label}
+        title={label}
+        onClick={(event) => followLink(event, page)}
+      >
+        {icon}
+      </a>
+    );
+  }
+
   return (
     <nav className="arc-pagination" aria-label="Pagination">
-      <IconButton label="Previous page" disabled={currentPage === 1} onClick={() => onPageChange(currentPage - 1)}>
-        <ArrowLeft size={17} aria-hidden="true" />
-      </IconButton>
+      {boundary('Previous page', activePage - 1, activePage <= 1, <ArrowLeft size={17} aria-hidden="true" />)}
       <div className="arc-pagination__pages">
         {pages.map((page, index) => (
           <span key={page} className="arc-pagination__item">
             {index > 0 && page - pages[index - 1] > 1 && <span className="arc-pagination__ellipsis" aria-hidden="true">…</span>}
-            <button
-              type="button"
-              className={join('arc-pagination__button', currentPage === page && 'arc-pagination__button--current')}
+            <a
+              className={join('arc-pagination__button', activePage === page && 'arc-pagination__button--current')}
+              href={getPageUrl(page)}
               aria-label={`Page ${page}`}
-              aria-current={currentPage === page ? 'page' : undefined}
-              onClick={() => onPageChange(page)}
+              aria-current={activePage === page ? 'page' : undefined}
+              onClick={(event) => followLink(event, page)}
             >
               {page}
-            </button>
+            </a>
           </span>
         ))}
       </div>
-      <IconButton label="Next page" disabled={currentPage === totalPages} onClick={() => onPageChange(currentPage + 1)}>
-        <ArrowRight size={17} aria-hidden="true" />
-      </IconButton>
+      {boundary('Next page', activePage + 1, activePage >= pageCount, <ArrowRight size={17} aria-hidden="true" />)}
     </nav>
   );
 }

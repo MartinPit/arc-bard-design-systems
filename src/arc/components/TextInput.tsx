@@ -35,7 +35,7 @@ export function TextInput({
           className={join('arc-input', error && 'arc-input--invalid', success && 'arc-input--success')}
           required={required}
           aria-invalid={error ? true : undefined}
-          aria-describedby={hint || error || success ? messageId : undefined}
+          aria-describedby={messageId}
           {...props}
         />
         {success && <CheckCircle2 className="arc-field__status" size={17} aria-hidden="true" />}

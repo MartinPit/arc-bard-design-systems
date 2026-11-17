@@ -45,6 +45,10 @@
 .arc-code pre { max-height: 320px; margin: 0; overflow: auto; padding: 1rem; border-top: 1px solid var(--arc-rule); background: var(--arc-ink); color: #f6e9d2; font: 0.72rem/1.65 var(--arc-font-mono); white-space: pre-wrap; overflow-wrap: anywhere; }
 .arc-copy-token { display: inline-flex; align-items: center; gap: 0.35rem; min-height: 2rem; padding: 0.3rem 0.45rem; border: 1px solid var(--arc-rule-strong); background: transparent; color: var(--arc-ink); font: 0.67rem var(--arc-font-mono); cursor: pointer; }
 .arc-copy-token:hover { background: var(--arc-paper-deep); }
+.arc-copy-token-control { display: flex; flex-wrap: wrap; align-items: center; }
+.arc-copy-token__status { flex-basis: 100%; margin-top: 0.35rem; color: var(--arc-ink-soft); font-size: 0.7rem; line-height: 1.4; user-select: text; }
+.arc-copy-token__status:empty { margin-top: 0; }
+.arc-copy-token__status--error { color: var(--arc-danger); }
 .arc-composition-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--arc-space-6); align-items: start; }
 .arc-fragment { min-width: 0; padding: var(--arc-space-6); border: 1px solid var(--arc-purple); background: var(--arc-paper-raised); box-shadow: var(--arc-shadow-sm); }
 .arc-fragment__header { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; padding-bottom: 1rem; border-bottom: 1px solid var(--arc-rule-strong); }

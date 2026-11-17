@@ -9,7 +9,11 @@ const componentNames = [
   'Card', 'Table', 'Pagination',
 ];
 
-afterEach(() => cleanup());
+afterEach(() => {
+  cleanup();
+  window.history.replaceState(null, '', '/');
+  window.dispatchEvent(new PopStateEvent('popstate'));
+});
 
 describe('ArcShowcase', () => {
   it('renders the Arc identity and all nineteen component specimens', () => {

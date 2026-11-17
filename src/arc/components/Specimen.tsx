@@ -1,5 +1,6 @@
-import { useState, type ReactNode } from 'react';
+import { useEffect, useId, useRef, useState, type ReactNode } from 'react';
 import { Check, Code2, Copy } from 'lucide-react';
+import { getSpecimenSourceId, useShowcaseUrlState } from '../showcaseUrlState';
 
 export function Specimen({
   title,
@@ -14,6 +15,9 @@ export function Specimen({
   children: ReactNode;
   align?: 'start' | 'center';
 }) {
+  const sourceId = getSpecimenSourceId(title);
+  const { sources, setSourceOpen } = useShowcaseUrlState();
+  const sourceOpen = sources.includes(sourceId);
   return (
     <article className="arc-specimen">
       <header className="arc-specimen__header">
@@ -29,7 +33,13 @@ export function Specimen({
         <span className="arc-specimen__cross arc-specimen__cross--two" aria-hidden="true">+</span>
         {children}
       </div>
-      <details className="arc-code">
+      <details
+        className="arc-code"
+        open={sourceOpen}
+        onToggle={(event) => {
+          if (event.currentTarget.open !== sourceOpen) setSourceOpen(sourceId, event.currentTarget.open);
+        }}
+      >
         <summary>
           <span><Code2 size={15} aria-hidden="true" /> React example</span>
           <span className="arc-code__action">View source</span>
@@ -41,22 +51,45 @@ export function Specimen({
 }
 
 export function CopyToken({ value, label }: { value: string; label: string }) {
-  const [copied, setCopied] = useState(false);
+  const [outcome, setOutcome] = useState<'idle' | 'success' | 'failure'>('idle');
+  const resetTimer = useRef<number | undefined>(undefined);
+  const statusId = useId();
+
+  useEffect(() => () => window.clearTimeout(resetTimer.current), []);
 
   async function copy() {
+    window.clearTimeout(resetTimer.current);
     try {
       await navigator.clipboard.writeText(value);
-      setCopied(true);
-      window.setTimeout(() => setCopied(false), 1600);
+      setOutcome('success');
+      resetTimer.current = window.setTimeout(() => setOutcome('idle'), 1600);
     } catch {
-      setCopied(false);
+      setOutcome('failure');
     }
   }
 
   return (
-    <button type="button" className="arc-copy-token" onClick={copy} aria-label={`Copy ${label} token ${value}`}>
-      {copied ? <Check size={15} aria-hidden="true" /> : <Copy size={15} aria-hidden="true" />}
-      <span>{copied ? 'Copied' : value}</span>
-    </button>
+    <div className="arc-copy-token-control">
+      <button
+        type="button"
+        className="arc-copy-token"
+        onClick={copy}
+        aria-label={`Copy ${label} token ${value}`}
+        aria-describedby={statusId}
+      >
+        {outcome === 'success' ? <Check size={15} aria-hidden="true" /> : <Copy size={15} aria-hidden="true" />}
+        <span>{outcome === 'success' ? 'Copied' : value}</span>
+      </button>
+      <span
+        className={`arc-copy-token__status${outcome === 'failure' ? ' arc-copy-token__status--error' : ''}`}
+        id={statusId}
+        role="status"
+        aria-live="polite"
+        aria-atomic="true"
+      >
+        {outcome === 'success' && `Copied ${value} to the clipboard.`}
+        {outcome === 'failure' && `Couldn’t copy ${value}. Copy the value manually.`}
+      </span>
+    </div>
   );
 }

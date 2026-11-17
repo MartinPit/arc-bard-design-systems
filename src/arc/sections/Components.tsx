@@ -37,6 +37,7 @@ import {
   Toast,
   Tooltip,
 } from '../components';
+import { useShowcaseUrlState } from '../showcaseUrlState';
 
 function ButtonSpecimen() {
   const [status, setStatus] = useState<'idle' | 'loading' | 'saved' | 'preview' | 'details'>('idle');
@@ -99,12 +100,12 @@ function TextInputSpecimen() {
     <Specimen
       title="Text Input"
       description="Persistent labels precede every field. Hints, errors, and success messages connect through aria-describedby; color never works alone."
-      code={`<TextInput label="Email address" type="email" required\n  error={invalid ? 'Enter a complete email address.' : undefined} />\n<TextInput label="Resource title" value={title} success="Available" />`}
+      code={`<TextInput label="Email address" name="email" autoComplete="off"\n  type="email" spellCheck={false} required value={email} onChange={(event) => setEmail(event.target.value)}\n  error={invalid ? 'Enter a complete email address.' : undefined} />\n<TextInput label="Resource title" name="resource-title" autoComplete="off"\n  value={title} onChange={(event) => setTitle(event.target.value)} success="Available" />`}
     >
       <div className="arc-form-grid">
-        <TextInput label="Email address" type="email" required value={email} onChange={(event) => setEmail(event.target.value)} hint="Used only for this local demonstration." error={email.length > 0 && !email.includes('@') ? 'Enter a complete email address.' : undefined} />
-        <TextInput label="Resource title" value={title} onChange={(event) => setTitle(event.target.value)} success={title.length > 3 ? 'Title is available' : undefined} error={title.length <= 3 ? 'Use at least four characters.' : undefined} />
-        <TextInput label="Reference (disabled)" value="ARC-019" disabled readOnly />
+        <TextInput label="Email address" name="email" autoComplete="off" type="email" spellCheck={false} required value={email} onChange={(event) => setEmail(event.target.value)} hint="Used only for this local demonstration." error={email.length > 0 && !email.includes('@') ? 'Enter a complete email address.' : undefined} />
+        <TextInput label="Resource title" name="resource-title" autoComplete="off" value={title} onChange={(event) => setTitle(event.target.value)} success={title.length > 3 ? 'Title is available' : undefined} error={title.length <= 3 ? 'Use at least four characters.' : undefined} />
+        <TextInput label="Reference (disabled)" name="resource-reference" autoComplete="off" value="ARC-019" disabled readOnly />
       </div>
     </Specimen>
   );
@@ -116,9 +117,9 @@ function TextareaSpecimen() {
     <Specimen
       title="Textarea"
       description="Multi-line fields grow to fit reading and editing tasks. A live character count provides constraint feedback without interrupting composition."
-      code={`<Textarea label="Summary" rows={4} maxLength={180}\n  value={value} onChange={(event) => setValue(event.target.value)}\n  hint={\`\${value.length}/180 characters\`} />`}
+      code={`<Textarea label="Summary" name="resource-summary" autoComplete="off"\n  rows={4} maxLength={180} value={value} onChange={(event) => setValue(event.target.value)}\n  hint={\`\${value.length}/180 characters\`} />`}
     >
-      <Textarea label="Summary" rows={4} maxLength={180} value={value} onChange={(event) => setValue(event.target.value)} hint={`${value.length}/180 characters. Keep the central idea in the first sentence.`} />
+      <Textarea label="Summary" name="resource-summary" autoComplete="off" rows={4} maxLength={180} value={value} onChange={(event) => setValue(event.target.value)} hint={`${value.length}/180 characters. Keep the central idea in the first sentence.`} />
     </Specimen>
   );
 }
@@ -129,13 +130,13 @@ function SelectSpecimen() {
     <Specimen
       title="Select"
       description="The native select preserves platform keyboard and touch behavior. Use it for a single choice among five or more mutually exclusive options."
-      code={`<Select label="Publication status" value={status} onChange={…}>\n  <option value="draft">Draft</option>\n  <option value="published">Published</option>\n  <option value="archived">Archived</option>\n</Select>`}
+      code={`<Select label="Publication status" name="publication-status" autoComplete="off"\n  value={status} onChange={…}>\n  <option value="draft">Draft</option>\n  <option value="published">Published</option>\n  <option value="archived">Archived</option>\n</Select>`}
     >
       <div className="arc-form-grid arc-form-grid--two">
-        <Select label="Publication status" value={value} onChange={(event) => setValue(event.target.value)} hint={`Current selection: ${value}`}>
+        <Select label="Publication status" name="publication-status" autoComplete="off" value={value} onChange={(event) => setValue(event.target.value)} hint={`Current selection: ${value}`}>
           <option value="draft">Draft</option><option value="review">In review</option><option value="published">Published</option><option value="archived">Archived</option><option value="retired">Retired</option>
         </Select>
-        <Select label="Unavailable selection" disabled value="locked" onChange={() => undefined}><option value="locked">Locked by permissions</option></Select>
+        <Select label="Unavailable selection" name="unavailable-selection" autoComplete="off" disabled value="locked" onChange={() => undefined}><option value="locked">Locked by permissions</option></Select>
       </div>
     </Specimen>
   );
@@ -210,13 +211,14 @@ function SliderSpecimen() {
 }
 
 function TabsSpecimen() {
+  const { tab, setTab } = useShowcaseUrlState();
   return (
     <Specimen
       title="Tabs"
       description="Tabs switch closely related peer views. Arrow keys move and select; Home and End jump to the boundaries."
-      code={`<Tabs label="Resource details" items={[\n  { id: 'overview', label: 'Overview', content: <Overview /> },\n  { id: 'notes', label: 'Notes', content: <Notes /> },\n]} />`}
+      code={`const { tab, setTab } = useShowcaseUrlState();\n<Tabs label="Resource details" value={tab} onValueChange={setTab} items={[\n  { id: 'overview', label: 'Overview', content: <Overview /> },\n  { id: 'notes', label: 'Notes', content: <Notes /> },\n]} />`}
     >
-      <Tabs label="Resource details" items={[
+      <Tabs label="Resource details" value={tab} onValueChange={setTab} items={[
         { id: 'overview', label: 'Overview', content: <div className="arc-tab-copy"><h4>A concise overview</h4><p>Only the active panel lives in the reading flow. The selected tab is identified with both color and an underline.</p></div> },
         { id: 'notes', label: 'Field notes', content: <div className="arc-tab-copy"><h4>Observations in context</h4><p>Notes retain their relationship to the resource without adding another page to the navigation model.</p></div> },
         { id: 'history', label: 'History', content: <div className="arc-tab-copy"><h4>Revision history</h4><p>Three local revisions are available. The most recent clarified the summary language.</p></div> },
@@ -234,13 +236,13 @@ function DialogSpecimen() {
       <Specimen
         title="Dialog"
         description="A modal dialog traps focus, closes with Escape or its backdrop, and restores focus to the invoking control. It opens in a document portal."
-        code={`<Dialog open={open} onOpenChange={setOpen}\n  title="Create a collection"\n  description="Add a short, recognizable name.">\n  <TextInput label="Collection name" />\n</Dialog>`}
+        code={`<Dialog open={open} onOpenChange={setOpen}\n  title="Create a collection"\n  description="Add a short, recognizable name.">\n  <TextInput label="Collection name" name="collection-name" autoComplete="off" />\n</Dialog>`}
       >
         <Button onClick={() => setOpen(true)}><Plus size={16} aria-hidden="true" /> Create a collection</Button>
         <p className="arc-demo-note">Test Tab, Shift + Tab, Escape, backdrop click, and focus return.</p>
       </Specimen>
       <Dialog open={open} onOpenChange={setOpen} title="Create a collection" description="This demonstration changes local state only. No information is sent." footer={<><Button variant="quiet" onClick={() => setOpen(false)}>Cancel</Button><Button onClick={() => setOpen(false)}>Create collection</Button></>}>
-        <TextInput label="Collection name" value={name} onChange={(event) => setName(event.target.value)} hint="Use a name that distinguishes this group from others." />
+        <TextInput label="Collection name" name="collection-name" autoComplete="off" value={name} onChange={(event) => setName(event.target.value)} hint="Use a name that distinguishes this group from others." />
       </Dialog>
     </>
   );
@@ -342,10 +344,10 @@ function TableSpecimen() {
 }
 
 function PaginationSpecimen() {
-  const [page, setPage] = useState(3);
+  const { page, setPage, getPageUrl } = useShowcaseUrlState();
   return (
-    <Specimen title="Pagination" description="Ellipses keep long ranges compact while first, last, and adjacent pages remain available. Current, previous, and next states are explicit." code={`<Pagination currentPage={page} totalPages={8}\n  onPageChange={setPage} />`}>
-      <div className="arc-demo-stack"><Pagination currentPage={page} totalPages={8} onPageChange={setPage} /><p className="arc-demo-note" aria-live="polite">Page {page} of 8. Select a page or use the arrow buttons.</p></div>
+    <Specimen title="Pagination" description="Ellipses keep long ranges compact while first, last, and adjacent pages remain available. Current, previous, and next states are explicit." code={`const { page, setPage, getPageUrl } = useShowcaseUrlState();\n<Pagination currentPage={page} totalPages={8}\n  getPageUrl={getPageUrl} onPageChange={setPage} />`}>
+      <div className="arc-demo-stack"><Pagination currentPage={page} totalPages={8} onPageChange={setPage} getPageUrl={getPageUrl} /><p className="arc-demo-note" aria-live="polite">Page {page} of 8. Select a page or use the previous and next links.</p></div>
     </Specimen>
   );
 }

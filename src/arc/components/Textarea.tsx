@@ -22,7 +22,7 @@ export function Textarea({ label, hint, error, id: suppliedId, className, ...pro
         id={id}
         className={join('arc-input', 'arc-textarea', error && 'arc-input--invalid')}
         aria-invalid={error ? true : undefined}
-        aria-describedby={hint || error ? messageId : undefined}
+        aria-describedby={messageId}
         {...props}
       />
       <FieldMessage id={messageId} hint={hint} error={error} />
