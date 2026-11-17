@@ -41,6 +41,10 @@
   --arc-space-7: 3rem;
   --arc-space-8: 4rem;
   --arc-space-9: 6rem;
+  --arc-safe-area-inset-top: env(safe-area-inset-top, 0px);
+  --arc-safe-area-inset-right: env(safe-area-inset-right, 0px);
+  --arc-safe-area-inset-bottom: env(safe-area-inset-bottom, 0px);
+  --arc-safe-area-inset-left: env(safe-area-inset-left, 0px);
   --arc-radius-sm: 0.25rem;
   --arc-radius-md: 0.625rem;
   --arc-radius-lg: 1.25rem;

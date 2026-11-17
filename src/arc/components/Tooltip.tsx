@@ -35,8 +35,10 @@ export function Tooltip({ label, children }: TooltipProps) {
     >
       {children}
       {visible && createPortal(
-        <span id={id} role="tooltip" className="arc-tooltip" style={{ top: position.top, left: position.left }}>
-          {label}
+        <span className="arc-root arc-tooltip-layer">
+          <span id={id} role="tooltip" className="arc-tooltip" style={{ top: position.top, left: position.left }}>
+            {label}
+          </span>
         </span>,
         document.body,
       )}

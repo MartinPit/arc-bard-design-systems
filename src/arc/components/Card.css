@@ -1,4 +1,4 @@
-.arc-card { position: relative; min-width: 0; display: flex; flex-direction: column; border: 1px solid var(--arc-purple); background: var(--arc-paper-raised); box-shadow: var(--arc-shadow-sm); overflow: hidden; }
+.arc-card { position: relative; min-width: 0; display: flex; flex-direction: column; border: 1px solid var(--arc-purple); background: var(--arc-paper-raised); box-shadow: var(--arc-shadow-sm); overflow: hidden; overflow-wrap: anywhere; }
 .arc-card--accent { border-radius: 0 3.5rem 0 0; }
 .arc-card--accent::after { content: ''; position: absolute; top: 0; right: 0; width: 70px; height: 70px; background: var(--arc-gradient); border-radius: 0 0 0 100%; pointer-events: none; }
 .arc-card__header, .arc-card__content, .arc-card__footer { position: relative; z-index: 1; padding: var(--arc-space-5); }

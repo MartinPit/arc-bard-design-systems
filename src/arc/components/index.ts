@@ -12,6 +12,7 @@ export { Dialog, type DialogProps } from './Dialog';
 export { Popover, type PopoverProps } from './Popover';
 export { Tooltip, type TooltipProps } from './Tooltip';
 export { Toast, type ToastProps } from './Toast';
+export { ToastRegion } from './ToastRegion';
 export { Badge, type BadgeProps } from './Badge';
 export { Avatar, type AvatarProps } from './Avatar';
 export { Card, type CardProps } from './Card';

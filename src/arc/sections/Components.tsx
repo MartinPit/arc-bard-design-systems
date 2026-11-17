@@ -35,6 +35,7 @@ import {
   Textarea,
   TextInput,
   Toast,
+  ToastRegion,
   Tooltip,
 } from '../components';
 import { useShowcaseUrlState } from '../showcaseUrlState';
@@ -243,6 +244,12 @@ function DialogSpecimen() {
       </Specimen>
       <Dialog open={open} onOpenChange={setOpen} title="Create a collection" description="This demonstration changes local state only. No information is sent." footer={<><Button variant="quiet" onClick={() => setOpen(false)}>Cancel</Button><Button onClick={() => setOpen(false)}>Create collection</Button></>}>
         <TextInput label="Collection name" name="collection-name" autoComplete="off" value={name} onChange={(event) => setName(event.target.value)} hint="Use a name that distinguishes this group from others." />
+        <div className="arc-dialog__example-copy">
+          <p>Group essays, field guides, and correspondence around one question. A collection can begin with a single useful reference and grow as the reading continues.</p>
+          <p>Long descriptions remain in the readable column. Scrolling stays inside this focused panel, including when the available space is reduced by a mobile display’s safe areas.</p>
+          <p>Keep the name specific enough to recognize later, without turning the title into a complete catalogue description.</p>
+          <p className="arc-demo-note">Reference ARC-COLLECTION-WITH-A-DELIBERATELY-LONG-AND-UNBROKEN-CATALOGUE-IDENTIFIER-7F42C9A88D1E6B20.</p>
+        </div>
       </Dialog>
     </>
   );
@@ -260,6 +267,13 @@ function PopoverSpecimen() {
         <p className="arc-eyebrow">LOCAL VIEW</p><h4 className="arc-popover__title">Display options</h4>
         <Switch label="Compact rows" description="Reduce vertical spacing in lists." checked={compact} onCheckedChange={setCompact} />
         <p className="arc-demo-note">{compact ? 'Compact rows selected.' : 'Comfortable rows selected.'}</p>
+        <div className="arc-popover__guidance">
+          <p><strong>Reading rhythm</strong></p>
+          <p>Comfortable rows leave room for titles, annotations, and the small details that make a collection easier to scan.</p>
+          <p>Compact rows are useful when a familiar collection needs more entries visible at once. The setting changes density, not reading order.</p>
+          <p>Long panels scroll within the available viewport, keeping this display control close without allowing the page behind it to scroll along.</p>
+          <p>Reference ARC-DISPLAY-OPTIONS-WITH-A-DELIBERATELY-UNBROKEN-IDENTIFIER remains readable beside every viewport edge.</p>
+        </div>
       </Popover>
     </Specimen>
   );
@@ -289,17 +303,19 @@ function ToastSpecimen() {
   function notify(tone: DemoToast['tone']) {
     const copy = tone === 'success'
       ? { title: 'Changes preserved', message: 'Your local edits are ready to review.' }
-      : { title: 'Review recommended', message: 'One field still needs your attention.' };
-    setToasts((items) => [...items.slice(-1), { id: nextId, tone, ...copy }]);
+      : tone === 'danger'
+        ? { title: 'Review recommended', message: 'The summary is ready, but the collection still needs a complete citation and a final accessibility review before it can be shared with the wider reading group.' }
+        : { title: 'Related reference ready', message: 'ARCHIVALREFERENCE-7F42C9A88D1E6B20-READINGROOM-CATALOGUE-WITHOUT-BREAKS is available in your local collection.' };
+    setToasts((items) => [...items, { id: nextId, tone, ...copy }]);
     setNextId((id) => id + 1);
   }
   return (
     <>
-      <Specimen title="Toast" description="Brief status messages appear above the page without stealing focus. Every toast has an explicit dismiss action and an appropriate live-region role." code={`<Toast tone="success" title="Changes preserved"\n  message="Your local edits are ready to review."\n  onDismiss={() => remove(id)} />`}>
-        <div className="arc-demo-row"><Button onClick={() => notify('success')}>Show success toast</Button><Button variant="secondary" onClick={() => notify('danger')}>Show review toast</Button></div>
+      <Specimen title="Toast" description="Brief status messages appear above the page without stealing focus. Every toast has an explicit dismiss action and an appropriate live-region role." code={`<ToastRegion>\n  <Toast tone="success" title="Changes preserved"\n    message="Your local edits are ready to review."\n    onDismiss={() => remove(id)} />\n</ToastRegion>`}>
+        <div className="arc-demo-row"><Button onClick={() => notify('success')}>Show success toast</Button><Button variant="secondary" onClick={() => notify('danger')}>Show review toast</Button><Button variant="quiet" onClick={() => notify('info')}>Show reference toast</Button></div>
         <p className="arc-demo-note">Toasts remain until dismissed, so their content cannot disappear before it is read.</p>
       </Specimen>
-      {toasts.map((toast, index) => <Toast key={toast.id} {...toast} index={index} onDismiss={() => setToasts((items) => items.filter((item) => item.id !== toast.id))} />)}
+      {toasts.length > 0 && <ToastRegion>{toasts.map((toast) => <Toast key={toast.id} {...toast} onDismiss={() => setToasts((items) => items.filter((item) => item.id !== toast.id))} />)}</ToastRegion>}
     </>
   );
 }
@@ -324,7 +340,7 @@ function CardSpecimen() {
   const [notesVisible, setNotesVisible] = useState(false);
   return (
     <Specimen title="Card" description="Cards group one coherent subject. A crisp rule and restrained offset create depth; an optional botanical accent distinguishes a featured item." code={`<Card eyebrow="FIELD GUIDE / 04" title="A considered summary"\n  footer={<Button variant="quiet">Read notes</Button>}>\n  <p>Related content with one clear destination.</p>\n</Card>`}>
-      <div className="arc-card-demo-grid"><Card eyebrow="FIELD GUIDE / 04" title="A considered summary" footer={<Button variant="quiet" aria-expanded={notesVisible} onClick={() => setNotesVisible((value) => !value)}>{notesVisible ? 'Hide notes' : 'Read notes'} <FileText size={15} aria-hidden="true" /></Button>}><p>Keep one subject and one primary destination within each card.</p>{notesVisible && <p className="arc-demo-note">Notes: retain a concise summary and avoid competing destinations.</p>}</Card><Card accent eyebrow="FEATURED / 07" title="A little more expression" footer={<Badge tone="accent">Featured</Badge>}><p>The curved accent is decorative, leaving the reading order unchanged.</p></Card></div>
+      <div className="arc-card-demo-grid"><Card eyebrow="FIELD GUIDE / 04" title="A considered summary" footer={<Button variant="quiet" aria-expanded={notesVisible} onClick={() => setNotesVisible((value) => !value)}>{notesVisible ? 'Hide notes' : 'Read notes'} <FileText size={15} aria-hidden="true" /></Button>}><p>Keep one subject and one primary destination within each card.</p>{notesVisible && <p className="arc-demo-note">Notes: retain a concise summary and avoid competing destinations. ARCHIVECARDREFERENCE-7F42C9A88D1E6B20-WITHOUT-BREAKS remains readable even when the card narrows.</p>}</Card><Card accent eyebrow="FEATURED / 07" title="A little more expression" footer={<Badge tone="accent">Featured</Badge>}><p>The curved accent is decorative, leaving the reading order unchanged.</p></Card></div>
     </Specimen>
   );
 }

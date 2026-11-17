@@ -100,8 +100,8 @@
 .arc-a11y-contrast strong { margin-top: 0.2rem; color: var(--arc-marigold); }
 .arc-focus-demo { display: grid; place-items: center; min-height: 2.75rem; border: 1px solid var(--arc-purple); background: var(--arc-paper); color: var(--arc-ink); font-size: 0.75rem; }
 .arc-accessibility-grid code { font: 0.66rem/1.5 var(--arc-font-mono); overflow-wrap: anywhere; }
-.arc-zoom-demo { padding: 0.6rem; border: 1px solid var(--arc-rule-strong); overflow: hidden; font-size: 0.75rem; white-space: nowrap; }
-.arc-zoom-demo span { display: block; font-size: 1.5em; }
+.arc-zoom-demo { min-width: 0; padding: 0.6rem; border: 1px solid var(--arc-rule-strong); overflow-wrap: anywhere; font-size: 0.75rem; }
+.arc-zoom-demo span { display: block; min-width: 0; font-size: 1.5em; }
 .arc-a11y-checklist { display: grid; grid-template-columns: 0.7fr 1.3fr; gap: var(--arc-space-6); margin-top: var(--arc-space-7); padding: var(--arc-space-6); background: var(--arc-aubergine); color: var(--arc-paper-raised); }
 .arc-a11y-checklist h3 { font: 500 var(--arc-text-xl) var(--arc-font-display); }
 .arc-a11y-checklist ul { margin: 0; padding: 0; list-style: none; }

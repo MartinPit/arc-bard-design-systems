@@ -115,7 +115,7 @@
 .arc-reading-room-club__attending > span:nth-child(2) { flex: 1; }
 .arc-reading-room-recent-note { padding-top: 1.8rem; }
 .arc-reading-room-recent-note .arc-reading-room__section-heading > svg { color: var(--arc-magenta-deep); }
-.arc-reading-room-recent-note blockquote { margin: 1.5rem 0 0.75rem; font: italic 380 1.3rem/1.45 var(--arc-font-display); }
+.arc-reading-room-recent-note blockquote { min-width: 0; margin: 1.5rem 0 0.75rem; overflow-wrap: anywhere; font: italic 380 1.3rem/1.45 var(--arc-font-display); }
 .arc-reading-room-recent-note > p { color: var(--arc-ink-soft); font: 0.58rem var(--arc-font-mono); }
 .arc-reading-room-recent-note .arc-reading-room__text-button { margin-top: 0.75rem; }
 .arc-reading-room-library-tools { margin-bottom: 2.5rem; padding: 1.1rem 0; display: grid; grid-template-columns: minmax(220px, 1.5fr) minmax(190px, 0.8fr) auto; align-items: end; gap: 1.3rem; border-top: 1px solid var(--arc-purple); border-bottom: 1px solid var(--arc-purple); }
@@ -132,9 +132,10 @@
 .arc-reading-room-notes { border-top: 1px solid var(--arc-purple); }
 .arc-reading-room-notes > .arc-reading-room__section-heading { border-top: 0; }
 .arc-reading-room-note { display: grid; grid-template-columns: 3.4rem minmax(0, 1fr) auto; gap: 1.5rem; padding: 2rem 0; border-bottom: 1px solid var(--arc-rule-strong); }
+.arc-reading-room-note__body { min-width: 0; overflow-wrap: anywhere; }
 .arc-reading-room-note__number { padding-top: 0.35rem; color: var(--arc-magenta-deep); font: italic 450 1.6rem/1 var(--arc-font-display); }
 .arc-reading-room-note__book { margin: 0 0 0.8rem; color: var(--arc-ink-soft); font: 500 0.62rem/1.4 var(--arc-font-mono); letter-spacing: 0.09em; text-transform: uppercase; }
-.arc-reading-room-note blockquote { max-width: 48rem; margin: 0; font: 380 clamp(1.35rem, 2.1vw, 1.8rem)/1.4 var(--arc-font-display); }
+.arc-reading-room-note blockquote { max-width: 48rem; min-width: 0; margin: 0; overflow-wrap: anywhere; font: 380 clamp(1.35rem, 2.1vw, 1.8rem)/1.4 var(--arc-font-display); }
 .arc-reading-room-note__date { margin: 1rem 0 0; color: var(--arc-ink-soft); font: 0.6rem/1.5 var(--arc-font-mono); }
 .arc-reading-room-note > svg { margin-top: 0.3rem; color: var(--arc-purple); }
 .arc-reading-room-notes__colophon { padding: 3rem 0 2rem; display: flex; align-items: center; justify-content: center; gap: 1rem; color: var(--arc-ink-soft); }

@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState, type FormEvent, type MouseEvent, type ReactNode } from 'react';
 import { ArrowRight, BookOpen, Bookmark, CalendarDays, Check, Clock3, Feather, LibraryBig, NotebookPen, Plus, Search, Sparkles, SunMedium, X } from 'lucide-react';
-import { Button, Dialog, IconButton, Select, Textarea, TextInput, Toast } from '../components';
+import { Button, Dialog, IconButton, Select, Textarea, TextInput, Toast, ToastRegion } from '../components';
 import { ThemeToggle } from '../components/ThemeToggle';
 import { useArcTheme } from '../theme';
 import { BookCover } from './BookCover';
@@ -321,7 +321,7 @@ export function ReadingRoom() {
         </form>
       </Dialog>
 
-      {toast && <Toast key={toast.id} title={toast.title} message={toast.message} tone={toast.tone} onDismiss={() => setToast(null)} />}
+      {toast && <ToastRegion><Toast key={toast.id} title={toast.title} message={toast.message} tone={toast.tone} onDismiss={() => setToast(null)} /></ToastRegion>}
     </div>
   );
 }

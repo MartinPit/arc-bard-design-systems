@@ -1,5 +1,4 @@
-import { useId, type CSSProperties } from 'react';
-import { createPortal } from 'react-dom';
+import { useId } from 'react';
 import { CheckCircle2, CircleAlert, Info, X } from 'lucide-react';
 import { IconButton } from './IconButton';
 import { join } from './shared';
@@ -10,25 +9,22 @@ export interface ToastProps {
   message: string;
   tone?: 'success' | 'info' | 'danger';
   onDismiss: () => void;
-  index?: number;
 }
 
-export function Toast({ title, message, tone = 'info', onDismiss, index = 0 }: ToastProps) {
+export function Toast({ title, message, tone = 'info', onDismiss }: ToastProps) {
   const titleId = useId();
-  const style = { '--arc-toast-index': index } as CSSProperties;
-  return createPortal(
-    <div className={join('arc-toast', `arc-toast--${tone}`)} role={tone === 'danger' ? 'alert' : 'status'} style={style}>
+  return (
+    <div className={join('arc-toast', `arc-toast--${tone}`)} role={tone === 'danger' ? 'alert' : 'status'} aria-labelledby={titleId}>
       <div className="arc-toast__icon" aria-hidden="true">
         {tone === 'success' ? <CheckCircle2 size={19} /> : tone === 'danger' ? <CircleAlert size={19} /> : <Info size={19} />}
       </div>
-      <div>
+      <div className="arc-toast__content">
         <strong id={titleId}>{title}</strong>
         <p>{message}</p>
       </div>
       <IconButton label={`Dismiss ${title}`} variant="quiet" onClick={onDismiss}>
         <X size={17} aria-hidden="true" />
       </IconButton>
-    </div>,
-    document.body,
+    </div>
   );
 }
