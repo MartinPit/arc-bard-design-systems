@@ -374,9 +374,9 @@ export function ComponentsSection() {
       <SectionHeading number="06" eyebrow="System / components" title="Nineteen instruments, one register.">
         Each specimen is live, local, and built with semantic HTML. Expand its source for a concise React implementation reference.
       </SectionHeading>
-      <div className="arc-component-index" aria-label="Component index">
+      <nav className="arc-component-index" aria-label="Component index">
         {['Button', 'Icon Button', 'Text Input', 'Textarea', 'Select', 'Checkbox', 'Radio Group', 'Switch', 'Slider', 'Tabs', 'Dialog', 'Popover', 'Tooltip', 'Toast', 'Badge', 'Avatar', 'Card', 'Table', 'Pagination'].map((item, index) => <a key={item} href={`#specimen-${item.toLowerCase().replaceAll(' ', '-')}`}><span>{String(index + 1).padStart(2, '0')}</span>{item}</a>)}
-      </div>
+      </nav>
       <div className="arc-specimens">
         <div id="specimen-button"><ButtonSpecimen /></div>
         <div id="specimen-icon-button"><IconButtonSpecimen /></div>

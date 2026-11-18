@@ -1,4 +1,4 @@
-.arc-icon-button { display: inline-grid; place-items: center; flex: 0 0 auto; width: 2.75rem; height: 2.75rem; padding: 0; border: 1px solid var(--arc-purple); border-radius: var(--arc-radius-sm); background: var(--arc-paper-raised); color: var(--arc-aubergine); cursor: pointer; transition: background var(--arc-duration-fast), transform var(--arc-duration-fast); }
+.arc-icon-button { display: inline-grid; place-items: center; flex: 0 0 auto; width: 2.75rem; height: 2.75rem; padding: 0; border: 1px solid var(--arc-purple); border-radius: var(--arc-radius-sm); background: var(--arc-paper-raised); color: var(--arc-aubergine); cursor: pointer; transition: transform var(--arc-duration-fast); }
 .arc-icon-button--ink { background: var(--arc-aubergine); color: var(--arc-paper-raised); }
 .arc-icon-button--quiet { border-color: transparent; background: transparent; }
 .arc-icon-button:hover:not(:disabled) { background: var(--arc-paper-deep); transform: translateY(-1px); }

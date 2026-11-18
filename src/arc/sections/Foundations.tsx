@@ -75,8 +75,8 @@ export function ColorSection() {
         ))}
       </div>
       <div className="arc-color-guidance">
-        <div className="arc-gradient-strip" aria-label="Arc accent gradient, marigold through orange and coral to magenta">
-          <span>EXPRESSIVE PRINT / USE SPARINGLY</span>
+        <div className="arc-gradient-strip" role="img" aria-label="Arc accent gradient, marigold through orange and coral to magenta" aria-describedby="arc-gradient-guidance">
+          <span id="arc-gradient-guidance">EXPRESSIVE PRINT / USE SPARINGLY</span>
         </div>
         <div className="arc-color-guidance__copy">
           <h3>Accent is not body copy</h3>
@@ -119,11 +119,11 @@ export function TypographySection() {
           </article>
         </div>
       </div>
-      <div className="arc-type-scale" aria-label="Recommended type scale">
+      <ol className="arc-type-scale" aria-label="Recommended type scale">
         {[['Hero', 'arc-type-scale--hero'], ['Title', 'arc-type-scale--title'], ['Heading', 'arc-type-scale--heading'], ['Body copy', 'arc-type-scale--body'], ['Interface', 'arc-type-scale--ui'], ['MONO LABEL', 'arc-type-scale--mono']].map(([label, className], index) => (
-          <div key={label}><span>{String(index + 1).padStart(2, '0')}</span><p className={className}>{label}</p></div>
+          <li key={label}><span>{String(index + 1).padStart(2, '0')}</span><p className={className}>{label}</p></li>
         ))}
-      </div>
+      </ol>
     </section>
   );
 }

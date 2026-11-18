@@ -82,7 +82,7 @@ export function ArcShowcase() {
       </nav>
 
       <main id="arc-content" tabIndex={-1}>
-        <div id="top" className="arc-anchor-top" aria-hidden="true" />
+        <div id="top" className="arc-anchor-top" tabIndex={-1} />
         <IdentitySection />
         <ColorSection />
         <TypographySection />

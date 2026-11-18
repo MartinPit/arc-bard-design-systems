@@ -26,6 +26,15 @@ describe('ArcShowcase', () => {
     expect(screen.getByRole('navigation', { name: 'Design system sections' })).toBeTruthy();
   });
 
+  it('exposes meaningful artwork, the type scale, and the component index semantically', () => {
+    render(<ArcShowcase />);
+
+    expect(screen.getByRole('img', { name: 'Arc accent gradient, marigold through orange and coral to magenta' })).toBeTruthy();
+    const typeScale = screen.getByRole('list', { name: 'Recommended type scale' });
+    expect(within(typeScale).getAllByRole('listitem')).toHaveLength(6);
+    expect(screen.getByRole('navigation', { name: 'Component index' })).toBeTruthy();
+  });
+
   it('keeps button icons and labels in the shared content wrapper', () => {
     render(<ArcShowcase />);
     const create = screen.getByRole('button', { name: 'Create a collection' });
