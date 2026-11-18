@@ -20,7 +20,7 @@ describe('Arc Reading Room', () => {
   it('navigates to the library and finds, empties, and restores catalogue results', () => {
     render(<ReadingRoom />);
     fireEvent.click(screen.getByRole('link', { name: 'Library' }));
-    expect(screen.getByRole('heading', { level: 1, name: 'The library.' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { level: 1, name: 'The Library.' })).toBeInTheDocument();
 
     const search = screen.getByRole('searchbox', { name: 'Search your library' });
     fireEvent.change(search, { target: { value: 'Mina Sol' } });
@@ -29,8 +29,8 @@ describe('Arc Reading Room', () => {
     expect(screen.getByText('1 volume found')).toBeInTheDocument();
 
     fireEvent.change(search, { target: { value: 'not on this shelf' } });
-    expect(screen.getByRole('heading', { name: 'No books in this corner' })).toBeInTheDocument();
-    fireEvent.click(screen.getByRole('button', { name: 'Clear search and filters' }));
+    expect(screen.getByRole('heading', { name: 'No Books in This Corner' })).toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button', { name: 'Clear Search and Filters' }));
     expect(search).toHaveValue('');
     expect(screen.getByText('6 volumes found')).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'The Orchard at Night' })).toBeInTheDocument();
@@ -38,32 +38,32 @@ describe('Arc Reading Room', () => {
 
   it('opens the reader, records chapter progress, and announces the update', async () => {
     render(<ReadingRoom />);
-    fireEvent.click(screen.getByRole('button', { name: 'Continue reading' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Continue Reading The Cartographer of Quiet' }));
     const dialog = await screen.findByRole('dialog', { name: 'The Cartographer of Quiet' });
     expect(dialog).toHaveAttribute('aria-modal', 'true');
     expect(within(dialog).getByText(/Before the town learned to name its streets/)).toBeInTheDocument();
-    fireEvent.click(within(dialog).getByRole('button', { name: 'Mark chapter read' }));
+    fireEvent.click(within(dialog).getByRole('button', { name: 'Mark Chapter Read' }));
 
     await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument());
-    expect(screen.getByText('Chapter marked read')).toBeInTheDocument();
-    expect(screen.getByText(/now 59% read/)).toBeInTheDocument();
+    expect(screen.getByText('You Marked a Chapter Read')).toBeInTheDocument();
+    expect(screen.getByText(/You read 59% of The Cartographer of Quiet/)).toBeInTheDocument();
     expect(screen.getByLabelText('Reading progress for The Cartographer of Quiet')).toHaveValue(59);
-    fireEvent.click(screen.getByRole('button', { name: 'Dismiss Chapter marked read' }));
-    expect(screen.queryByText('Chapter marked read')).not.toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button', { name: 'Dismiss You Marked a Chapter Read' }));
+    expect(screen.queryByText('You Marked a Chapter Read')).not.toBeInTheDocument();
   });
 
   it('adds a reading note to the commonplace book', async () => {
     render(<ReadingRoom />);
     fireEvent.click(screen.getByRole('link', { name: 'Notes' }));
-    fireEvent.click(screen.getByRole('button', { name: 'Add a note' }));
-    const dialog = await screen.findByRole('dialog', { name: 'Press a thought into the margin' });
+    fireEvent.click(screen.getByRole('button', { name: 'Add a Note' }));
+    const dialog = await screen.findByRole('dialog', { name: 'Press a Thought into the Margin' });
     fireEvent.change(within(dialog).getByLabelText('Book'), { target: { value: 'yellow-light' } });
     fireEvent.change(within(dialog).getByLabelText('Your note'), { target: { value: 'Keep this image of light gathering the room.' } });
-    fireEvent.click(within(dialog).getByRole('button', { name: 'Save note' }));
+    fireEvent.click(within(dialog).getByRole('button', { name: 'Save Note' }));
 
     await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument());
     expect(screen.getByText('Keep this image of light gathering the room.')).toBeInTheDocument();
-    expect(screen.getByText('Note pressed into the margin')).toBeInTheDocument();
+    expect(screen.getByText('You Pressed a Note into the Margin')).toBeInTheDocument();
     const newEntry = screen.getByText('Keep this image of light gathering the room.').closest('article');
     expect(newEntry).not.toBeNull();
     expect(within(newEntry as HTMLElement).getByText('A Field Guide to Yellow Light')).toBeInTheDocument();

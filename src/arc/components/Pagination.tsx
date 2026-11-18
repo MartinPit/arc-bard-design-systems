@@ -1,5 +1,6 @@
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import type { MouseEvent, ReactNode } from 'react';
+import { formatNumber } from '../intl';
 import { IconButton } from './IconButton';
 import { join } from './shared';
 import './Pagination.css';
@@ -41,7 +42,7 @@ export function Pagination({ currentPage, totalPages, onPageChange, getPageUrl }
 
   return (
     <nav className="arc-pagination" aria-label="Pagination">
-      {boundary('Previous page', activePage - 1, activePage <= 1, <ArrowLeft size={17} aria-hidden="true" />)}
+      {boundary('Previous Page', activePage - 1, activePage <= 1, <ArrowLeft size={17} aria-hidden="true" />)}
       <div className="arc-pagination__pages">
         {pages.map((page, index) => (
           <span key={page} className="arc-pagination__item">
@@ -49,16 +50,16 @@ export function Pagination({ currentPage, totalPages, onPageChange, getPageUrl }
             <a
               className={join('arc-pagination__button', activePage === page && 'arc-pagination__button--current')}
               href={getPageUrl(page)}
-              aria-label={`Page ${page}`}
+              aria-label={`Page ${formatNumber(page)}`}
               aria-current={activePage === page ? 'page' : undefined}
               onClick={(event) => followLink(event, page)}
             >
-              {page}
+              {formatNumber(page)}
             </a>
           </span>
         ))}
       </div>
-      {boundary('Next page', activePage + 1, activePage >= pageCount, <ArrowRight size={17} aria-hidden="true" />)}
+      {boundary('Next Page', activePage + 1, activePage >= pageCount, <ArrowRight size={17} aria-hidden="true" />)}
     </nav>
   );
 }

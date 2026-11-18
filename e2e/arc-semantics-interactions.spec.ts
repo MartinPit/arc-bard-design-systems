@@ -51,7 +51,7 @@ test('Arc section-brand and footer links provide distinct hover feedback', async
   await brand.hover();
   await expect.poll(() => brand.evaluate((element) => getComputedStyle(element).color)).not.toBe(brandColor);
 
-  const footer = page.getByRole('link', { name: 'Return to the beginning' });
+  const footer = page.getByRole('link', { name: 'Return to the Beginning' });
   const footerColor = await footer.evaluate((element) => getComputedStyle(element).color);
   await footer.hover();
   await expect.poll(() => footer.evaluate((element) => getComputedStyle(element).color)).not.toBe(footerColor);
@@ -73,7 +73,7 @@ test('Arc reviewed transitions and keyframes stay compositor-friendly without br
   }));
   expect(nonCompositedTransitions).toEqual([]);
 
-  const saveButton = page.getByRole('button', { name: 'Save changes', exact: true });
+  const saveButton = page.getByRole('button', { name: 'Save Changes', exact: true });
   const readButtonStyle = () => saveButton.evaluate((element) => {
     const style = getComputedStyle(element);
     return { background: style.backgroundColor, shadow: style.boxShadow };
@@ -121,7 +121,7 @@ test('Arc preserves visible focus and hover feedback in forced-colors mode', asy
   await brand.hover();
   await expect(brand).toHaveCSS('text-decoration-line', 'underline');
 
-  const footer = page.getByRole('link', { name: 'Return to the beginning' });
+  const footer = page.getByRole('link', { name: 'Return to the Beginning' });
   await footer.hover();
   await expect(footer).toHaveCSS('text-decoration-thickness', '2px');
 });

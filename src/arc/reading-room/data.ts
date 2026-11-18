@@ -8,7 +8,8 @@ export interface Book {
   category: string;
   progress: number;
   saved: boolean;
-  chapter: string;
+  chapterNumber: number;
+  chapterTitle: string;
   minutesLeft: number;
   cover: CoverVariant;
   coverDescription: string;
@@ -24,7 +25,7 @@ export const initialBooks: Book[] = [
     category: 'Essays',
     progress: 42,
     saved: true,
-    chapter: '04 — The unmapped hour',
+    chapterNumber: 4, chapterTitle: 'The unmapped hour',
     minutesLeft: 12,
     cover: 'botanical',
     coverDescription: 'Two marigold and magenta leaves pressed over an aubergine grid.',
@@ -42,7 +43,7 @@ export const initialBooks: Book[] = [
     category: 'Poetry',
     progress: 68,
     saved: true,
-    chapter: '09 — Late apricots',
+    chapterNumber: 9, chapterTitle: 'Late apricots',
     minutesLeft: 8,
     cover: 'light',
     coverDescription: 'A warm sun sinking behind fine architectural arcs.',
@@ -60,7 +61,7 @@ export const initialBooks: Book[] = [
     category: 'Fiction',
     progress: 0,
     saved: false,
-    chapter: '01 — The gate left open',
+    chapterNumber: 1, chapterTitle: 'The gate left open',
     minutesLeft: 18,
     cover: 'orchard',
     coverDescription: 'A crescent moon above an abstract flowering branch.',
@@ -78,7 +79,7 @@ export const initialBooks: Book[] = [
     category: 'Essays',
     progress: 24,
     saved: true,
-    chapter: '03 — A pocket of rain',
+    chapterNumber: 3, chapterTitle: 'A pocket of rain',
     minutesLeft: 15,
     cover: 'weather',
     coverDescription: 'A ribbon of rain crossing a precise printed weather grid.',
@@ -96,7 +97,7 @@ export const initialBooks: Book[] = [
     category: 'Fiction',
     progress: 100,
     saved: true,
-    chapter: '12 — What the fire kept',
+    chapterNumber: 12, chapterTitle: 'What the fire kept',
     minutesLeft: 0,
     cover: 'cinder',
     coverDescription: 'Curving ember ribbons on a dark, tactile field.',
@@ -114,7 +115,7 @@ export const initialBooks: Book[] = [
     category: 'Stories',
     progress: 0,
     saved: false,
-    chapter: '01 — Rooms without doors',
+    chapterNumber: 1, chapterTitle: 'Rooms without doors',
     minutesLeft: 14,
     cover: 'arch',
     coverDescription: 'An open architectural arch framing a geometric flower.',
@@ -130,7 +131,10 @@ export interface ReadingNote {
   id: number;
   bookId: string;
   text: string;
-  date: string;
+  createdAt: string;
+  page?: number;
+  completed?: boolean;
+  personal?: boolean;
 }
 
 export const initialNotes: ReadingNote[] = [
@@ -138,18 +142,21 @@ export const initialNotes: ReadingNote[] = [
     id: 1,
     bookId: 'yellow-light',
     text: 'The ordinary sounds are the scene. A spoon against a cup can hold the whole day.',
-    date: '14 Nov · p. 86',
+    createdAt: '2026-11-14T12:00:00',
+    page: 86,
   },
   {
     id: 2,
     bookId: 'cartographer',
     text: 'A map of pauses, not places. Return to this idea for Thursday’s reading circle.',
-    date: '11 Nov · p. 41',
+    createdAt: '2026-11-11T12:00:00',
+    page: 41,
   },
   {
     id: 3,
     bookId: 'cinder',
     text: 'An ending that makes repair feel possible without making it feel easy.',
-    date: '02 Nov · finished',
+    createdAt: '2026-11-02T12:00:00',
+    completed: true,
   },
 ];

@@ -14,9 +14,9 @@ describe('TextInput', () => {
     expect(region).toHaveAttribute('aria-atomic', 'true');
     expect(region).toBeEmptyDOMElement();
 
-    rerender(<TextInput label="Resource title" error="Use at least four characters." />);
+    rerender(<TextInput label="Resource title" error="Use at least 4 characters." />);
     expect(document.getElementById(messageId!)).toBe(region);
-    expect(region).toHaveTextContent('Use at least four characters.');
+    expect(region).toHaveTextContent('Use at least 4 characters.');
     expect(region).toHaveClass('arc-field__message--error');
 
     rerender(<TextInput label="Resource title" success="Title is available" />);

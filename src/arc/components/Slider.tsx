@@ -1,4 +1,5 @@
 import { useId, type CSSProperties } from 'react';
+import { formatUnit } from '../intl';
 import './shared.css';
 import './Slider.css';
 
@@ -23,8 +24,7 @@ export function Slider({ label, value, onChange, min = 0, max = 100, step = 1, u
           {label}
         </label>
         <output htmlFor={id} className="arc-slider__value">
-          {value}
-          {unit}
+          {formatUnit(value, unit)}
         </output>
       </div>
       <input
@@ -39,8 +39,8 @@ export function Slider({ label, value, onChange, min = 0, max = 100, step = 1, u
         style={{ '--arc-range-progress': `${percentage}%` } as CSSProperties}
       />
       <div className="arc-slider__limits" aria-hidden="true">
-        <span>{min}{unit}</span>
-        <span>{max}{unit}</span>
+        <span>{formatUnit(min, unit)}</span>
+        <span>{formatUnit(max, unit)}</span>
       </div>
     </div>
   );

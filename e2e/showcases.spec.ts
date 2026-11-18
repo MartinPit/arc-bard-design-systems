@@ -64,8 +64,8 @@ for (const system of ['arc', 'bard'] as const) {
     await page.goto(`./${system}/`);
 
     if (system === 'arc') {
-      await page.getByRole('button', { name: 'Create a collection' }).click();
-      await expect(page.getByRole('dialog', { name: 'Create a collection' })).toBeVisible();
+      await page.getByRole('button', { name: 'Create a Collection' }).click();
+      await expect(page.getByRole('dialog', { name: 'Create a Collection' })).toBeVisible();
       await page.keyboard.press('Escape');
       await expect(page.getByRole('dialog')).toHaveCount(0);
 
@@ -74,10 +74,10 @@ for (const system of ['arc', 'bard'] as const) {
       await page.locator('label.arc-switch').filter({ hasText: 'Revision notifications' }).click();
       await expect(switchControl).not.toBeChecked();
 
-      await page.getByRole('button', { name: 'Show success toast' }).click();
-      await expect(page.getByRole('status').filter({ hasText: 'Changes preserved' })).toBeVisible();
-      await page.getByRole('button', { name: 'Dismiss Changes preserved' }).click();
-      await expect(page.getByRole('status').filter({ hasText: 'Changes preserved' })).toHaveCount(0);
+      await page.getByRole('button', { name: 'Show Success Toast' }).click();
+      await expect(page.getByRole('status').filter({ hasText: 'You Saved Changes' })).toBeVisible();
+      await page.getByRole('button', { name: 'Dismiss You Saved Changes' }).click();
+      await expect(page.getByRole('status').filter({ hasText: 'You Saved Changes' })).toHaveCount(0);
     } else {
       await page.getByRole('button', { name: 'Open dialog' }).click();
       await expect(page.getByRole('dialog', { name: 'Keep the whole composition in view.' })).toBeVisible();
@@ -112,6 +112,7 @@ for (const system of ['arc', 'bard'] as const) {
     }));
     expect(summary).toEqual([]);
   });
+
 }
 
 test('arc tabs do not create vertical overflow or a scrollbar', async ({ page }) => {

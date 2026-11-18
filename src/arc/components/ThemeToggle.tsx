@@ -9,7 +9,8 @@ interface ThemeToggleProps {
 
 export function ThemeToggle({ theme, onToggle }: ThemeToggleProps) {
   const nextTheme = theme === 'light' ? 'dark' : 'light';
-  const label = `Switch to ${nextTheme} mode`;
+  const nextThemeLabel = nextTheme === 'dark' ? 'Dark' : 'Light';
+  const label = `Switch to ${nextThemeLabel} Mode`;
   return (
     <button type="button" className="arc-theme-toggle" aria-label={label} title={label} onClick={onToggle}>
       {theme === 'light' ? <Moon size={16} aria-hidden="true" /> : <Sun size={16} aria-hidden="true" />}

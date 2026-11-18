@@ -1,4 +1,5 @@
 import { useId } from 'react';
+import { formatLedgerNumber } from '../intl';
 
 export function ArcLeaf({ className = '' }: { className?: string }) {
   const id = useId().replace(/:/g, '');
@@ -9,7 +10,7 @@ export function ArcLeaf({ className = '' }: { className?: string }) {
       role="img"
       aria-labelledby={`${id}-title ${id}-desc`}
     >
-      <title id={`${id}-title`}>The Arc leaf</title>
+      <title id={`${id}-title`}>The <tspan className="notranslate">Arc</tspan> leaf</title>
       <desc id={`${id}-desc`}>
         An asymmetric botanical leaf printed in marigold, coral, and magenta with fine aubergine veins.
       </desc>
@@ -51,7 +52,7 @@ export function ArcStamp({ compact = false }: { compact?: boolean }) {
       className={compact ? 'arc-stamp arc-stamp--compact' : 'arc-stamp'}
       viewBox="0 0 140 140"
       role="img"
-      aria-label="Arc design system, edition one"
+      aria-label="Arc design system, edition 1"
     >
       <defs>
         <path id={`${id}-path`} d="M70,70 m-51,0 a51,51 0 1,1 102,0 a51,51 0 1,1 -102,0" />
@@ -59,7 +60,7 @@ export function ArcStamp({ compact = false }: { compact?: boolean }) {
       <circle cx="70" cy="70" r="64" fill="none" stroke="currentColor" strokeWidth="1" />
       <circle cx="70" cy="70" r="44" fill="none" stroke="currentColor" strokeWidth="1" strokeDasharray="2 3" />
       <text fill="currentColor" fontFamily="IBM Plex Mono, monospace" fontSize="10" letterSpacing="2.1">
-        <textPath href={`#${id}-path`}>ARC · DESIGN SYSTEM · EDITION 01 · </textPath>
+        <textPath href={`#${id}-path`} className="notranslate">ARC · DESIGN SYSTEM · EDITION {formatLedgerNumber(1)} · </textPath>
       </text>
       <path d="M70 91C48 75 45 54 87 43C82 69 85 82 70 91Z" fill="currentColor" />
       <path d="M59 98L80 53" stroke="var(--arc-paper)" strokeWidth="1.5" />

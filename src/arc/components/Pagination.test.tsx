@@ -10,19 +10,19 @@ describe('Pagination', () => {
     const { rerender } = render(<Pagination currentPage={0} totalPages={0} onPageChange={onPageChange} getPageUrl={getPageUrl} />);
 
     expect(screen.queryByRole('link', { name: /^Page \d+$/ })).not.toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'Previous page' })).toBeDisabled();
-    expect(screen.getByRole('button', { name: 'Next page' })).toBeDisabled();
+    expect(screen.getByRole('button', { name: 'Previous Page' })).toBeDisabled();
+    expect(screen.getByRole('button', { name: 'Next Page' })).toBeDisabled();
 
     rerender(<Pagination currentPage={-3} totalPages={3} onPageChange={onPageChange} getPageUrl={getPageUrl} />);
     expect(screen.getByRole('link', { name: 'Page 1' })).toHaveAttribute('aria-current', 'page');
-    expect(screen.getByRole('button', { name: 'Previous page' })).toBeDisabled();
-    fireEvent.click(screen.getByRole('link', { name: 'Next page' }));
+    expect(screen.getByRole('button', { name: 'Previous Page' })).toBeDisabled();
+    fireEvent.click(screen.getByRole('link', { name: 'Next Page' }));
     expect(onPageChange).toHaveBeenLastCalledWith(2);
 
     rerender(<Pagination currentPage={99} totalPages={3} onPageChange={onPageChange} getPageUrl={getPageUrl} />);
     expect(screen.getByRole('link', { name: 'Page 3' })).toHaveAttribute('aria-current', 'page');
-    expect(screen.getByRole('button', { name: 'Next page' })).toBeDisabled();
-    fireEvent.click(screen.getByRole('link', { name: 'Previous page' }));
+    expect(screen.getByRole('button', { name: 'Next Page' })).toBeDisabled();
+    fireEvent.click(screen.getByRole('link', { name: 'Previous Page' }));
     expect(onPageChange).toHaveBeenLastCalledWith(2);
     expect(onPageChange).toHaveBeenCalledTimes(2);
   });

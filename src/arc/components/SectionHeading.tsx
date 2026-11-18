@@ -1,18 +1,21 @@
+import type { ReactNode } from 'react';
+import { formatLedgerNumber } from '../intl';
+
 export function SectionHeading({
   number,
   eyebrow,
   title,
   children,
 }: {
-  number: string;
+  number: number;
   eyebrow: string;
   title: string;
-  children: string;
+  children: ReactNode;
 }) {
   const id = `section-${number}`;
   return (
     <header className="arc-section-heading">
-      <div className="arc-section-heading__number" aria-hidden="true">{number}</div>
+      <div className="arc-section-heading__number" aria-hidden="true">{formatLedgerNumber(number)}</div>
       <div>
         <p className="arc-eyebrow">{eyebrow}</p>
         <h2 id={id}>{title}</h2>

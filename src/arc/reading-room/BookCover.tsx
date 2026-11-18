@@ -32,7 +32,7 @@ export function BookCover({ book, compact = false }: BookCoverProps) {
 
         <rect className="arc-reading-room-book-cover__paper" x="0.5" y="0.5" width="239" height="339" />
         <path className="arc-reading-room-book-cover__spine" d="M14 0v340" />
-        <text className="arc-reading-room-book-cover__imprint" x="28" y="28">ARC EDITIONS · {book.category.toUpperCase()}</text>
+        <text className="arc-reading-room-book-cover__imprint" x="28" y="28"><tspan className="notranslate">ARC EDITIONS</tspan> · {book.category.toUpperCase()}</text>
         <text className="arc-reading-room-book-cover__title" x="28" y="66">
           {book.titleLines.map((line, index) => <tspan x="28" dy={index === 0 ? 0 : 26} key={line}>{line}</tspan>)}
         </text>

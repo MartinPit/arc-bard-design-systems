@@ -2,18 +2,27 @@ import { useEffect, useMemo, useState, type FormEvent, type MouseEvent, type Rea
 import { ArrowRight, BookOpen, Bookmark, CalendarDays, Check, Clock3, Feather, LibraryBig, NotebookPen, Plus, Search, Sparkles, SunMedium, X } from 'lucide-react';
 import { Button, Dialog, IconButton, Select, Textarea, TextInput, Toast, ToastRegion } from '../components';
 import { ThemeToggle } from '../components/ThemeToggle';
+import { ProtectedText } from '../components/ProtectedText';
 import { useArcTheme } from '../theme';
+import { formatDate, formatLedgerNumber, formatNumber, formatRelativeTime, formatTime, formatUnit, formatYear } from '../intl';
 import { BookCover } from './BookCover';
 import { initialBooks, initialNotes, type Book, type ReadingNote } from './data';
 import { useReadingRoomUrlState, type LibraryFilter, type View } from './readingRoomUrlState';
 import './reading-room.css';
 type ToastState = { id: number; title: string; message: string; tone?: 'success' | 'info' | 'danger' };
 
-const navigation: { id: View; label: string; index: string; icon: typeof SunMedium }[] = [
-  { id: 'today', label: 'Today', index: '01', icon: SunMedium },
-  { id: 'library', label: 'Library', index: '02', icon: LibraryBig },
-  { id: 'notes', label: 'Notes', index: '03', icon: NotebookPen },
+const navigation: { id: View; label: string; index: number; icon: typeof SunMedium }[] = [
+  { id: 'today', label: 'Today', index: 1, icon: SunMedium },
+  { id: 'library', label: 'Library', index: 2, icon: LibraryBig },
+  { id: 'notes', label: 'Notes', index: 3, icon: NotebookPen },
 ];
+
+const editionNumber = 26;
+const editionYear = 2026;
+
+const editionDate = '2026-11-16T12:00:00';
+const readingCircleAt = '2026-11-19T19:30:00';
+const readingCircleTeaAt = '2026-11-19T19:00:00';
 
 const filters: { value: LibraryFilter; label: string }[] = [
   { value: 'all', label: 'All books' },
@@ -39,8 +48,23 @@ function ArcLeafMark() {
   );
 }
 
-function SectionLabel({ number, children }: { number: string; children: ReactNode }) {
-  return <p className="arc-reading-room__section-label"><span>{number}</span>{children}</p>;
+function SectionLabel({ number, children }: { number: string | number; children: ReactNode }) {
+  return <p className="arc-reading-room__section-label"><span>{typeof number === 'number' ? formatLedgerNumber(number) : number}</span>{children}</p>;
+}
+
+function formatChapter(book: Book) {
+  return `${formatLedgerNumber(book.chapterNumber)} — ${book.chapterTitle}`;
+}
+
+function NoteMetadata({ note }: { note: ReadingNote }) {
+  return (
+    <>
+      <time dateTime={note.createdAt}>{note.personal ? formatRelativeTime(note.createdAt) : formatDate(note.createdAt, { day: '2-digit', month: 'short' })}</time>
+      {note.page !== undefined && <> · p. {formatNumber(note.page)}</>}
+      {note.completed && ' · finished'}
+      {note.personal && ' · personal note'}
+    </>
+  );
 }
 
 interface BookCardProps {
@@ -50,7 +74,7 @@ interface BookCardProps {
 }
 
 function BookCard({ book, onOpen, onSave }: BookCardProps) {
-  const progressLabel = book.progress === 100 ? 'Finished' : book.progress === 0 ? 'Not started' : `${book.progress}% read`;
+  const progressLabel = book.progress === 100 ? 'Finished' : book.progress === 0 ? 'Not started' : `${formatUnit(book.progress, '%')} read`;
   return (
     <article className="arc-reading-room-book-card">
       <div className="arc-reading-room-book-card__cover-wrap">
@@ -71,7 +95,7 @@ function BookCard({ book, onOpen, onSave }: BookCardProps) {
         <p className="arc-reading-room-book-card__category">{book.category}</p>
         <h3><button type="button" onClick={() => onOpen(book)}>{book.title}</button></h3>
         <p className="arc-reading-room-book-card__author">{book.author}</p>
-        <div className="arc-reading-room-book-card__progress-label"><span>{progressLabel}</span><span>{book.minutesLeft > 0 ? `${book.minutesLeft} min` : 'Complete'}</span></div>
+        <div className="arc-reading-room-book-card__progress-label"><span>{progressLabel}</span><span>{book.minutesLeft > 0 ? formatUnit(book.minutesLeft, 'min') : 'Complete'}</span></div>
         <progress className="arc-reading-room-progress" max="100" value={book.progress} aria-label={`Reading progress for ${book.title}`} />
       </div>
     </article>
@@ -82,10 +106,10 @@ function EmptyLibrary({ onClear }: { onClear: () => void }) {
   return (
     <div className="arc-reading-room__empty">
       <Feather size={34} strokeWidth={1.3} aria-hidden="true" />
-      <p className="arc-reading-room__folio">NO. 000</p>
-      <h2>No books in this corner</h2>
+      <p className="arc-reading-room__folio">NO. {formatNumber(0, { minimumIntegerDigits: 3, useGrouping: false })}</p>
+      <h2>No Books in This Corner</h2>
       <p>Try another title or author, or clear the filters to bring the whole collection back.</p>
-      <Button variant="secondary" onClick={onClear}><X size={16} aria-hidden="true" />Clear search and filters</Button>
+      <Button variant="secondary" onClick={onClear}><X size={16} aria-hidden="true" />Clear Search and Filters</Button>
     </div>
   );
 }
@@ -143,7 +167,7 @@ export function ReadingRoom() {
     const book = books.find((item) => item.id === id);
     if (!book) return;
     setBooks((current) => current.map((item) => item.id === id ? { ...item, saved: !item.saved } : item));
-    announce(book.saved ? 'Removed from saved' : 'Saved for later', book.saved ? `${book.title} remains in your library.` : `${book.title} is tucked safely into your shelf.`, 'info');
+    announce(book.saved ? 'You Removed a Saved Book' : 'You Saved a Book for Later', book.saved ? `${book.title} remains in your library.` : `You saved ${book.title} to your shelf.`, 'info');
   }
 
   function markChapterRead() {
@@ -153,9 +177,9 @@ export function ReadingRoom() {
       ? { ...book, progress: nextProgress, minutesLeft: nextProgress === 100 ? 0 : Math.max(3, book.minutesLeft - 4) }
       : book));
     setSelectedBookId(null);
-    announce(nextProgress === 100 ? 'Book finished' : 'Chapter marked read', nextProgress === 100
+    announce(nextProgress === 100 ? 'You Finished the Book' : 'You Marked a Chapter Read', nextProgress === 100
       ? `You closed the final page of ${selectedBook.title}.`
-      : `${selectedBook.title} is now ${nextProgress}% read. Your place is saved.`);
+      : `You read ${formatUnit(nextProgress, '%')} of ${selectedBook.title}. Your place stays on this device.`);
   }
 
   function addNote(event: FormEvent<HTMLFormElement>) {
@@ -168,16 +192,16 @@ export function ReadingRoom() {
       return;
     }
     const book = books.find((item) => item.id === draftBookId) ?? books[0];
-    setNotes((current) => [{ id: Date.now(), bookId: book.id, text, date: 'Just now · personal note' }, ...current]);
+    setNotes((current) => [{ id: Date.now(), bookId: book.id, text, createdAt: new Date().toISOString(), personal: true }, ...current]);
     setDraftNote('');
     setNoteError('');
     setNoteDialogOpen(false);
-    announce('Note pressed into the margin', `Your thought on ${book.title} is saved on this device.`);
+    announce('You Pressed a Note into the Margin', `You saved your thought on ${book.title} on this device.`);
   }
 
   const readerFooter = selectedBook ? (
     <Button onClick={markChapterRead} disabled={selectedBook.progress === 100}>
-      <Check size={17} aria-hidden="true" />{selectedBook.progress === 100 ? 'Book completed' : 'Mark chapter read'}
+      <Check size={17} aria-hidden="true" />{selectedBook.progress === 100 ? 'Book Completed' : 'Mark Chapter Read'}
     </Button>
   ) : null;
 
@@ -187,11 +211,11 @@ export function ReadingRoom() {
       <header className="arc-reading-room__masthead">
         <div className="arc-reading-room__identity">
           <ArcLeafMark />
-          <div><span className="arc-reading-room__wordmark">Arc Reading Room</span><span className="arc-reading-room__tagline">A quieter place to read</span></div>
+          <div><span className="arc-reading-room__wordmark notranslate" translate="no" data-protected-text>Arc Reading Room</span><span className="arc-reading-room__tagline">A Quieter Place to Read</span></div>
         </div>
-        <div className="arc-reading-room__masthead-meta"><span>Private edition · No. 026</span><span>Made for slow afternoons</span></div>
+        <div className="arc-reading-room__masthead-meta"><span>Private edition · No. {formatLedgerNumber(editionNumber)}</span><span>Made for slow afternoons</span></div>
         <div className="arc-reading-room__masthead-actions">
-          <a className="arc-reading-room__system-link" href={`${import.meta.env.BASE_URL}arc/`}>Arc design system<span aria-hidden="true">↗</span></a>
+          <a className="arc-reading-room__system-link" href={`${import.meta.env.BASE_URL}arc/`}><ProtectedText>Arc</ProtectedText> design system<span aria-hidden="true">↗</span></a>
           <ThemeToggle theme={theme} onToggle={toggleTheme} />
         </div>
       </header>
@@ -202,20 +226,20 @@ export function ReadingRoom() {
             <p className="arc-reading-room__rail-label">Your reading desk</p>
             {navigation.map(({ id, label, index, icon: Icon }) => (
               <a key={id} href={getViewUrl(id)} aria-label={label} aria-current={view === id ? 'page' : undefined} onClick={(event) => followInternalLink(event, () => setView(id))}>
-                <span className="arc-reading-room__nav-index">{index}</span><Icon size={18} strokeWidth={1.65} aria-hidden="true" /><span>{label}</span>
-                {id === 'notes' && <span className="arc-reading-room__nav-count" aria-label={`${noteCount} notes`}>{noteCount}</span>}
+                <span className="arc-reading-room__nav-index">{formatLedgerNumber(index)}</span><Icon size={18} strokeWidth={1.65} aria-hidden="true" /><span>{label}</span>
+                {id === 'notes' && <span className="arc-reading-room__nav-count" aria-label={`${formatNumber(noteCount)} notes`}>{formatNumber(noteCount)}</span>}
               </a>
             ))}
           </nav>
           <div className="arc-reading-room__rail-bottom">
             <div className="arc-reading-room__quiet-stats">
               <p className="arc-reading-room__rail-label">A gentle ledger</p>
-              <dl><div><dt>Books in motion</dt><dd>{readingCount.toString().padStart(2, '0')}</dd></div><div><dt>Marginalia kept</dt><dd>{noteCount.toString().padStart(2, '0')}</dd></div></dl>
+              <dl><div><dt>Books in motion</dt><dd>{formatLedgerNumber(readingCount)}</dd></div><div><dt>Marginalia kept</dt><dd>{formatLedgerNumber(noteCount)}</dd></div></dl>
             </div>
             <div className="arc-reading-room__member-note">
               <ArcLeafMark />
               <p>“Attention is the rarest and purest form of generosity.”</p>
-              <span>Your member commonplace · 2026</span>
+              <span>Your member commonplace · {formatYear(editionYear)}</span>
             </div>
           </div>
         </aside>
@@ -224,28 +248,28 @@ export function ReadingRoom() {
           {view === 'today' && (
             <>
               <header className="arc-reading-room__page-header">
-                <div><p className="arc-reading-room__eyebrow">Monday’s edition · 16 November</p><h1>Make room<br />for a <em>story.</em></h1></div>
-                <div className="arc-reading-room__page-intro"><span className="arc-reading-room__folio">FOLIO 01</span><p>A small shelf, a comfortable chair, and nothing asking to be done quickly. Welcome back to your reading room.</p></div>
+                <div><p className="arc-reading-room__eyebrow">{formatDate(editionDate, { weekday: 'long' })}’s edition · <time dateTime={editionDate}>{formatDate(editionDate, { day: 'numeric', month: 'long' })}</time></p><h1>Make Room<br />for a <em>Story.</em></h1></div>
+                <div className="arc-reading-room__page-intro"><span className="arc-reading-room__folio">FOLIO {formatLedgerNumber(1)}</span><p>A small shelf, a comfortable chair, and nothing asking to be done quickly. Welcome back to your reading room.</p></div>
               </header>
 
               <section className="arc-reading-room-feature" aria-labelledby="continue-heading">
-                <div className="arc-reading-room-feature__art"><span className="arc-reading-room-feature__plate">ARC / CURRENT VOLUME</span><BookCover book={continueBook} /><span className="arc-reading-room-feature__edition">First room edition<br />Autumn · 2026</span></div>
+                <div className="arc-reading-room-feature__art"><span className="arc-reading-room-feature__plate"><ProtectedText>ARC</ProtectedText> / CURRENT VOLUME</span><BookCover book={continueBook} /><span className="arc-reading-room-feature__edition">First room edition<br />Autumn · {formatYear(editionYear)}</span></div>
                 <div className="arc-reading-room-feature__copy">
-                  <p className="arc-reading-room-feature__eyebrow"><BookOpen size={16} aria-hidden="true" />Continue reading</p>
-                  <span className="arc-reading-room-feature__chapter">{continueBook.chapter}</span>
+                  <p className="arc-reading-room-feature__eyebrow"><BookOpen size={16} aria-hidden="true" />Continue Reading {continueBook.title}</p>
+                  <span className="arc-reading-room-feature__chapter">{formatChapter(continueBook)}</span>
                   <h2 id="continue-heading">{continueBook.title}</h2>
                   <p className="arc-reading-room-feature__author">Written by {continueBook.author}</p>
                   <blockquote>“Some places are found by staying long enough to notice them.”</blockquote>
-                  <div className="arc-reading-room-feature__reading-meta"><span>{continueBook.progress}% through the volume</span><span><Clock3 size={14} aria-hidden="true" />{continueBook.minutesLeft} min left in chapter</span></div>
+                  <div className="arc-reading-room-feature__reading-meta"><span>{formatUnit(continueBook.progress, '%')} through the volume</span><span><Clock3 size={14} aria-hidden="true" />{formatUnit(continueBook.minutesLeft, 'min')} left in chapter</span></div>
                   <progress className="arc-reading-room-progress arc-reading-room-progress--feature" max="100" value={continueBook.progress} aria-label={`Reading progress for ${continueBook.title}`} />
-                  <div className="arc-reading-room-feature__actions"><Button onClick={() => openBook(continueBook)}>Continue reading<ArrowRight size={17} aria-hidden="true" /></Button><button type="button" className="arc-reading-room-feature__save" aria-pressed={continueBook.saved} onClick={() => toggleSaved(continueBook.id)}><Bookmark size={16} fill={continueBook.saved ? 'currentColor' : 'none'} aria-hidden="true" />{continueBook.saved ? 'Saved to your shelf' : 'Save for later'}</button></div>
+                  <div className="arc-reading-room-feature__actions"><Button onClick={() => openBook(continueBook)}>Continue Reading {continueBook.title}<ArrowRight size={17} aria-hidden="true" /></Button><button type="button" className="arc-reading-room-feature__save" aria-pressed={continueBook.saved} onClick={() => toggleSaved(continueBook.id)}><Bookmark size={16} fill={continueBook.saved ? 'currentColor' : 'none'} aria-hidden="true" />{continueBook.saved ? 'Saved to Your Shelf' : 'Save for Later'}</button></div>
                 </div>
               </section>
 
               <div className="arc-reading-room__today-grid">
                 <section className="arc-reading-room__shelf" aria-labelledby="shelf-heading">
-                  <div className="arc-reading-room__section-heading"><SectionLabel number="02">Curated by your shelf</SectionLabel><span className="arc-reading-room__folio">{books.length} VOLUMES</span></div>
-                  <div className="arc-reading-room__section-title-row"><h2 id="shelf-heading">A little of everything.</h2><a className="arc-reading-room__text-button" href={getViewUrl('library')} onClick={(event) => followInternalLink(event, () => setView('library'))}>Browse library<ArrowRight size={15} aria-hidden="true" /></a></div>
+                  <div className="arc-reading-room__section-heading"><SectionLabel number={2}>Curated by your shelf</SectionLabel><span className="arc-reading-room__folio">{formatNumber(books.length)} VOLUMES</span></div>
+                  <div className="arc-reading-room__section-title-row"><h2 id="shelf-heading">A Little of Everything.</h2><a className="arc-reading-room__text-button" href={getViewUrl('library')} onClick={(event) => followInternalLink(event, () => setView('library'))}>Browse Library<ArrowRight size={15} aria-hidden="true" /></a></div>
                   <div className="arc-reading-room__book-grid arc-reading-room__book-grid--shelf">
                     {[books[1], books[4], books[2]].map((book) => <BookCard key={book.id} book={book} onOpen={openBook} onSave={toggleSaved} />)}
                   </div>
@@ -253,16 +277,16 @@ export function ReadingRoom() {
 
                 <aside className="arc-reading-room__companion" aria-label="Reading circle and recent note">
                   <section className="arc-reading-room-club">
-                    <SectionLabel number="03">The reading circle</SectionLabel>
+                    <SectionLabel number={3}>The Reading Circle</SectionLabel>
                     <CalendarDays size={27} strokeWidth={1.25} aria-hidden="true" />
-                    <p className="arc-reading-room-club__date"><span>NOV</span><strong>19</strong><span>THU · 19:30</span></p>
-                    <h2>On paying attention</h2><p>A quiet conversation about Rowan Vale’s essays. Twelve chairs, tea at seven.</p>
+                    <time className="arc-reading-room-club__date" dateTime={readingCircleAt}><span>{formatDate(readingCircleAt, { month: 'short' })}</span><strong>{formatDate(readingCircleAt, { day: 'numeric' })}</strong><span>{formatDate(readingCircleAt, { weekday: 'short' })} · {formatTime(readingCircleAt)}</span></time>
+                    <h2>On Paying Attention</h2><p>A quiet conversation about Rowan Vale’s essays. {formatNumber(12)} chairs, tea at <time dateTime={readingCircleTeaAt}>{formatTime(readingCircleTeaAt)}</time>.</p>
                     <div className="arc-reading-room-club__attending"><span className="arc-reading-room-club__avatars" aria-hidden="true"><i>MS</i><i>IW</i><i>EN</i></span><span>You’re on the list</span><Check size={16} aria-hidden="true" /></div>
                   </section>
                   <section className="arc-reading-room-recent-note">
-                    <div className="arc-reading-room__section-heading"><SectionLabel number="04">From the margins</SectionLabel><Feather size={18} aria-hidden="true" /></div>
-                    <blockquote>{notes[0]?.text ?? 'Your next observation can live here.'}</blockquote><p>{notes[0]?.date ?? 'A fresh page'}</p>
-                    <a className="arc-reading-room__text-button" href={getViewUrl('notes')} onClick={(event) => followInternalLink(event, () => setView('notes'))}>Open commonplace book<ArrowRight size={15} aria-hidden="true" /></a>
+                    <div className="arc-reading-room__section-heading"><SectionLabel number={4}>From the Margins</SectionLabel><Feather size={18} aria-hidden="true" /></div>
+                    <blockquote>{notes[0]?.text ?? 'Your next observation can live here.'}</blockquote><p>{notes[0] ? <NoteMetadata note={notes[0]} /> : 'A fresh page'}</p>
+                    <a className="arc-reading-room__text-button" href={getViewUrl('notes')} onClick={(event) => followInternalLink(event, () => setView('notes'))}>Open Commonplace Book<ArrowRight size={15} aria-hidden="true" /></a>
                   </section>
                 </aside>
               </div>
@@ -272,15 +296,15 @@ export function ReadingRoom() {
           {view === 'library' && (
             <>
               <header className="arc-reading-room__page-header arc-reading-room__page-header--compact">
-                <div><p className="arc-reading-room__eyebrow">Your collection · {books.length} original volumes</p><h1>The <em>library.</em></h1></div>
-                <div className="arc-reading-room__page-intro"><span className="arc-reading-room__folio">CATALOGUE 02</span><p>Stories in progress, poems to return to, and unopened doors. Find your next quiet place.</p></div>
+                <div><p className="arc-reading-room__eyebrow">Your collection · {formatNumber(books.length)} original volumes</p><h1>The <em>Library.</em></h1></div>
+                <div className="arc-reading-room__page-intro"><span className="arc-reading-room__folio">CATALOGUE {formatLedgerNumber(2)}</span><p>Stories in progress, poems to return to, and unopened doors. Find your next quiet place.</p></div>
               </header>
               <section aria-labelledby="catalogue-heading">
-                <h2 id="catalogue-heading" className="arc-reading-room__visually-hidden">Library catalogue</h2>
+                <h2 id="catalogue-heading" className="arc-reading-room__visually-hidden">Library Catalogue</h2>
                 <form className="arc-reading-room-library-tools" role="search" onSubmit={(event) => event.preventDefault()}>
                   <TextInput type="search" name="library-search" autoComplete="off" label="Search your library" placeholder="Title or author…" value={search} onChange={(event) => setSearch(event.target.value)} />
                   <Select label="Filter by reading status" name="reading-status" autoComplete="off" value={filter} onChange={(event) => setFilter(event.target.value as LibraryFilter)}>{filters.map((item) => <option key={item.value} value={item.value}>{item.label}</option>)}</Select>
-                  <div className="arc-reading-room-library-tools__count" aria-live="polite"><Search size={17} aria-hidden="true" /><span>{filteredBooks.length} {filteredBooks.length === 1 ? 'volume' : 'volumes'} found</span></div>
+                  <div className="arc-reading-room-library-tools__count" aria-live="polite"><Search size={17} aria-hidden="true" /><span>{formatNumber(filteredBooks.length)} {filteredBooks.length === 1 ? 'volume' : 'volumes'} found</span></div>
                 </form>
                 {filteredBooks.length > 0 ? <div className="arc-reading-room__book-grid arc-reading-room__book-grid--library">{filteredBooks.map((book) => <BookCard key={book.id} book={book} onOpen={openBook} onSave={toggleSaved} />)}</div> : <EmptyLibrary onClear={clearCatalogue} />}
               </section>
@@ -290,34 +314,34 @@ export function ReadingRoom() {
           {view === 'notes' && (
             <>
               <header className="arc-reading-room__page-header arc-reading-room__page-header--compact">
-                <div><p className="arc-reading-room__eyebrow">Your commonplace book · {notes.length} entries</p><h1>From the <em>margins.</em></h1></div>
-                <div className="arc-reading-room__page-intro"><span className="arc-reading-room__folio">LEDGER 03</span><p>Loose thoughts, underlined sentences, and the ideas that stayed after the book was closed.</p><Button onClick={() => setNoteDialogOpen(true)}><Plus size={17} aria-hidden="true" />Add a note</Button></div>
+                <div><p className="arc-reading-room__eyebrow">Your commonplace book · {formatNumber(notes.length)} entries</p><h1>From the <em>Margins.</em></h1></div>
+                <div className="arc-reading-room__page-intro"><span className="arc-reading-room__folio">LEDGER {formatLedgerNumber(3)}</span><p>Loose thoughts, underlined sentences, and the ideas that stayed with you after you closed the book.</p><Button onClick={() => setNoteDialogOpen(true)}><Plus size={17} aria-hidden="true" />Add a Note</Button></div>
               </header>
               <section className="arc-reading-room-notes" aria-labelledby="notes-heading">
-                <div className="arc-reading-room__section-heading"><SectionLabel number="A—Z">Entries in order of noticing</SectionLabel><NotebookPen size={21} strokeWidth={1.4} aria-hidden="true" /></div>
-                <h2 id="notes-heading" className="arc-reading-room__visually-hidden">Reading notes</h2>
+                <div className="arc-reading-room__section-heading"><SectionLabel number="A—Z">Entries in Order of Noticing</SectionLabel><NotebookPen size={21} strokeWidth={1.4} aria-hidden="true" /></div>
+                <h2 id="notes-heading" className="arc-reading-room__visually-hidden">Reading Notes</h2>
                 {notes.map((note, index) => {
                   const book = books.find((item) => item.id === note.bookId);
-                  return <article className="arc-reading-room-note" key={note.id}><div className="arc-reading-room-note__number">{String(index + 1).padStart(2, '0')}</div><div className="arc-reading-room-note__body"><p className="arc-reading-room-note__book">{book?.title ?? 'Unbound thought'}</p><blockquote>{note.text}</blockquote><p className="arc-reading-room-note__date">{note.date} · {book?.author}</p></div><Feather size={20} strokeWidth={1.2} aria-hidden="true" /></article>;
+                  return <article className="arc-reading-room-note" key={note.id}><div className="arc-reading-room-note__number">{formatLedgerNumber(index + 1)}</div><div className="arc-reading-room-note__body"><p className="arc-reading-room-note__book">{book?.title ?? 'Unbound thought'}</p><blockquote>{note.text}</blockquote><p className="arc-reading-room-note__date"><NoteMetadata note={note} /> · {book?.author}</p></div><Feather size={20} strokeWidth={1.2} aria-hidden="true" /></article>;
                 })}
                 <div className="arc-reading-room-notes__colophon"><ArcLeafMark /><p>Keep what moves you.<br /><span>Leave the rest lightly.</span></p></div>
               </section>
             </>
           )}
 
-          <footer className="arc-reading-room__footer"><span>ARC READING ROOM</span><p>A private place for public stories.</p><span>EST. 2026 · FOLIO {view === 'today' ? '01' : view === 'library' ? '02' : '03'}</span></footer>
+          <footer className="arc-reading-room__footer"><span><ProtectedText>ARC READING ROOM</ProtectedText></span><p>A Private Place for Public Stories.</p><span>EST. {formatYear(editionYear)} · FOLIO {formatLedgerNumber(navigation.find((item) => item.id === view)?.index ?? 1)}</span></footer>
         </main>
       </div>
 
-      <Dialog open={Boolean(selectedBook)} onOpenChange={(open) => { if (!open) setSelectedBookId(null); }} title={selectedBook?.title ?? 'Reader'} description={selectedBook ? `${selectedBook.author} · ${selectedBook.chapter}` : undefined} footer={readerFooter}>
-        {selectedBook && <div className="arc-reading-room-reader"><div className="arc-reading-room-reader__opening" aria-hidden="true"><Sparkles size={25} strokeWidth={1.2} /><span>ARC / ORIGINAL FICTION & ESSAYS</span><span>{selectedBook.progress}%</span></div><p className="arc-reading-room-reader__dropcap">{selectedBook.excerpt[0]}</p>{selectedBook.excerpt.slice(1).map((paragraph) => <p key={paragraph}>{paragraph}</p>)}<div className="arc-reading-room-reader__end"><span>❧</span><span>Your progress is stored for this visit.</span></div></div>}
+      <Dialog open={Boolean(selectedBook)} onOpenChange={(open) => { if (!open) setSelectedBookId(null); }} title={selectedBook?.title ?? 'Reader'} description={selectedBook ? `${selectedBook.author} · ${formatChapter(selectedBook)}` : undefined} footer={readerFooter}>
+        {selectedBook && <div className="arc-reading-room-reader"><div className="arc-reading-room-reader__opening" aria-hidden="true"><Sparkles size={25} strokeWidth={1.2} /><span><ProtectedText>ARC</ProtectedText> / ORIGINAL FICTION & ESSAYS</span><span>{formatUnit(selectedBook.progress, '%')}</span></div><p className="arc-reading-room-reader__dropcap">{selectedBook.excerpt[0]}</p>{selectedBook.excerpt.slice(1).map((paragraph) => <p key={paragraph}>{paragraph}</p>)}<div className="arc-reading-room-reader__end"><span>❧</span><span>You keep your progress on this device for this visit.</span></div></div>}
       </Dialog>
 
-      <Dialog open={noteDialogOpen} onOpenChange={setNoteDialogOpen} title="Press a thought into the margin" description="Add a short personal note. It will appear at the top of your commonplace book.">
+      <Dialog open={noteDialogOpen} onOpenChange={setNoteDialogOpen} title="Press a Thought into the Margin" description="Add a short personal note. It will appear at the top of your commonplace book.">
         <form className="arc-reading-room-note-form" onSubmit={addNote}>
           <Select label="Book" name="note-book" autoComplete="off" value={draftBookId} onChange={(event) => setDraftBookId(event.target.value)}>{books.map((book) => <option key={book.id} value={book.id}>{book.title}</option>)}</Select>
-          <Textarea label="Your note" name="note" autoComplete="off" required maxLength={320} rows={5} value={draftNote} error={noteError || undefined} onChange={(event) => { setDraftNote(event.target.value); setNoteError(''); }} placeholder="A line about light gathering the room…" hint={`${draftNote.length}/320 characters · saved locally for this visit`} />
-          <div className="arc-reading-room-note-form__actions"><Button variant="quiet" onClick={() => setNoteDialogOpen(false)}>Cancel</Button><Button type="submit"><Feather size={16} aria-hidden="true" />Save note</Button></div>
+          <Textarea label="Your note" name="note" autoComplete="off" required maxLength={320} rows={5} value={draftNote} error={noteError || undefined} onChange={(event) => { setDraftNote(event.target.value); setNoteError(''); }} placeholder="A line about light gathering the room…" hint={`${formatNumber(draftNote.length)}/${formatNumber(320)} characters · you keep your note on this device for this visit`} />
+          <div className="arc-reading-room-note-form__actions"><Button variant="quiet" onClick={() => setNoteDialogOpen(false)}>Cancel</Button><Button type="submit"><Feather size={16} aria-hidden="true" />Save Note</Button></div>
         </form>
       </Dialog>
 

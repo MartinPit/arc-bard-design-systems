@@ -40,7 +40,7 @@
 .arc-code summary > span:first-child { display: flex; align-items: center; gap: 0.45rem; }
 .arc-code__action { color: var(--arc-ink-soft); font-size: 0.63rem; }
 .arc-code[open] .arc-code__action { font-size: 0; }
-.arc-code[open] .arc-code__action::after { content: 'Hide source'; font-size: 0.63rem; }
+.arc-code[open] .arc-code__action::after { content: 'Hide Source'; font-size: 0.63rem; }
 .arc-code summary:hover { background: var(--arc-paper-deep); }
 .arc-code pre { max-height: 320px; margin: 0; overflow: auto; padding: 1rem; border-top: 1px solid var(--arc-rule); background: var(--arc-ink); color: #f6e9d2; font: 0.72rem/1.65 var(--arc-font-mono); white-space: pre-wrap; overflow-wrap: anywhere; }
 .arc-copy-token { display: inline-flex; align-items: center; gap: 0.35rem; min-height: 2rem; padding: 0.3rem 0.45rem; border: 1px solid var(--arc-rule-strong); background: transparent; color: var(--arc-ink); font: 0.67rem var(--arc-font-mono); cursor: pointer; }

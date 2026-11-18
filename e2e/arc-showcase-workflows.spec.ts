@@ -4,12 +4,12 @@ test('Arc restores tab, source, collection, sort, and page state from a deep lin
   await page.goto('./arc/?tab=notes&source=button&source=tabs&q=clear&sort=desc&page=5#specimen-tabs');
 
   await expect(page.getByRole('tab', { name: 'Field notes' })).toHaveAttribute('aria-selected', 'true');
-  await expect(page.getByRole('tabpanel', { name: 'Field notes' })).toContainText('Observations in context');
+  await expect(page.getByRole('tabpanel', { name: 'Field notes' })).toContainText('Observations in Context');
   await expect(page.locator('#specimen-button details')).toHaveAttribute('open', '');
   await expect(page.locator('#specimen-tabs details')).toHaveAttribute('open', '');
   await expect(page.getByRole('searchbox', { name: 'Filter resources' })).toHaveValue('clear');
   await expect(page.getByRole('button', { name: 'Title: Z–A' })).toBeVisible();
-  await expect(page.locator('.arc-resource-row strong')).toHaveText(['Principles of clear revision']);
+  await expect(page.locator('.arc-resource-row strong')).toHaveText(['Principles of Clear Revision']);
   await expect(page.getByRole('link', { name: 'Page 5', exact: true })).toHaveAttribute('aria-current', 'page');
   await expect(page).toHaveURL(/#specimen-tabs$/);
   await expect(page.locator('#specimen-tabs')).toBeInViewport({ ratio: 0.01 });
@@ -63,7 +63,7 @@ test('Arc replaces search history while typing and pushes sort and clear-filter 
   await search.click();
   await search.pressSequentially('missing', { delay: 20 });
   await expect(search).toHaveValue('missing');
-  await expect(page.getByRole('heading', { name: 'No matching resources' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'No Matching Resources' })).toBeVisible();
   expect(await page.evaluate(() => history.length)).toBe(initialHistoryLength);
   await expect(page).toHaveURL(/q=missing#composition$/);
 
@@ -76,7 +76,7 @@ test('Arc replaces search history while typing and pushes sort and clear-filter 
   await page.goForward();
   await expect(page.getByRole('button', { name: 'Title: Z–A' })).toBeVisible();
 
-  await page.getByRole('button', { name: 'Clear filter' }).click();
+  await page.getByRole('button', { name: 'Clear Filter' }).click();
   await expect(search).toHaveValue('');
   await expect(page.locator('.arc-resource-row')).toHaveCount(3);
   await expect(page).toHaveURL(/sort=desc#composition$/);
@@ -85,7 +85,7 @@ test('Arc replaces search history while typing and pushes sort and clear-filter 
   await page.goBack();
   await expect(search).toHaveValue('missing');
   await expect(page.getByRole('button', { name: 'Title: Z–A' })).toBeVisible();
-  await expect(page.getByRole('heading', { name: 'No matching resources' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'No Matching Resources' })).toBeVisible();
   await page.goForward();
   await expect(search).toHaveValue('');
   await expect(page.locator('.arc-resource-row')).toHaveCount(3);
@@ -100,11 +100,11 @@ test('Arc safely validates unknown, duplicate, disabled, and out-of-range URL va
   await expect(page.getByRole('searchbox', { name: 'Filter resources' })).toHaveValue('');
   await expect(page.getByRole('button', { name: 'Title: A–Z' })).toBeVisible();
   await expect(page.getByRole('link', { name: 'Page 8', exact: true })).toHaveAttribute('aria-current', 'page');
-  await expect(page.getByRole('button', { name: 'Next page' })).toBeDisabled();
+  await expect(page.getByRole('button', { name: 'Next Page' })).toBeDisabled();
 
   await page.goto('./arc/?page=0');
   await expect(page.getByRole('link', { name: 'Page 1', exact: true })).toHaveAttribute('aria-current', 'page');
-  await expect(page.getByRole('button', { name: 'Previous page' })).toBeDisabled();
+  await expect(page.getByRole('button', { name: 'Previous Page' })).toBeDisabled();
 
   await page.goto('./arc/?page=not-a-number');
   await expect(page.getByRole('link', { name: 'Page 3', exact: true })).toHaveAttribute('aria-current', 'page');
@@ -205,13 +205,13 @@ test('Arc exposes reviewed form metadata, persistent live regions, and matching 
   const titleMessageId = await title.getAttribute('aria-describedby');
   const titleMessage = page.locator(`#${titleMessageId}`);
   await title.fill('abc');
-  await expect(titleMessage).toContainText('Use at least four characters.');
+  await expect(titleMessage).toContainText('Use at least 4 characters.');
   await expect(titleMessage).toHaveAttribute('role', 'status');
   await title.fill('Field notes');
   await expect(titleMessage).toContainText('Title is available');
   await expect(title).toHaveAttribute('aria-describedby', titleMessageId!);
 
-  await page.getByRole('button', { name: 'Create a collection' }).click();
+  await page.getByRole('button', { name: 'Create a Collection' }).click();
   await expect(page.getByRole('textbox', { name: 'Collection name' })).toHaveAttribute('name', 'collection-name');
   await expect(page.getByRole('textbox', { name: 'Collection name' })).toHaveAttribute('autocomplete', 'off');
   await page.keyboard.press('Escape');
@@ -224,6 +224,118 @@ test('Arc exposes reviewed form metadata, persistent live regions, and matching 
   await expect(page.locator('#specimen-select code')).toContainText('name="publication-status"');
   await expect(page.locator('#specimen-tabs code')).toContainText('value={tab} onValueChange={setTab}');
   await expect(page.locator('#specimen-pagination code')).toContainText('getPageUrl={getPageUrl}');
+});
+
+test.describe('Arc locale-ready content', () => {
+  test.use({ locale: 'de-DE', timezoneId: 'America/New_York' });
+
+  test('formats slider output and limits without changing its numeric value', async ({ page }) => {
+    await page.goto('./arc/#specimen-slider');
+
+    const slider = page.getByRole('slider', { name: 'Preview density' });
+    const specimen = page.locator('#specimen-slider');
+    await expect(slider).toHaveValue('64');
+    await expect(specimen.locator('.arc-slider').first().locator('output')).toHaveText('64\u00a0%');
+    await expect(specimen.locator('.arc-slider').first().locator('.arc-slider__limits span')).toHaveText(['0\u00a0%', '100\u00a0%']);
+    await expect(specimen.locator('.arc-demo-note')).toContainText('64\u00a0%');
+  });
+
+  test('formats dated table data and pagination from numeric values', async ({ page }) => {
+    await page.goto('./arc/?page=8#specimen-table');
+
+    const firstResource = page.getByRole('row').filter({ hasText: 'Botanical index' });
+    await expect(firstResource.locator('time')).toHaveAttribute('datetime', '2026-11-12');
+    await expect(firstResource.locator('time')).toHaveText('12.11.2026');
+    await expect(firstResource.locator('.arc-numeric')).toHaveText('128');
+
+    const pagination = page.locator('#specimen-pagination');
+    await expect(pagination.getByRole('link', { name: 'Page 8', exact: true })).toHaveAttribute('aria-current', 'page');
+    await expect(pagination.locator('.arc-demo-note')).toContainText('Page 8 of 8.');
+    await expect(page.locator('.arc-section-nav__links a').first().locator('span')).toHaveText('01');
+  });
+
+  test('formats editorial counts, ledger numbers, and number-unit pairs', async ({ page }) => {
+    await page.goto('./arc/');
+
+    await expect(page.locator('#components .arc-section-heading__number')).toHaveText('06');
+    await expect(page.locator('#components .arc-section-heading h2')).toHaveText('19 Instruments, One Register.');
+    await expect(page.locator('.arc-component-index a').first().locator('span')).toHaveText('01');
+    await expect(page.locator('.arc-swatch').first().locator('.arc-swatch__color span').first()).toHaveText('01');
+    await expect(page.locator('.arc-space-scale h3 span')).toHaveText('4\u00a0px Base');
+    await expect(page.locator('.arc-motion-specs article').first().locator('span')).toHaveText('120\u00a0ms');
+    await expect(page.locator('.arc-resource-fragment .arc-fragment__count')).toHaveText('3 / 3');
+    await expect(page.locator('.arc-resource-row').first()).toContainText('8\u00a0min read');
+    await expect(page.locator('.arc-decision-list li').last()).toContainText('320\u00a0pixels');
+  });
+});
+
+test('Arc falls back to the document language when browser languages are unavailable', async ({ page }) => {
+  await page.addInitScript(() => {
+    Object.defineProperty(navigator, 'languages', { configurable: true, get: () => [] });
+    Object.defineProperty(navigator, 'language', { configurable: true, get: () => '' });
+    const setDocumentLanguage = () => {
+      if (!document.documentElement) return false;
+      document.documentElement.lang = 'en-GB';
+      return true;
+    };
+    if (setDocumentLanguage()) return;
+    const observer = new MutationObserver(() => {
+      if (setDocumentLanguage()) observer.disconnect();
+    });
+    observer.observe(document, { childList: true, subtree: true });
+  });
+  await page.goto('./arc/#specimen-table');
+
+  await expect(page.getByRole('row').filter({ hasText: 'Botanical index' }).locator('time')).toHaveText('12 Nov 2026');
+});
+
+test('Arc protects brands, font names, code, and identifiers without protecting surrounding prose', async ({ page }) => {
+  await page.goto('./arc/');
+
+  await expect(page.locator('.arc-hero h1')).toHaveAttribute('translate', 'no');
+  await expect(page.locator('.arc-hero h1')).toHaveClass(/notranslate/);
+  const fontName = page.locator('#typography .arc-section-heading__intro [data-protected-text]').first();
+  await expect(fontName).toHaveText('Fraunces');
+  await expect(fontName).toHaveAttribute('translate', 'no');
+  await expect(page.locator('#typography .arc-section-heading__intro')).not.toHaveAttribute('translate', 'no');
+  await expect(page.locator('#specimen-button pre code')).toHaveAttribute('translate', 'no');
+  await expect(page.locator('#specimen-button pre code')).toHaveClass(/notranslate/);
+  await expect(page.locator('#specimen-button .arc-specimen__description')).not.toHaveAttribute('translate', 'no');
+  await expect(page.getByRole('textbox', { name: 'Reference (disabled)' })).toHaveAttribute('translate', 'no');
+
+  await page.getByRole('button', { name: 'Create a Collection' }).click();
+  const dialogIdentifier = page.getByRole('dialog').locator('[data-protected-text]').filter({ hasText: 'ARC-COLLECTION' });
+  await expect(dialogIdentifier).toHaveAttribute('translate', 'no');
+  await expect(dialogIdentifier.locator('..')).not.toHaveAttribute('translate', 'no');
+  await page.keyboard.press('Escape');
+
+  await page.getByRole('button', { name: 'Show Reference Toast' }).click();
+  const toastIdentifier = page.getByRole('status').locator('[data-protected-text]').filter({ hasText: 'ARCHIVALREFERENCE' });
+  await expect(toastIdentifier).toHaveAttribute('translate', 'no');
+  await expect(toastIdentifier.locator('..')).not.toHaveAttribute('translate', 'no');
+});
+
+test('Arc uses specific title-case actions, loading ellipses, and matching source examples', async ({ page }) => {
+  await page.goto('./arc/#specimen-button');
+
+  const save = page.getByRole('button', { name: 'Save Changes', exact: true });
+  await save.click();
+  await expect(page.getByRole('button', { name: 'Saving Changes…', exact: true })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Preview Specimen', exact: true })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'View Specimen Details', exact: true })).toBeVisible();
+  await expect(page.locator('#specimen-button code')).toContainText('Save Changes');
+  await expect(page.locator('#specimen-button code')).toContainText('Preview Specimen');
+  await expect(page.locator('#specimen-button code')).toContainText('Saving Changes…');
+  await expect(page.locator('#specimen-slider code')).toContainText("formatUnit(density, '%')");
+  await expect(page.locator('#specimen-table code')).toContainText('formatDate(row.revisedAt)');
+  await expect(page.locator('#specimen-table code')).toContainText('formatNumber(row.entries)');
+
+  const source = page.locator('#specimen-button summary');
+  await expect(source).toContainText('React Example');
+  await expect(source).toContainText('View Source');
+  await source.click();
+  expect(await source.locator('.arc-code__action').evaluate((element) => getComputedStyle(element, '::after').content)).toBe('"Hide Source"');
+  await expect(page.locator('#specimen-dialog .arc-demo-note')).toContainText('Shift\u00a0+\u00a0Tab');
 });
 
 test('Arc announces clipboard success with a matching visible control state', async ({ page }) => {

@@ -37,13 +37,13 @@ describe('ArcShowcase', () => {
 
   it('keeps button icons and labels in the shared content wrapper', () => {
     render(<ArcShowcase />);
-    const create = screen.getByRole('button', { name: 'Create a collection' });
+    const create = screen.getByRole('button', { name: 'Create a Collection' });
     const createContent = create.querySelector(':scope > .arc-button__content');
     expect(createContent).toBeTruthy();
     expect(createContent?.querySelector('svg')).toBeTruthy();
-    expect(screen.getByRole('link', { name: 'Explore components' }).querySelector('.arc-button__content svg')).toBeTruthy();
-    fireEvent.click(screen.getByRole('button', { name: 'Save changes' }));
-    const saving = screen.getByRole('button', { name: 'Saving changes' });
+    expect(screen.getByRole('link', { name: 'Explore Components' }).querySelector('.arc-button__content svg')).toBeTruthy();
+    fireEvent.click(screen.getByRole('button', { name: 'Save Changes' }));
+    const saving = screen.getByRole('button', { name: 'Saving Changes…' });
     expect(saving.querySelector(':scope > .arc-button__loader')).toBeTruthy();
     expect(saving.querySelector(':scope > .arc-button__content')).toBeTruthy();
   });
@@ -54,7 +54,7 @@ describe('ArcShowcase', () => {
     const notes = screen.getByRole('tab', { name: 'Field notes' });
     fireEvent.click(notes);
     expect(notes.getAttribute('aria-selected')).toBe('true');
-    expect(screen.getByRole('tabpanel').textContent).toContain('Observations in context');
+    expect(screen.getByRole('tabpanel').textContent).toContain('Observations in Context');
     fireEvent.keyDown(notes, { key: 'ArrowRight' });
     expect(screen.getByRole('tab', { name: 'History' }).getAttribute('aria-selected')).toBe('true');
     fireEvent.keyDown(overview, { key: 'End' });
@@ -63,10 +63,10 @@ describe('ArcShowcase', () => {
 
   it('opens an accessible dialog, receives focus, and closes with Escape', async () => {
     render(<ArcShowcase />);
-    const trigger = screen.getByRole('button', { name: 'Create a collection' });
+    const trigger = screen.getByRole('button', { name: 'Create a Collection' });
     trigger.focus();
     fireEvent.click(trigger);
-    const dialog = await screen.findByRole('dialog', { name: 'Create a collection' });
+    const dialog = await screen.findByRole('dialog', { name: 'Create a Collection' });
     expect(dialog.getAttribute('aria-modal')).toBe('true');
     await waitFor(() => expect(document.activeElement).toBe(within(dialog).getByLabelText(/Collection name/)));
     fireEvent.keyDown(document, { key: 'Escape' });
@@ -85,24 +85,24 @@ describe('ArcShowcase', () => {
 
   it('adds and dismisses a status toast without taking focus', async () => {
     render(<ArcShowcase />);
-    const trigger = screen.getByRole('button', { name: 'Show success toast' });
+    const trigger = screen.getByRole('button', { name: 'Show Success Toast' });
     trigger.focus();
     fireEvent.click(trigger);
-    const message = await screen.findByText('Changes preserved');
+    const message = await screen.findByText('You Saved Changes');
     expect(message.closest('[role="status"]')?.textContent).toContain('Your local edits are ready to review.');
     expect(document.activeElement).toBe(trigger);
-    fireEvent.click(screen.getByRole('button', { name: 'Dismiss Changes preserved' }));
-    expect(screen.queryByText('Changes preserved')).toBeNull();
+    fireEvent.click(screen.getByRole('button', { name: 'Dismiss You Saved Changes' }));
+    expect(screen.queryByText('You Saved Changes')).toBeNull();
   });
 
   it('supports local filtering, including an empty state and recovery', () => {
     render(<ArcShowcase />);
     const filter = screen.getByRole('searchbox', { name: 'Filter resources' });
     fireEvent.change(filter, { target: { value: 'not-a-resource' } });
-    expect(screen.getByRole('heading', { name: 'No matching resources' })).toBeTruthy();
-    fireEvent.click(screen.getByRole('button', { name: 'Clear filter' }));
+    expect(screen.getByRole('heading', { name: 'No Matching Resources' })).toBeTruthy();
+    fireEvent.click(screen.getByRole('button', { name: 'Clear Filter' }));
     expect((filter as HTMLInputElement).value).toBe('');
-    expect(screen.getByText('Principles of clear revision')).toBeTruthy();
+    expect(screen.getByText('Principles of Clear Revision')).toBeTruthy();
   });
 
   it('has no detectable axe accessibility violations', async () => {
@@ -110,4 +110,5 @@ describe('ArcShowcase', () => {
     const results = await axe.run(document.body);
     expect(results.violations).toEqual([]);
   }, 15000);
+
 });

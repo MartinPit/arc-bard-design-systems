@@ -1,6 +1,7 @@
 import { useEffect, useId, useRef, useState, type ReactNode } from 'react';
 import { Check, Code2, Copy } from 'lucide-react';
 import { getSpecimenSourceId, useShowcaseUrlState } from '../showcaseUrlState';
+import { ProtectedText } from './ProtectedText';
 
 export function Specimen({
   title,
@@ -41,10 +42,10 @@ export function Specimen({
         }}
       >
         <summary>
-          <span><Code2 size={15} aria-hidden="true" /> React example</span>
-          <span className="arc-code__action">View source</span>
+          <span><Code2 size={15} aria-hidden="true" /> <ProtectedText>React</ProtectedText> Example</span>
+          <span className="arc-code__action">View Source</span>
         </summary>
-        <pre tabIndex={0}><code>{code}</code></pre>
+        <pre tabIndex={0}><code translate="no" className="notranslate">{code}</code></pre>
       </details>
     </article>
   );
@@ -78,7 +79,7 @@ export function CopyToken({ value, label }: { value: string; label: string }) {
         aria-describedby={statusId}
       >
         {outcome === 'success' ? <Check size={15} aria-hidden="true" /> : <Copy size={15} aria-hidden="true" />}
-        <span>{outcome === 'success' ? 'Copied' : value}</span>
+        <span>{outcome === 'success' ? 'Copied' : <ProtectedText>{value}</ProtectedText>}</span>
       </button>
       <span
         className={`arc-copy-token__status${outcome === 'failure' ? ' arc-copy-token__status--error' : ''}`}
@@ -87,8 +88,8 @@ export function CopyToken({ value, label }: { value: string; label: string }) {
         aria-live="polite"
         aria-atomic="true"
       >
-        {outcome === 'success' && `Copied ${value} to the clipboard.`}
-        {outcome === 'failure' && `Couldn’t copy ${value}. Copy the value manually.`}
+        {outcome === 'success' && <>Copied <ProtectedText>{value}</ProtectedText> to the clipboard.</>}
+        {outcome === 'failure' && <>Couldn’t copy <ProtectedText>{value}</ProtectedText>. Copy the value manually.</>}
       </span>
     </div>
   );

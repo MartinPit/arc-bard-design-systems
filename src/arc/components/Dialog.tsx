@@ -85,7 +85,7 @@ export function Dialog({ open, onOpenChange, title, description, children, foote
               <p className="arc-eyebrow">Focused dialogue</p>
               <h2 id={titleId}>{title}</h2>
             </div>
-            <IconButton label="Close dialog" variant="quiet" onClick={() => onOpenChange(false)}>
+            <IconButton label="Close Dialog" variant="quiet" onClick={() => onOpenChange(false)}>
               <X size={20} aria-hidden="true" />
             </IconButton>
           </div>

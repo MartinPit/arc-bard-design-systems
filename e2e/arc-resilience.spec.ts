@@ -1,7 +1,7 @@
 import { expect, test, type Locator, type Page } from '@playwright/test';
 
 async function placeAndOpenPopover(page: Page, vertical: 'top' | 'bottom' | 'center', horizontal: 'left' | 'right' | 'center') {
-  const trigger = page.locator('#specimen-popover').getByRole('button', { name: 'Display options' });
+  const trigger = page.locator('#specimen-popover').getByRole('button', { name: 'Display Options' });
   await trigger.evaluate((button, placement) => {
     button.style.position = 'fixed';
     button.style.margin = '0';
@@ -12,7 +12,7 @@ async function placeAndOpenPopover(page: Page, vertical: 'top' | 'bottom' | 'cen
     button.style.right = placement.horizontal === 'right' ? '0px' : 'auto';
     button.click();
   }, { vertical, horizontal });
-  const panel = page.getByRole('dialog', { name: 'Display options', exact: true });
+  const panel = page.getByRole('dialog', { name: 'Display Options', exact: true });
   await expect(panel).toBeVisible();
   await expect(panel).toBeFocused();
   return { trigger, panel };
@@ -106,18 +106,18 @@ test('Arc toasts stack by content height in one safe, reduced-motion notificatio
   await page.emulateMedia({ colorScheme: 'dark', reducedMotion: 'reduce' });
   await page.goto('./arc/#specimen-toast');
 
-  await page.getByRole('button', { name: 'Show success toast' }).click();
+  await page.getByRole('button', { name: 'Show Success Toast' }).click();
   await page.getByRole('button', { name: 'Show review toast' }).click();
-  await page.getByRole('button', { name: 'Show reference toast' }).click();
+  await page.getByRole('button', { name: 'Show Reference Toast' }).click();
 
   const region = page.getByRole('region', { name: 'Notifications' });
   await expect(region).toHaveCount(1);
   await expect(region).toHaveClass(/arc-root/);
   const toasts = region.locator('.arc-toast');
   await expect(toasts).toHaveCount(3);
-  await expect(toasts.filter({ hasText: 'Changes preserved' })).toHaveRole('status');
-  await expect(toasts.filter({ hasText: 'Related reference ready' })).toHaveRole('status');
-  await expect(toasts.filter({ hasText: 'Review recommended' })).toHaveRole('alert');
+  await expect(toasts.filter({ hasText: 'You Saved Changes' })).toHaveRole('status');
+  await expect(toasts.filter({ hasText: 'Related Reference Ready' })).toHaveRole('status');
+  await expect(toasts.filter({ hasText: 'Complete Your Review' })).toHaveRole('alert');
 
   const rectangles = await toasts.evaluateAll((elements) => elements.map((element) => {
     const rect = element.getBoundingClientRect();
@@ -142,9 +142,9 @@ test('Arc toasts stack by content height in one safe, reduced-motion notificatio
   });
   await expect(region).toHaveCSS('right', '28px');
   await expect(region).toHaveCSS('bottom', '32px');
-  await expect(page.getByRole('button', { name: 'Show reference toast' })).toBeFocused();
+  await expect(page.getByRole('button', { name: 'Show Reference Toast' })).toBeFocused();
 
-  await toasts.filter({ hasText: 'Changes preserved' }).getByRole('button', { name: 'Dismiss Changes preserved' }).click();
+  await toasts.filter({ hasText: 'You Saved Changes' }).getByRole('button', { name: 'Dismiss You Saved Changes' }).click();
   await expect(toasts).toHaveCount(2);
 });
 
@@ -152,7 +152,7 @@ test('Arc cards and enlarged copy reflow while data tables retain intentional ho
   await page.setViewportSize({ width: 320, height: 640 });
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.goto('./arc/#specimen-card');
-  await page.getByRole('button', { name: 'Read notes' }).click();
+  await page.getByRole('button', { name: 'Read Summary Notes' }).click();
   await expect(page.locator('#specimen-card').getByText('ARCHIVECARDREFERENCE', { exact: false })).toBeVisible();
   await page.evaluate(() => { document.documentElement.style.fontSize = '200%'; });
 
@@ -188,10 +188,10 @@ test('Reading Room wraps user-authored long notes in both quotation placements',
   await expect(page.locator('meta[name="viewport"]')).toHaveAttribute('content', /viewport-fit=cover/);
 
   const longNote = `${'LIGHTGATHERINGQUIETROOM-'.repeat(7)} A long observation can remain legible without breaking the reading column.`;
-  await page.getByRole('button', { name: 'Add a note' }).click();
-  const dialog = page.getByRole('dialog', { name: 'Press a thought into the margin' });
+  await page.getByRole('button', { name: 'Add a Note' }).click();
+  const dialog = page.getByRole('dialog', { name: 'Press a Thought into the Margin' });
   await dialog.getByRole('textbox', { name: 'Your note' }).fill(longNote);
-  await dialog.getByRole('button', { name: 'Save note' }).click();
+  await dialog.getByRole('button', { name: 'Save Note' }).click();
 
   const savedNote = page.locator('.arc-reading-room-note').first();
   await expect(savedNote.locator('blockquote')).toHaveText(longNote);
@@ -218,9 +218,9 @@ test('Arc dialogs respect safe usable space, wrap realistic content, and contain
     document.documentElement.style.setProperty('--arc-safe-area-inset-left', '16px');
   });
 
-  const trigger = page.getByRole('button', { name: 'Create a collection' });
+  const trigger = page.getByRole('button', { name: 'Create a Collection' });
   await trigger.click();
-  const dialog = page.getByRole('dialog', { name: 'Create a collection' });
+  const dialog = page.getByRole('dialog', { name: 'Create a Collection' });
   const backdrop = page.locator('.arc-dialog-backdrop');
   await expect(dialog).toBeVisible();
   await expect(backdrop).toHaveCSS('padding-top', '28px');
@@ -230,7 +230,7 @@ test('Arc dialogs respect safe usable space, wrap realistic content, and contain
   await expectWithinViewport(page, '.arc-dialog');
 
   await dialog.locator('h2').evaluate((element) => {
-    element.textContent = `Create a collection ${'WITHOUTBREAKS-ARCHIVETITLE-'.repeat(3)}`;
+    element.textContent = `Create a Collection ${'WITHOUTBREAKS-ARCHIVETITLE-'.repeat(3)}`;
   });
   await dialog.locator('.arc-dialog__description').evaluate((element) => {
     element.textContent = `A realistic long description for a collection of references, annotations, and reading notes. ${'WITHOUTBREAKS-ARCHIVEDESCRIPTION-'.repeat(3)}`;

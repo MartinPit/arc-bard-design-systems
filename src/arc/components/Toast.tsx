@@ -1,4 +1,4 @@
-import { useId } from 'react';
+import { useId, type ReactNode } from 'react';
 import { CheckCircle2, CircleAlert, Info, X } from 'lucide-react';
 import { IconButton } from './IconButton';
 import { join } from './shared';
@@ -6,7 +6,7 @@ import './Toast.css';
 
 export interface ToastProps {
   title: string;
-  message: string;
+  message: ReactNode;
   tone?: 'success' | 'info' | 'danger';
   onDismiss: () => void;
 }
