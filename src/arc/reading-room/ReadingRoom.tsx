@@ -317,7 +317,7 @@ export function ReadingRoom() {
                 <div><p className="arc-reading-room__eyebrow">Your commonplace book · {formatNumber(notes.length)} entries</p><h1>From the <em>Margins.</em></h1></div>
                 <div className="arc-reading-room__page-intro"><span className="arc-reading-room__folio">LEDGER {formatLedgerNumber(3)}</span><p>Loose thoughts, underlined sentences, and the ideas that stayed with you after you closed the book.</p><Button onClick={() => setNoteDialogOpen(true)}><Plus size={17} aria-hidden="true" />Add a Note</Button></div>
               </header>
-              <section className="arc-reading-room-notes" aria-labelledby="notes-heading">
+              <section className={`arc-reading-room-notes${notes.length > 50 ? ' arc-reading-room-notes--large' : ''}`} aria-labelledby="notes-heading">
                 <div className="arc-reading-room__section-heading"><SectionLabel number="A—Z">Entries in Order of Noticing</SectionLabel><NotebookPen size={21} strokeWidth={1.4} aria-hidden="true" /></div>
                 <h2 id="notes-heading" className="arc-reading-room__visually-hidden">Reading Notes</h2>
                 {notes.map((note, index) => {

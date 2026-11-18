@@ -132,6 +132,7 @@
 .arc-reading-room-notes { border-top: 1px solid var(--arc-purple); }
 .arc-reading-room-notes > .arc-reading-room__section-heading { border-top: 0; }
 .arc-reading-room-note { display: grid; grid-template-columns: 3.4rem minmax(0, 1fr) auto; gap: 1.5rem; padding: 2rem 0; border-bottom: 1px solid var(--arc-rule-strong); }
+.arc-reading-room-notes--large .arc-reading-room-note { content-visibility: auto; contain-intrinsic-block-size: auto 10rem; }
 .arc-reading-room-note__body { min-width: 0; overflow-wrap: anywhere; }
 .arc-reading-room-note__number { padding-top: 0.35rem; color: var(--arc-magenta-deep); font: italic 450 1.6rem/1 var(--arc-font-display); }
 .arc-reading-room-note__book { margin: 0 0 0.8rem; color: var(--arc-ink-soft); font: 500 0.62rem/1.4 var(--arc-font-mono); letter-spacing: 0.09em; text-transform: uppercase; }

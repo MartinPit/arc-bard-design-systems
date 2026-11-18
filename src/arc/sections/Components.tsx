@@ -352,11 +352,30 @@ const resourceRows = [
   { resource: <span className="arc-resource-cell"><FileText size={15} aria-hidden="true" /> Editorial methods</span>, kind: 'Guide', status: <Badge tone="info">In review</Badge>, revisedAt: '2026-11-08', entries: 42 },
   { resource: <span className="arc-resource-cell"><Mail size={15} aria-hidden="true" /> Correspondence patterns</span>, kind: 'Collection', status: <Badge>Draft</Badge>, revisedAt: '2026-11-01', entries: 86 },
 ];
+const largeResourceTopics = ['Botanical index', 'Editorial methods', 'Correspondence patterns', 'Reading observations', 'Garden marginalia', 'Commonplace references'];
+const largeResourceVariants = [
+  { kind: 'Reference', status: <Badge tone="success">Current</Badge> },
+  { kind: 'Guide', status: <Badge tone="info">In review</Badge> },
+  { kind: 'Collection', status: <Badge>Draft</Badge> },
+];
+const largeResourceRows = Array.from({ length: 51 }, (_, index) => {
+  const title = index === 50 ? 'Catalogue of garden letters' : `${largeResourceTopics[index % largeResourceTopics.length]} ${formatLedgerNumber(index + 1)}`;
+  const month = String((index % 9) + 1).padStart(2, '0');
+  const day = String((index % 27) + 1).padStart(2, '0');
+  return {
+    resource: <span className="arc-resource-cell"><FileText size={15} aria-hidden="true" />{title}</span>,
+    ...largeResourceVariants[index % largeResourceVariants.length],
+    revisedAt: `2026-${month}-${day}`,
+    entries: 24 + index * 3,
+  };
+});
 function TableSpecimen() {
   const [empty, setEmpty] = useState(false);
+  const [large, setLarge] = useState(false);
+  const rows = large ? largeResourceRows : resourceRows;
   return (
-    <Specimen title="Table" description="Semantic headers, a useful caption, and numeric alignment make comparison easy. Small screens expose a labeled horizontal scroll region." code={`<Table caption="Resource register"\n  columns={[{ key: 'resource', label: 'Resource' }, …]}\n  rows={rows.map((row) => ({ ...row,\n    revised: <time dateTime={row.revisedAt}>{formatDate(row.revisedAt)}</time>,\n    entries: formatNumber(row.entries) }))}\n  emptyMessage="No resources match this view." />`}>
-      <div className="arc-demo-stack"><Table caption="Resource register" columns={[{ key: 'resource', label: 'Resource' }, { key: 'kind', label: 'Format' }, { key: 'status', label: 'Status' }, { key: 'revised', label: 'Revised' }, { key: 'entries', label: 'Entries', numeric: true }]} rows={empty ? [] : resourceRows.map(({ revisedAt, entries, ...row }) => ({ ...row, revised: <time dateTime={revisedAt}>{formatDate(revisedAt)}</time>, entries: formatNumber(entries) }))} emptyMessage="No resources match this view. Reset the example to restore them." /><Button variant="quiet" onClick={() => setEmpty((value) => !value)}>{empty ? 'Restore Resource Rows' : 'Show Empty Table State'}</Button></div>
+    <Specimen title="Table" description="Semantic headers, a useful caption, and numeric alignment make comparison easy. Beyond 50 rows, pagination bounds rendering without changing the native table or its reading order." code={`<Table caption="Resource register"\n  columns={[{ key: 'resource', label: 'Resource' }, …]}\n  rows={rows.map((row) => ({ ...row,\n    revised: <time dateTime={row.revisedAt}>{formatDate(row.revisedAt)}</time>,\n    entries: formatNumber(row.entries) }))}\n  emptyMessage="No resources match this view." />`}>
+      <div className="arc-demo-stack"><Table caption="Resource register" columns={[{ key: 'resource', label: 'Resource' }, { key: 'kind', label: 'Format' }, { key: 'status', label: 'Status' }, { key: 'revised', label: 'Revised' }, { key: 'entries', label: 'Entries', numeric: true }]} rows={empty ? [] : rows.map(({ revisedAt, entries, ...row }) => ({ ...row, revised: <time dateTime={revisedAt}>{formatDate(revisedAt)}</time>, entries: formatNumber(entries) }))} emptyMessage="No resources match this view. Reset the example to restore them." /><div className="arc-demo-row"><Button variant="quiet" onClick={() => setLarge((value) => !value)}>{large ? 'Show Original Resource Rows' : 'Show 51 Resource Rows'}</Button><Button variant="quiet" onClick={() => setEmpty((value) => !value)}>{empty ? 'Restore Resource Rows' : 'Show Empty Table State'}</Button></div></div>
     </Specimen>
   );
 }
