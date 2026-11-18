@@ -2,7 +2,7 @@
 .arc-icon-button--ink { background: var(--arc-aubergine); color: var(--arc-paper-raised); }
 .arc-icon-button--quiet { border-color: transparent; background: transparent; }
 .arc-icon-button:hover:not(:disabled) { background: var(--arc-paper-deep); transform: translateY(-1px); }
-.arc-icon-button--ink:hover:not(:disabled) { background: #512360; }
-.arc-icon-button[aria-pressed='true'] { background: var(--arc-marigold); color: var(--arc-ink); }
+.arc-icon-button--ink:hover:not(:disabled) { background: var(--arc-primary-hover); }
+.arc-icon-button[aria-pressed='true'] { background: var(--arc-marigold); color: var(--arc-accent-ink); }
 .arc-icon-button:active:not(:disabled) { transform: translateY(1px); }
 .arc-icon-button:disabled { opacity: 0.42; cursor: not-allowed; }

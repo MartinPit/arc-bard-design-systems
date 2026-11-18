@@ -57,6 +57,24 @@ test('Arc section-brand and footer links provide distinct hover feedback', async
   await expect.poll(() => footer.evaluate((element) => getComputedStyle(element).color)).not.toBe(footerColor);
 });
 
+test('Arc checkbox, radio, and switch controls provide visible hover feedback', async ({ page }) => {
+  await page.goto('./arc/');
+
+  const cases = [
+    { control: page.getByRole('checkbox', { name: /Include field notes/ }), visual: '.arc-choice__mark' },
+    { control: page.getByRole('radio', { name: 'Weekly digest' }), visual: '.arc-choice__mark' },
+    { control: page.getByRole('switch', { name: /Revision notifications/ }), visual: '.arc-switch__track' },
+  ];
+  for (const { control, visual } of cases) {
+    const label = control.locator('..');
+    const mark = label.locator(visual);
+    const restingColor = await mark.evaluate((element) => getComputedStyle(element).borderColor);
+    await label.hover();
+    await expect.poll(() => mark.evaluate((element) => getComputedStyle(element).borderColor)).not.toBe(restingColor);
+    await page.mouse.move(0, 0);
+  }
+});
+
 test('Arc reviewed transitions and keyframes stay compositor-friendly without breaking motion controls', async ({ page }) => {
   await page.goto('./arc/');
 

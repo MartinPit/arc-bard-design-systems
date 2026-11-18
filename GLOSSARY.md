@@ -20,6 +20,10 @@ _Avoid_: main system, shared theme
 A single page presenting one design system’s foundations, reusable components, composition patterns, and usage guidance. It is not an example product or prototype application.
 _Avoid_: demo app, product prototype
 
+**Reading Room**:
+A separate product prototype built with Arc's approved components and visual language. It is a working personal reading application, not another design-system showcase or a source of shared styled components.
+_Avoid_: second Arc showcase, Bard app
+
 **Design independence**:
 Arc and Bard each follow their own visual language; neither adopts a visual decision merely to match the other. A shared component inventory does not imply shared styling.
 _Avoid_: visual alignment, shared theme

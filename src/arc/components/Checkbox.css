@@ -1,6 +1,7 @@
 .arc-choice > input { position: absolute; width: 1.25rem; height: 1.25rem; margin: 0.15rem 0 0; opacity: 0; }
 .arc-choice__mark { display: grid; place-items: center; flex: 0 0 auto; width: 1.25rem; height: 1.25rem; margin-top: 0.14rem; border: 1px solid var(--arc-purple); border-radius: 2px; background: var(--arc-paper-raised); color: transparent; }
 .arc-choice input:checked + .arc-choice__mark { background: var(--arc-aubergine); color: var(--arc-paper-raised); }
+.arc-choice:hover:not(:has(input:disabled)) input + .arc-choice__mark { border-color: var(--arc-magenta-deep); }
 .arc-choice input:focus-visible + .arc-choice__mark { outline: 3px solid var(--arc-focus); outline-offset: 3px; }
 .arc-choice input:disabled ~ span { opacity: 0.55; }
 .arc-choice:has(input:disabled) { cursor: not-allowed; }

@@ -2,7 +2,7 @@
 .arc-field__label { display: block; margin-bottom: 0.4rem; color: var(--arc-ink); font-size: var(--arc-text-sm); font-weight: 650; line-height: 1.4; }
 .arc-field__label > span { color: var(--arc-danger); }
 .arc-input { width: 100%; min-height: 2.85rem; padding: 0.7rem 0.85rem; border: 1px solid var(--arc-rule-strong); border-radius: var(--arc-radius-sm); background: var(--arc-paper-raised); color: var(--arc-ink); font-size: var(--arc-text-sm); line-height: 1.4; }
-.arc-input::placeholder { color: #74667a; opacity: 1; }
+.arc-input::placeholder { color: var(--arc-input-placeholder); opacity: 1; }
 .arc-input:hover:not(:disabled) { border-color: var(--arc-purple); }
 .arc-input:focus-visible { border-color: var(--arc-focus); box-shadow: inset 3px 0 0 var(--arc-focus); }
 .arc-input--invalid { border-color: var(--arc-danger); box-shadow: inset 3px 0 0 var(--arc-danger); }

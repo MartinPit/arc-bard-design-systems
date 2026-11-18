@@ -11,6 +11,7 @@ export default defineConfig({
       input: {
         portal: fileURLToPath(new URL('./index.html', import.meta.url)),
         arc: fileURLToPath(new URL('./arc/index.html', import.meta.url)),
+        arcReadingRoom: fileURLToPath(new URL('./arc/reading-room/index.html', import.meta.url)),
         bard: fileURLToPath(new URL('./bard/index.html', import.meta.url)),
       },
     },

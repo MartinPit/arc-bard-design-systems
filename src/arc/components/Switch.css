@@ -3,6 +3,7 @@
 .arc-switch__track { position: relative; flex: 0 0 auto; width: 2.9rem; height: 1.65rem; border: 1px solid var(--arc-purple); border-radius: 2rem; background: var(--arc-paper-deep); }
 .arc-switch__track > span { position: absolute; top: 3px; left: 3px; width: 1.05rem; height: 1.05rem; border-radius: 50%; background: var(--arc-purple-deep); transition: transform var(--arc-duration-fast) var(--arc-ease-print); }
 .arc-switch input:checked + .arc-switch__track { background: var(--arc-aubergine); }
+.arc-switch:not(.arc-switch--disabled):hover .arc-switch__track { border-color: var(--arc-magenta-deep); }
 .arc-switch input:checked + .arc-switch__track > span { background: var(--arc-paper-raised); transform: translateX(1.22rem); }
 .arc-switch input:focus-visible + .arc-switch__track { outline: 3px solid var(--arc-focus); outline-offset: 3px; }
 .arc-switch--disabled { cursor: not-allowed; }

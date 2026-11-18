@@ -6,6 +6,7 @@ import './styles/tokens.css';
 import './styles/global.css';
 import { BardShowcase } from './BardShowcase';
 import './styles/showcase.css';
+import './styles/dark.css';
 
 document.documentElement.classList.add('bard-document');
 document.body.classList.add('bard-body');

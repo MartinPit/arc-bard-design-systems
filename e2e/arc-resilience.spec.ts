@@ -206,6 +206,20 @@ test('Reading Room wraps user-authored long notes in both quotation placements',
   await expectNoHorizontalPageOverflow(page);
 });
 
+test('Reading Room wraps long book titles and authors without page overflow', async ({ page }) => {
+  await page.setViewportSize({ width: 320, height: 640 });
+  await page.goto('./arc/reading-room/?view=library');
+  const card = page.locator('.arc-reading-room-book-card').first();
+  const title = card.locator('h3');
+  const author = card.locator('.arc-reading-room-book-card__author');
+  await title.locator('button').evaluate((element) => { element.textContent = 'UNBROKENARCHIVALBOOKTITLE'.repeat(4); });
+  await author.evaluate((element) => { element.textContent = 'UNBROKENARCHIVALAUTHORNAME'.repeat(4); });
+
+  await expectNoHorizontalOverflow(title);
+  await expectNoHorizontalOverflow(author);
+  await expectNoHorizontalPageOverflow(page);
+});
+
 test('Arc dialogs respect safe usable space, wrap realistic content, and contain overscroll', async ({ page }) => {
   await page.setViewportSize({ width: 360, height: 520 });
   await page.emulateMedia({ reducedMotion: 'reduce' });

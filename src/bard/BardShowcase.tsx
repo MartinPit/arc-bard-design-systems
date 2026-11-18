@@ -5,6 +5,7 @@ import { BardWordmark, GuillocheField, SpiralSigil } from './Brand';
 import { ColorSection, FormSection, IdentitySection, TypographySection } from './sections/Foundations';
 import { ComponentCatalog } from './sections/ComponentCatalog';
 import { AccessibilitySection, CompositionSection, MotionSection, UsageSection } from './sections/Guidance';
+import { ThemeToggle } from './ThemeToggle';
 
 const sections = [
   ['identity', 'Identity'],
@@ -45,7 +46,10 @@ export function BardShowcase() {
           <nav className="bard-section-nav" aria-label="Showcase sections">
             {sections.map(([id, label]) => <a href={`#${id}`} key={id} className={activeSection === id ? 'is-active' : undefined} aria-current={activeSection === id ? 'location' : undefined}>{label}</a>)}
           </nav>
-          <span className="bard-site-header__edition">Edition 01</span>
+          <div className="bard-site-header__tools">
+            <span className="bard-site-header__edition">Edition 01</span>
+            <ThemeToggle />
+          </div>
         </header>
 
         <main id="bard-main">
@@ -58,7 +62,7 @@ export function BardShowcase() {
               <div className="bard-hero__actions"><a href="#components" className="bard-button bard-button--primary">Explore components <ArrowDown size={16} aria-hidden="true" /></a><a href="#identity" className="bard-text-link">Read the principles <ArrowUpRight size={15} aria-hidden="true" /></a></div>
               <div className="bard-hero__footnote"><span>19 components</span><i /><span>9 foundations &amp; guides</span><i /><span>WCAG 2.2 AA oriented</span></div>
             </div>
-            <div className="bard-hero__art" aria-label="Bard membership card: a dark spiral beside a fully legible Bard wordmark over mint, aqua, and lilac fan guilloché" role="img">
+            <div className="bard-hero__art" aria-label="Bard membership card: a spiral beside a fully legible Bard wordmark over mint, aqua, and lilac spectral fan guilloché" role="img">
               <GuillocheField />
               <div className="bard-hero__emboss" aria-hidden="true" />
               <div className="bard-hero__art-top"><span>BARD · CIRCLE OF EXPRESSION</span><span>MMXXVI</span></div>

@@ -3,8 +3,8 @@ import { expect, test } from '@playwright/test';
 test('Arc restores tab, source, collection, sort, and page state from a deep link', async ({ page }) => {
   await page.goto('./arc/?tab=notes&source=button&source=tabs&q=clear&sort=desc&page=5#specimen-tabs');
 
-  await expect(page.getByRole('tab', { name: 'Field notes' })).toHaveAttribute('aria-selected', 'true');
-  await expect(page.getByRole('tabpanel', { name: 'Field notes' })).toContainText('Observations in Context');
+  await expect(page.getByRole('tab', { name: 'Field Notes' })).toHaveAttribute('aria-selected', 'true');
+  await expect(page.getByRole('tabpanel', { name: 'Field Notes' })).toContainText('Observations in Context');
   await expect(page.locator('#specimen-button details')).toHaveAttribute('open', '');
   await expect(page.locator('#specimen-tabs details')).toHaveAttribute('open', '');
   await expect(page.getByRole('searchbox', { name: 'Filter resources' })).toHaveValue('clear');
@@ -15,7 +15,7 @@ test('Arc restores tab, source, collection, sort, and page state from a deep lin
   await expect(page.locator('#specimen-tabs')).toBeInViewport({ ratio: 0.01 });
 
   await page.reload();
-  await expect(page.getByRole('tab', { name: 'Field notes' })).toHaveAttribute('aria-selected', 'true');
+  await expect(page.getByRole('tab', { name: 'Field Notes' })).toHaveAttribute('aria-selected', 'true');
   await expect(page.locator('#specimen-button details')).toHaveAttribute('open', '');
   await expect(page.locator('#specimen-tabs details')).toHaveAttribute('open', '');
   await expect(page.getByRole('link', { name: 'Page 5', exact: true })).toHaveAttribute('aria-current', 'page');
@@ -25,12 +25,12 @@ test('Arc restores tab, source, collection, sort, and page state from a deep lin
 test('Arc restores deliberate tab, disclosure, and pagination changes through browser history', async ({ page }) => {
   await page.goto('./arc/?keep=yes#specimen-tabs');
 
-  await page.getByRole('tab', { name: 'Field notes' }).click();
+  await page.getByRole('tab', { name: 'Field Notes' }).click();
   await expect(page).toHaveURL(/keep=yes&tab=notes#specimen-tabs$/);
   await page.goBack();
   await expect(page.getByRole('tab', { name: 'Overview' })).toHaveAttribute('aria-selected', 'true');
   await page.goForward();
-  await expect(page.getByRole('tab', { name: 'Field notes' })).toHaveAttribute('aria-selected', 'true');
+  await expect(page.getByRole('tab', { name: 'Field Notes' })).toHaveAttribute('aria-selected', 'true');
 
   await page.locator('#specimen-button summary').click();
   await expect(page.locator('#specimen-button details')).toHaveAttribute('open', '');
@@ -139,7 +139,7 @@ test('Arc pagination preserves native modified and middle-click navigation', asy
 test('Arc preserves tab keyboard behavior, panel focus, and native disclosure keyboard controls', async ({ page }) => {
   await page.goto('./arc/#specimen-tabs');
   const overview = page.getByRole('tab', { name: 'Overview' });
-  const notes = page.getByRole('tab', { name: 'Field notes' });
+  const notes = page.getByRole('tab', { name: 'Field Notes' });
   const history = page.getByRole('tab', { name: 'History' });
   const restricted = page.getByRole('tab', { name: 'Restricted' });
 
@@ -148,7 +148,7 @@ test('Arc preserves tab keyboard behavior, panel focus, and native disclosure ke
   await page.keyboard.press('ArrowRight');
   await expect(notes).toBeFocused();
   await expect(notes).toHaveAttribute('aria-selected', 'true');
-  await expect(page.getByRole('tabpanel', { name: 'Field notes' })).toHaveAttribute('tabindex', '0');
+  await expect(page.getByRole('tabpanel', { name: 'Field Notes' })).toHaveAttribute('tabindex', '0');
   await page.keyboard.press('ArrowRight');
   await expect(history).toBeFocused();
   await page.keyboard.press('ArrowRight');
@@ -207,7 +207,7 @@ test('Arc exposes reviewed form metadata, persistent live regions, and matching 
   await title.fill('abc');
   await expect(titleMessage).toContainText('Use at least 4 characters.');
   await expect(titleMessage).toHaveAttribute('role', 'status');
-  await title.fill('Field notes');
+  await title.fill('Field Notes');
   await expect(titleMessage).toContainText('Title is available');
   await expect(title).toHaveAttribute('aria-describedby', titleMessageId!);
 

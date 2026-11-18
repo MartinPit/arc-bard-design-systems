@@ -113,6 +113,42 @@ for (const system of ['arc', 'bard'] as const) {
     expect(summary).toEqual([]);
   });
 
+  test(`${system} dark mode follows the system, persists explicit choices, and meets WCAG AA`, async ({ page }) => {
+    const lightModeLabel = system === 'arc' ? 'Switch to Light Mode' : 'Switch to light mode';
+    const darkModeLabel = system === 'arc' ? 'Switch to Dark Mode' : 'Switch to dark mode';
+    await page.emulateMedia({ colorScheme: 'dark', reducedMotion: 'reduce' });
+    await page.goto(`./${system}/`);
+
+    await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
+    await expect(page.getByRole('button', { name: lightModeLabel })).toBeVisible();
+
+    await page.getByRole('button', { name: lightModeLabel }).click();
+    await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
+    expect(await page.evaluate(() => localStorage.getItem(`${location.pathname.includes('/arc/') ? 'arc' : 'bard'}-theme`))).toBe('light');
+
+    await page.reload();
+    await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
+    await page.getByRole('button', { name: darkModeLabel }).click();
+    await page.reload();
+    await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
+
+    const dimensions = await page.evaluate(() => ({
+      contentWidth: document.documentElement.scrollWidth,
+      viewportWidth: window.innerWidth,
+    }));
+    expect(dimensions.contentWidth).toBeLessThanOrEqual(dimensions.viewportWidth + 1);
+
+    const results = await new AxeBuilder({ page })
+      .withTags(['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa'])
+      .analyze();
+    const summary = results.violations.map((violation) => ({
+      id: violation.id,
+      impact: violation.impact,
+      description: violation.description,
+      nodes: violation.nodes.map((node) => ({ target: node.target, summary: node.failureSummary })),
+    }));
+    expect(summary).toEqual([]);
+  });
 }
 
 test('arc tabs do not create vertical overflow or a scrollbar', async ({ page }) => {
@@ -127,6 +163,25 @@ test('arc tabs do not create vertical overflow or a scrollbar', async ({ page })
 
 test('the Portal has no detectable WCAG AA violations', async ({ page }) => {
   await page.goto('./');
+  const results = await new AxeBuilder({ page })
+    .withTags(['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa'])
+    .analyze();
+  expect(results.violations.map((violation) => violation.id)).toEqual([]);
+});
+
+test('the Portal dark mode persists and has no detectable WCAG AA violations', async ({ page }) => {
+  await page.emulateMedia({ colorScheme: 'dark' });
+  await page.goto('./');
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
+
+  await page.getByRole('button', { name: 'Switch to light mode' }).click();
+  await page.reload();
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
+  expect(await page.evaluate(() => localStorage.getItem('portal-theme'))).toBe('light');
+
+  await page.getByRole('button', { name: 'Switch to dark mode' }).click();
+  await page.reload();
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
   const results = await new AxeBuilder({ page })
     .withTags(['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa'])
     .analyze();

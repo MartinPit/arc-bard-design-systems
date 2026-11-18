@@ -6,6 +6,25 @@
     <meta name="theme-color" content="#f4efe4" />
     <link rel="preload" as="font" type="font/woff2" crossorigin href="/node_modules/@fontsource-variable/fraunces/files/fraunces-latin-wght-normal.woff2" />
     <link rel="preload" as="font" type="font/woff2" crossorigin href="/node_modules/@fontsource-variable/inter/files/inter-latin-wght-normal.woff2" />
+    <script>
+      (function () {
+        var theme = 'light';
+        var saved = null;
+        try { saved = window.localStorage.getItem('arc-theme'); } catch (error) { /* Storage can be blocked. */ }
+        if (saved === 'light' || saved === 'dark') {
+          theme = saved;
+        } else {
+          try {
+            if (typeof window.matchMedia === 'function' && window.matchMedia('(prefers-color-scheme: dark)').matches) theme = 'dark';
+          } catch (error) { /* Fall back to the light edition. */ }
+        }
+        var root = document.documentElement;
+        root.setAttribute('data-theme', theme);
+        root.style.colorScheme = theme;
+        var themeColor = document.querySelector('meta[name="theme-color"]');
+        if (themeColor) themeColor.setAttribute('content', theme === 'dark' ? '#171019' : '#f4efe4');
+      })();
+    </script>
     <meta
       name="description"
       content="Arc is an editorial design system shaped by warm paper, aubergine ink, and expressive botanical forms."

@@ -1,54 +1,105 @@
 :root {
+  --portal-background: #f2f0e9;
+  --portal-text: #252421;
+  --portal-muted: #69665e;
+  --portal-border: #c9c5ba;
+  --portal-rule: #d4d0c5;
+  --portal-control: transparent;
+  --portal-control-hover: #e8e5dc;
+  --portal-arc-stock: #fffdf0;
+  --portal-arc-ink: #6b2c83;
+  --portal-bard-start: #c8c5ec;
+  --portal-bard-middle: #b9e4e1;
+  --portal-bard-end: #b4ead3;
+  --portal-bard-ink: #102f32;
+  --portal-bard-muted: #285d60;
+  --portal-bard-line: #3b9e9c;
+  --portal-bard-seal: #e5fff5;
   font-family: 'Inter Variable', Inter, sans-serif;
-  color: #252421;
-  background: #f2f0e9;
+  color: var(--portal-text);
+  background: var(--portal-background);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
 }
 
+:root[data-theme='dark'] {
+  --portal-background: #191815;
+  --portal-text: #efeadf;
+  --portal-muted: #aaa59a;
+  --portal-border: #49463e;
+  --portal-rule: #3b3933;
+  --portal-control: #211f1b;
+  --portal-control-hover: #2b2923;
+  --portal-arc-stock: #281729;
+  --portal-arc-ink: #e2b4e8;
+  --portal-bard-start: #332a43;
+  --portal-bard-middle: #1b4144;
+  --portal-bard-end: #193b32;
+  --portal-bard-ink: #e0f7ef;
+  --portal-bard-muted: #a9d8d1;
+  --portal-bard-line: #7bd5d0;
+  --portal-bard-seal: #b7f4df;
+}
+
 * { box-sizing: border-box; }
-body { margin: 0; min-width: 320px; }
+body { margin: 0; min-width: 320px; background: var(--portal-background); }
 a { color: inherit; }
 button, a { -webkit-tap-highlight-color: transparent; }
-a:focus-visible { outline: 2px solid #252421; outline-offset: 6px; }
+button { font: inherit; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--portal-text); outline-offset: 6px; }
 ::selection { color: #fffdf0; background: #532c63; }
+:root[data-theme='dark'] ::selection { color: #102f32; background: #b9e4e1; }
 
 .portal-shell { width: min(1280px, calc(100% - 80px)); margin: 0 auto; }
-.portal-header { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; min-height: 104px; border-bottom: 1px solid #c9c5ba; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.11em; }
+.portal-header { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; min-height: 104px; border-bottom: 1px solid var(--portal-border); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.11em; }
 .portal-header p { margin: 0; }
-.wordmark { width: fit-content; color: #252421; font-size: 1.25rem; font-weight: 750; letter-spacing: -0.08em; text-decoration: none; }
+.portal-header__end { display: flex; justify-self: end; align-items: center; gap: 22px; }
+.wordmark { width: fit-content; color: var(--portal-text); font-size: 1.25rem; font-weight: 750; letter-spacing: -0.08em; text-decoration: none; }
 .wordmark span { margin: 0 0.18em; font-family: Georgia, serif; font-size: 0.85em; font-weight: 400; }
-.edition { justify-self: end; color: #69665e; }
+.edition { color: var(--portal-muted); white-space: nowrap; }
+.theme-toggle { display: inline-flex; align-items: center; gap: 8px; min-height: 38px; padding: 0 12px; border: 1px solid var(--portal-border); border-radius: 2px; color: var(--portal-text); background: var(--portal-control); font-size: 0.65rem; font-weight: 650; text-transform: uppercase; letter-spacing: 0.09em; cursor: pointer; transition: background-color 160ms ease, border-color 160ms ease; }
+.theme-toggle:hover { border-color: var(--portal-muted); background: var(--portal-control-hover); }
+.theme-toggle svg { width: 15px; height: 15px; stroke-width: 1.5; }
 
 .portal-intro { display: grid; grid-template-columns: minmax(0, 1fr) minmax(260px, 0.37fr); column-gap: 64px; padding: clamp(64px, 8vw, 120px) 0 clamp(56px, 7vw, 96px); }
-.eyebrow { grid-column: 1 / -1; margin: 0 0 24px; color: #69665e; font-size: 0.69rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.16em; }
+.eyebrow { grid-column: 1 / -1; margin: 0 0 24px; color: var(--portal-muted); font-size: 0.69rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.16em; }
 h1 { margin: 0; font-size: clamp(3.2rem, 7.4vw, 7.4rem); font-weight: 520; letter-spacing: -0.072em; line-height: 0.9; }
 h1 em { font-family: Georgia, 'Times New Roman', serif; font-weight: 400; }
-.intro-copy { align-self: end; max-width: 31rem; margin: 0 0 0.5rem; color: #666259; font-size: clamp(0.95rem, 1.4vw, 1.08rem); line-height: 1.75; }
+.intro-copy { align-self: end; max-width: 31rem; margin: 0 0 0.5rem; color: var(--portal-muted); font-size: clamp(0.95rem, 1.4vw, 1.08rem); line-height: 1.75; }
 
 .system-index { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(24px, 4vw, 56px); }
 .system-entry > a { display: block; text-decoration: none; }
-.preview-frame { overflow: hidden; border: 1px solid #d4d0c5; }
+.preview-frame { overflow: hidden; border: 1px solid var(--portal-rule); }
 .preview-art { display: block; width: 100%; height: auto; transition: transform 350ms cubic-bezier(.2,.75,.25,1); }
 .system-entry a:hover .preview-art { transform: scale(1.012); }
 .entry-heading { display: flex; align-items: center; justify-content: space-between; margin-top: 28px; }
 .entry-heading > div { display: flex; align-items: baseline; gap: 16px; }
-.entry-number { color: #69665e; font-family: monospace; font-size: 0.66rem; }
+.entry-number { color: var(--portal-muted); font-family: monospace; font-size: 0.66rem; }
 .entry-heading h2 { margin: 0; font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 520; letter-spacing: -0.055em; }
 .bard-entry .entry-heading h2 { font-family: Georgia, serif; font-weight: 400; letter-spacing: -0.04em; }
 .entry-heading svg { width: 25px; height: 25px; stroke-width: 1.25; transition: transform 180ms ease; }
 .system-entry a:hover .entry-heading svg { transform: translate(3px, -3px); }
-.system-entry > a > p { max-width: 32rem; margin: 10px 0 22px; color: #615e56; font-size: 0.9rem; line-height: 1.6; }
-.system-entry ul { display: flex; flex-wrap: wrap; gap: 8px 20px; margin: 0; padding: 16px 0 0; border-top: 1px solid #d4d0c5; list-style: none; color: #6d6960; font-family: monospace; font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.06em; }
+.system-entry > a > p { max-width: 32rem; margin: 10px 0 22px; color: var(--portal-muted); font-size: 0.9rem; line-height: 1.6; }
+.system-entry ul { display: flex; flex-wrap: wrap; gap: 8px 20px; margin: 0; padding: 16px 0 0; border-top: 1px solid var(--portal-rule); list-style: none; color: var(--portal-muted); font-family: monospace; font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.06em; }
+.system-entry > .portal-app-link { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 44px; margin-top: 16px; padding: 10px 0; border-bottom: 1px solid var(--portal-rule); color: var(--portal-muted); font-family: monospace; font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.06em; }
+.portal-app-link > span:last-child { display: inline-flex; align-items: center; gap: 6px; color: var(--portal-text); font-weight: 600; }
+.portal-app-link svg { width: 14px; height: 14px; stroke-width: 1.5; }
+.portal-app-link:hover > span:last-child { color: var(--portal-arc-ink); }
 
-.portal-footer { display: flex; justify-content: space-between; gap: 24px; margin-top: clamp(72px, 10vw, 144px); padding: 28px 0 36px; border-top: 1px solid #c9c5ba; color: #69665e; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.08em; }
+.portal-footer { display: flex; justify-content: space-between; gap: 24px; margin-top: clamp(72px, 10vw, 144px); padding: 28px 0 36px; border-top: 1px solid var(--portal-border); color: var(--portal-muted); font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.08em; }
 .portal-footer p { margin: 0; }
 .portal-footer span { margin: 0 8px; }
+
+@media (max-width: 900px) {
+  .edition { display: none; }
+}
 
 @media (max-width: 760px) {
   .portal-shell { width: min(100% - 36px, 620px); }
   .portal-header { grid-template-columns: 1fr auto; min-height: 80px; }
   .portal-header p { display: none; }
+  .theme-toggle { min-width: 40px; padding: 0 11px; }
+  .theme-toggle span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
   .portal-intro { grid-template-columns: 1fr; gap: 30px; padding: 54px 0; }
   h1 { font-size: clamp(3.3rem, 14.6vw, 6rem); }
   .intro-copy { max-width: 28rem; }

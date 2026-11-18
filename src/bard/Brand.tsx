@@ -68,37 +68,37 @@ export function GuillocheField() {
     <svg className="bard-guilloche" viewBox="0 0 960 640" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
       <defs>
         <linearGradient id={foil} x1="0" y1="0.18" x2="1" y2="0.82">
-          <stop offset="0" stopColor="#cce8cd" />
-          <stop offset="0.16" stopColor="#b8e8d9" />
-          <stop offset="0.34" stopColor="#b8dfed" />
-          <stop offset="0.51" stopColor="#d3cfed" />
-          <stop offset="0.68" stopColor="#e5cfeb" />
-          <stop offset="0.83" stopColor="#b6e4e2" />
-          <stop offset="1" stopColor="#dcefcf" />
+          <stop offset="0" stopColor="var(--bard-foil-1, #cce8cd)" />
+          <stop offset="0.16" stopColor="var(--bard-foil-2, #b8e8d9)" />
+          <stop offset="0.34" stopColor="var(--bard-foil-3, #b8dfed)" />
+          <stop offset="0.51" stopColor="var(--bard-foil-4, #d3cfed)" />
+          <stop offset="0.68" stopColor="var(--bard-foil-5, #e5cfeb)" />
+          <stop offset="0.83" stopColor="var(--bard-foil-6, #b6e4e2)" />
+          <stop offset="1" stopColor="var(--bard-foil-7, #dcefcf)" />
         </linearGradient>
         <radialGradient id={bloom} cx="0.12" cy="0.8" r="0.82">
-          <stop offset="0" stopColor="#a7e7d0" stopOpacity="0.88" />
-          <stop offset="0.34" stopColor="#d8f1ea" stopOpacity="0.34" />
-          <stop offset="0.62" stopColor="#cbc1ea" stopOpacity="0.5" />
-          <stop offset="1" stopColor="#cbc1ea" stopOpacity="0" />
+          <stop offset="0" stopColor="var(--bard-bloom-1, #a7e7d0)" stopOpacity="0.88" />
+          <stop offset="0.34" stopColor="var(--bard-bloom-2, #d8f1ea)" stopOpacity="0.34" />
+          <stop offset="0.62" stopColor="var(--bard-bloom-3, #cbc1ea)" stopOpacity="0.5" />
+          <stop offset="1" stopColor="var(--bard-bloom-3, #cbc1ea)" stopOpacity="0" />
         </radialGradient>
         <radialGradient id={pearl} cx="0.78" cy="0.16" r="0.75">
-          <stop offset="0" stopColor="#ffffff" stopOpacity="0.94" />
-          <stop offset="0.3" stopColor="#f8fbf1" stopOpacity="0.5" />
+          <stop offset="0" stopColor="var(--bard-art-pearl, #ffffff)" stopOpacity="var(--bard-art-pearl-opacity, 0.94)" />
+          <stop offset="0.3" stopColor="var(--bard-art-pearl, #ffffff)" stopOpacity="0.5" />
           <stop offset="0.58" stopColor="#b9eaf2" stopOpacity="0.12" />
-          <stop offset="1" stopColor="#ffffff" stopOpacity="0" />
+          <stop offset="1" stopColor="var(--bard-art-pearl, #ffffff)" stopOpacity="0" />
         </radialGradient>
         <linearGradient id={fan} x1="0" y1="0" x2="1" y2="0.32">
-          <stop offset="0" stopColor="#247b70" />
-          <stop offset="0.27" stopColor="#36889b" />
-          <stop offset="0.52" stopColor="#696a9e" />
-          <stop offset="0.73" stopColor="#866696" />
-          <stop offset="1" stopColor="#267b77" />
+          <stop offset="0" stopColor="var(--bard-fan-1, #247b70)" />
+          <stop offset="0.27" stopColor="var(--bard-fan-2, #36889b)" />
+          <stop offset="0.52" stopColor="var(--bard-fan-3, #696a9e)" />
+          <stop offset="0.73" stopColor="var(--bard-fan-4, #866696)" />
+          <stop offset="1" stopColor="var(--bard-fan-5, #267b77)" />
         </linearGradient>
         <linearGradient id={fineFan} x1="0" y1="1" x2="1" y2="0">
-          <stop offset="0" stopColor="#3b9486" />
-          <stop offset="0.48" stopColor="#7a72a3" />
-          <stop offset="1" stopColor="#268ca0" />
+          <stop offset="0" stopColor="var(--bard-fine-fan-1, #3b9486)" />
+          <stop offset="0.48" stopColor="var(--bard-fine-fan-2, #7a72a3)" />
+          <stop offset="1" stopColor="var(--bard-fine-fan-3, #268ca0)" />
         </linearGradient>
         <linearGradient id={sheen} x1="0" y1="0" x2="1" y2="0">
           <stop offset="0" stopColor="#ffffff" stopOpacity="0" />

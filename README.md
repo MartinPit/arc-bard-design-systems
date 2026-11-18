@@ -5,15 +5,16 @@ Two independent React design systems translated from the visual language of two 
 - **Arc** — editorial, tactile, warm ivory and aubergine with print-inspired details and a marigold–magenta leaf gradient.
 - **Bard** — ethereal, intricate, mint/aqua/lilac with original guilloché artwork and restrained, fluid motion.
 
-The project contains exactly three website entries:
+The project contains four website entries:
 
 | Entry | Development path | Purpose |
 | --- | --- | --- |
-| Portal | `/arc-bard-design-systems/` | Quiet index linking to the two systems |
+| Portal | `/arc-bard-design-systems/` | Quiet index linking to the systems and Arc app |
 | Arc | `/arc-bard-design-systems/arc/` | Complete Arc design-system showcase |
+| Arc Reading Room | `/arc-bard-design-systems/arc/reading-room/` | Personal reading app built with Arc |
 | Bard | `/arc-bard-design-systems/bard/` | Complete Bard design-system showcase |
 
-There are no example product applications, backend services, remote assets, or shared styled components. Arc and Bard were implemented independently by separate agents with disjoint file ownership. They demonstrate the same 19-component inventory without sharing component implementations, tokens, styles, or visual composition.
+The Reading Room is a separate visit-local product prototype that consumes Arc's approved components and tokens without changing the showcase. There are no backend services, remote assets, or shared styled components. Arc and Bard were implemented independently by separate agents with disjoint file ownership. They demonstrate the same 19-component inventory without sharing component implementations, tokens, styles, or visual composition.
 
 Each public component lives in its own TypeScript file with a colocated stylesheet and explicit style dependencies. `src/arc/components/index.ts` and `src/bard/components/index.ts` are the respective public entry points. System tokens and small private utilities may be shared within a system, but never across Arc and Bard.
 
@@ -36,6 +37,10 @@ npm run dev
 ```
 
 Vite prints the local server address. Open `/arc-bard-design-systems/` from that address. Root-relative links and production assets use the same base path locally and on GitHub Pages.
+
+## Themes
+
+The Portal, Arc, and Bard each include a complete light and dark presentation. Each page follows the operating-system color scheme until its header theme toggle records an explicit choice. Preferences persist independently in `portal-theme`, `arc-theme`, and `bard-theme`; no visual implementation or theme state is shared between Arc and Bard.
 
 ## Verify
 
@@ -60,8 +65,10 @@ Playwright runs against the production build using `vite preview`. Build before 
 ## Source boundaries
 
 ```text
-arc/index.html          Arc entry only
+arc/index.html          Arc showcase entry only
+arc/reading-room/       Arc Reading Room app entry
 src/arc/                Arc components, tokens, artwork, styles, tests
+src/arc/reading-room/   Arc Reading Room app, artwork, styles, tests
 bard/index.html         Bard entry only
 src/bard/               Bard components, tokens, artwork, styles, tests
 index.html              Portal entry

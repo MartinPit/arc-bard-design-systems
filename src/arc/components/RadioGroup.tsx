@@ -1,5 +1,5 @@
 import { useId } from 'react';
-import { CircleAlert } from 'lucide-react';
+import { FieldMessage } from './shared';
 import './shared.css';
 import './Checkbox.css';
 import './RadioGroup.css';
@@ -16,7 +16,7 @@ export interface RadioGroupProps {
 export function RadioGroup({ label, name, options, value, onChange, error }: RadioGroupProps) {
   const id = useId();
   return (
-    <fieldset className="arc-radio-group" aria-describedby={error ? `${id}-error` : undefined}>
+    <fieldset className="arc-radio-group" aria-describedby={`${id}-error`}>
       <legend className="arc-field__label">{label}</legend>
       {options.map((option) => (
         <label className="arc-choice" key={option.value}>
@@ -36,11 +36,7 @@ export function RadioGroup({ label, name, options, value, onChange, error }: Rad
           </span>
         </label>
       ))}
-      {error && (
-        <span className="arc-field__message arc-field__message--error" id={`${id}-error`}>
-          <CircleAlert size={14} aria-hidden="true" /> {error}
-        </span>
-      )}
+      <FieldMessage id={`${id}-error`} error={error} />
     </fieldset>
   );
 }

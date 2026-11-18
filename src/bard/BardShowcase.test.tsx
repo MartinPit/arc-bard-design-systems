@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom/vitest';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { cleanup, render, screen, waitFor, within } from '@testing-library/react';
+import { act, cleanup, render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import axe from 'axe-core';
 import { BardShowcase } from './BardShowcase';
@@ -35,6 +35,11 @@ class ObserverStub {
 }
 
 beforeEach(() => {
+  window.localStorage.clear();
+  document.documentElement.removeAttribute('data-theme');
+  document.documentElement.style.colorScheme = '';
+  document.documentElement.classList.remove('bard-theme-changing');
+
   vi.stubGlobal('IntersectionObserver', ObserverStub);
   vi.stubGlobal('ResizeObserver', ObserverStub);
   vi.stubGlobal('matchMedia', vi.fn().mockImplementation((query: string) => ({
@@ -60,6 +65,10 @@ beforeEach(() => {
 
 afterEach(() => {
   cleanup();
+  window.localStorage.clear();
+  document.documentElement.removeAttribute('data-theme');
+  document.documentElement.style.colorScheme = '';
+  document.documentElement.classList.remove('bard-theme-changing');
   vi.restoreAllMocks();
   vi.unstubAllGlobals();
 });
@@ -174,6 +183,78 @@ describe('BardShowcase', () => {
     expect(filter).toHaveValue('');
     expect(screen.getByRole('table', { name: 'Design-system resources' })).toBeInTheDocument();
     expect(screen.getByRole('cell', { name: 'Dialog' })).toBeInTheDocument();
+  });
+
+  it('switches themes with exact accessible names and persists the explicit choice', async () => {
+    const user = userEvent.setup();
+    const { unmount } = render(<BardShowcase />);
+
+    const darkToggle = screen.getByRole('button', { name: 'Switch to dark mode' });
+    expect(document.documentElement).toHaveAttribute('data-theme', 'light');
+    expect(document.documentElement).toHaveStyle({ colorScheme: 'light' });
+
+    await user.click(darkToggle);
+    expect(screen.getByRole('button', { name: 'Switch to light mode' })).toHaveAttribute('data-theme-toggle', 'dark');
+    expect(document.documentElement).toHaveAttribute('data-theme', 'dark');
+    expect(document.documentElement).toHaveStyle({ colorScheme: 'dark' });
+    expect(window.localStorage.getItem('bard-theme')).toBe('dark');
+
+    unmount();
+    render(<BardShowcase />);
+    expect(screen.getByRole('button', { name: 'Switch to light mode' })).toBeInTheDocument();
+    expect(document.documentElement).toHaveAttribute('data-theme', 'dark');
+
+    await user.click(screen.getByRole('button', { name: 'Switch to light mode' }));
+    expect(window.localStorage.getItem('bard-theme')).toBe('light');
+    expect(screen.getByRole('button', { name: 'Switch to dark mode' })).toBeInTheDocument();
+  });
+
+  it('uses a saved dark preference instead of the operating system preference', () => {
+    window.localStorage.setItem('bard-theme', 'dark');
+    render(<BardShowcase />);
+
+    expect(screen.getByRole('button', { name: 'Switch to light mode' })).toBeInTheDocument();
+    expect(document.documentElement).toHaveAttribute('data-theme', 'dark');
+  });
+
+  it('follows operating system changes only until a theme is explicitly chosen', async () => {
+    const listeners = new Set<(event: MediaQueryListEvent) => void>();
+    vi.stubGlobal('matchMedia', vi.fn().mockImplementation((query: string) => ({
+      matches: true,
+      media: query,
+      onchange: null,
+      addListener: vi.fn(),
+      removeListener: vi.fn(),
+      addEventListener: vi.fn((_: string, listener: (event: MediaQueryListEvent) => void) => listeners.add(listener)),
+      removeEventListener: vi.fn((_: string, listener: (event: MediaQueryListEvent) => void) => listeners.delete(listener)),
+      dispatchEvent: vi.fn(),
+    })));
+    const user = userEvent.setup();
+    render(<BardShowcase />);
+
+    expect(document.documentElement).toHaveAttribute('data-theme', 'dark');
+    act(() => listeners.forEach((listener) => listener({ matches: false } as MediaQueryListEvent)));
+    expect(document.documentElement).toHaveAttribute('data-theme', 'light');
+    expect(screen.getByRole('button', { name: 'Switch to dark mode' })).toBeInTheDocument();
+    expect(window.localStorage.getItem('bard-theme')).toBeNull();
+
+    await user.click(screen.getByRole('button', { name: 'Switch to dark mode' }));
+    expect(listeners.size).toBe(0);
+    act(() => listeners.forEach((listener) => listener({ matches: false } as MediaQueryListEvent)));
+    expect(document.documentElement).toHaveAttribute('data-theme', 'dark');
+    expect(window.localStorage.getItem('bard-theme')).toBe('dark');
+  });
+
+  it('keeps theme controls usable when matchMedia and localStorage are unavailable', async () => {
+    vi.stubGlobal('matchMedia', undefined);
+    vi.spyOn(Storage.prototype, 'getItem').mockImplementation(() => { throw new Error('Storage blocked'); });
+    vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => { throw new Error('Storage blocked'); });
+    const user = userEvent.setup();
+
+    expect(() => render(<BardShowcase />)).not.toThrow();
+    await user.click(screen.getByRole('button', { name: 'Switch to dark mode' }));
+    expect(document.documentElement).toHaveAttribute('data-theme', 'dark');
+    expect(screen.getByRole('button', { name: 'Switch to light mode' })).toBeInTheDocument();
   });
 
   it('renders when IntersectionObserver is unavailable', () => {

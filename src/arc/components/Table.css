@@ -5,6 +5,6 @@
 .arc-table thead th { background: var(--arc-paper-deep); color: var(--arc-aubergine); font: 500 0.7rem var(--arc-font-mono); letter-spacing: 0.05em; text-transform: uppercase; }
 .arc-table tbody th { font-weight: 650; }
 .arc-table tbody tr:last-child > * { border-bottom: 0; }
-.arc-table tbody tr:hover { background: #f4ead8; }
+.arc-table tbody tr:hover { background: var(--arc-table-hover); }
 .arc-numeric { text-align: right; font-variant-numeric: tabular-nums; }
 .arc-table__empty { padding: 2.5rem 1rem !important; color: var(--arc-ink-soft); text-align: center; white-space: normal !important; }

@@ -5,6 +5,7 @@ import { Button } from '../components';
 import { CopyToken } from '../components/Specimen';
 import { SectionHeading } from '../components/SectionHeading';
 import { ProtectedText } from '../components/ProtectedText';
+import type { ArcTheme } from '../theme';
 import { formatLedgerNumber, formatNumber, formatUnit } from '../intl';
 
 export function IdentitySection() {
@@ -44,17 +45,17 @@ export function IdentitySection() {
 }
 
 const colors = [
-  { name: 'Paper', token: '--arc-paper', value: '#F4EFE4', usage: 'Page ground', tone: 'paper' },
-  { name: 'Raised Paper', token: '--arc-paper-raised', value: '#FFFAF0', usage: 'Fields & overlays', tone: 'raised' },
-  { name: 'Aubergine', token: '--arc-aubergine', value: '#3C1949', usage: 'Primary action', tone: 'aubergine' },
-  { name: 'Ink', token: '--arc-ink', value: '#27132F', usage: 'Essential text', tone: 'ink' },
-  { name: 'Ruled Purple', token: '--arc-purple', value: '#684477', usage: 'Focus & outlines', tone: 'purple' },
-  { name: 'Marigold', token: '--arc-marigold', value: '#EDAE2B', usage: 'Highlights', tone: 'marigold' },
-  { name: 'Coral', token: '--arc-coral', value: '#DF5D58', usage: 'Expressive accents', tone: 'coral' },
-  { name: 'Magenta', token: '--arc-magenta', value: '#A92367', usage: 'Graphic moments', tone: 'magenta' },
+  { name: 'Paper', token: '--arc-paper', value: { light: '#F4EFE4', dark: '#171019' }, usage: 'Page ground', tone: 'paper' },
+  { name: 'Raised Paper', token: '--arc-paper-raised', value: { light: '#FFFAF0', dark: '#211625' }, usage: 'Fields & overlays', tone: 'raised' },
+  { name: 'Aubergine', token: '--arc-aubergine', value: { light: '#3C1949', dark: '#C4A1CE' }, usage: 'Primary action', tone: 'aubergine' },
+  { name: 'Ink', token: '--arc-ink', value: { light: '#27132F', dark: '#F2E6D3' }, usage: 'Essential text', tone: 'ink' },
+  { name: 'Ruled Purple', token: '--arc-purple', value: { light: '#684477', dark: '#AA87B5' }, usage: 'Focus & outlines', tone: 'purple' },
+  { name: 'Marigold', token: '--arc-marigold', value: { light: '#EDAE2B', dark: '#F0BC4F' }, usage: 'Highlights', tone: 'marigold' },
+  { name: 'Coral', token: '--arc-coral', value: { light: '#DF5D58', dark: '#E97971' }, usage: 'Expressive accents', tone: 'coral' },
+  { name: 'Magenta', token: '--arc-magenta', value: { light: '#A92367', dark: '#D75B96' }, usage: 'Graphic moments', tone: 'magenta' },
 ];
 
-export function ColorSection() {
+export function ColorSection({ theme }: { theme: ArcTheme }) {
   return (
     <section id="color" className="arc-section" aria-labelledby="section-2">
       <SectionHeading number={2} eyebrow="Foundation / color" title="Ink First. Pigment Second.">
@@ -70,7 +71,7 @@ export function ColorSection() {
             <div className="arc-swatch__body">
               <h3>{color.name}</h3>
               <p>{color.usage}</p>
-              <CopyToken value={color.value} label={color.name} />
+              <CopyToken value={color.value[theme]} label={color.name} />
               <code translate="no" className="notranslate">{color.token}</code>
             </div>
           </article>

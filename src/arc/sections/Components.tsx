@@ -223,7 +223,7 @@ function TabsSpecimen() {
     >
       <Tabs label="Resource details" value={tab} onValueChange={setTab} items={[
         { id: 'overview', label: 'Overview', content: <div className="arc-tab-copy"><h4>A Concise Overview</h4><p>Only the active panel lives in the reading flow. Color and an underline show which tab you selected.</p></div> },
-        { id: 'notes', label: 'Field notes', content: <div className="arc-tab-copy"><h4>Observations in Context</h4><p>Notes retain their relationship to the resource without adding another page to the navigation model.</p></div> },
+        { id: 'notes', label: 'Field Notes', content: <div className="arc-tab-copy"><h4>Observations in Context</h4><p>Notes retain their relationship to the resource without adding another page to the navigation model.</p></div> },
         { id: 'history', label: 'History', content: <div className="arc-tab-copy"><h4>Revision History</h4><p>{formatNumber(3)} local revisions are available. The most recent clarified the summary language.</p></div> },
         { id: 'restricted', label: 'Restricted', disabled: true, content: null },
       ]} />

@@ -8,6 +8,26 @@
       content="Bard is a meticulous, expressive design system for composing calm and accessible digital experiences."
     />
     <meta name="theme-color" content="#e9f2e9" />
+    <script>
+      (function () {
+        try {
+          var theme = null;
+          try {
+            var saved = window.localStorage.getItem('bard-theme');
+            if (saved === 'light' || saved === 'dark') theme = saved;
+          } catch (_) {}
+          if (!theme) {
+            theme = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+          }
+          document.documentElement.setAttribute('data-theme', theme);
+          document.documentElement.style.colorScheme = theme;
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', theme === 'dark' ? '#0d1420' : '#e9f2e9');
+        } catch (_) {
+          document.documentElement.setAttribute('data-theme', 'light');
+          document.documentElement.style.colorScheme = 'light';
+        }
+      })();
+    </script>
     <title>Bard — Design system</title>
   </head>
   <body>

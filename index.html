@@ -5,6 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#f2f0e9" />
     <meta name="description" content="Two independent web design systems, Arc and Bard." />
+    <script>
+      (() => {
+        let stored = null;
+        try { stored = localStorage.getItem('portal-theme'); } catch { /* Storage may be unavailable. */ }
+        const theme = stored === 'light' || stored === 'dark'
+          ? stored
+          : window.matchMedia?.('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        document.documentElement.dataset.theme = theme;
+        document.documentElement.style.colorScheme = theme;
+        document.querySelector('meta[name="theme-color"]').content = theme === 'dark' ? '#191815' : '#f2f0e9';
+      })();
+    </script>
     <title>Arc & Bard — Two Design Systems</title>
   </head>
   <body>

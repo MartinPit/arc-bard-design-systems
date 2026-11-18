@@ -4,7 +4,9 @@ import { ArcLeaf, ArcStamp, RegistrationMark } from './components/Brand';
 import { ColorSection, IdentitySection, MotionSection, ShapeSection, TypographySection } from './sections/Foundations';
 import { ComponentsSection } from './sections/Components';
 import { AccessibilitySection, CompositionSection, GuidanceSection } from './sections/Guidance';
+import { ThemeToggle } from './components/ThemeToggle';
 import { ProtectedText } from './components/ProtectedText';
+import { useArcTheme } from './theme';
 import { formatLedgerNumber, formatNumber, formatYear } from './intl';
 
 const editionNumber = 1;
@@ -17,6 +19,7 @@ const sections = [
 
 export function ArcShowcase() {
   const [active, setActive] = useState('identity');
+  const { theme, toggleTheme } = useArcTheme();
 
   useEffect(() => {
     if (!window.location.hash) return;
@@ -83,13 +86,14 @@ export function ArcShowcase() {
           <div className="arc-section-nav__links">
             {sections.map(([id, label], index) => <a key={id} href={`#${id}`} aria-current={active === id ? 'location' : undefined}><span>{formatLedgerNumber(index + 1)}</span>{label}</a>)}
           </div>
+          <ThemeToggle theme={theme} onToggle={toggleTheme} />
         </div>
       </nav>
 
       <main id="arc-content" tabIndex={-1}>
         <div id="top" className="arc-anchor-top" tabIndex={-1} />
         <IdentitySection />
-        <ColorSection />
+        <ColorSection theme={theme} />
         <TypographySection />
         <ShapeSection />
         <MotionSection />

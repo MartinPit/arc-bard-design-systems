@@ -85,10 +85,10 @@
 .arc-reading-room-book-card__save.is-saved { color: var(--arc-magenta-deep); }
 .arc-reading-room-book-card__meta { padding-top: 1rem; }
 .arc-reading-room-book-card__category { margin: 0 0 0.35rem; color: var(--arc-magenta-deep); font: 0.56rem/1.4 var(--arc-font-mono); letter-spacing: 0.11em; text-transform: uppercase; }
-.arc-reading-room-book-card h3 { margin: 0; font: 520 1.3rem/1.15 var(--arc-font-display); letter-spacing: -0.02em; }
+.arc-reading-room-book-card h3 { margin: 0; overflow-wrap: anywhere; font: 520 1.3rem/1.15 var(--arc-font-display); letter-spacing: -0.02em; }
 .arc-reading-room-book-card h3 button { padding: 0; border: 0; background: transparent; color: inherit; font: inherit; letter-spacing: inherit; text-align: left; cursor: pointer; }
 .arc-reading-room-book-card h3 button:hover { color: var(--arc-magenta-deep); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.25rem; }
-.arc-reading-room-book-card__author { margin: 0.45rem 0 0.85rem; color: var(--arc-ink-soft); font-size: 0.73rem; }
+.arc-reading-room-book-card__author { margin: 0.45rem 0 0.85rem; overflow-wrap: anywhere; color: var(--arc-ink-soft); font-size: 0.73rem; }
 .arc-reading-room-book-card__progress-label { margin-bottom: 0.45rem; display: flex; justify-content: space-between; gap: 0.5rem; color: var(--arc-ink-soft); font: 0.55rem/1.4 var(--arc-font-mono); }
 .arc-reading-room-book-cover { position: relative; aspect-ratio: 12 / 17; border: 1px solid var(--arc-art-ink); background: var(--arc-paper-raised); box-shadow: 4px 5px 0 var(--arc-art-shadow); transition: transform var(--arc-duration-base) var(--arc-ease-print); }
 .arc-reading-room-book-cover svg { width: 100%; height: 100%; }
