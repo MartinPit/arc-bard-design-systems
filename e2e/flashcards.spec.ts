@@ -85,7 +85,7 @@ test('the editor preserves an invalid draft, fixes it, and adds a row from Tab',
 test('early Don’t know reveals, survives reload, then continues to Known and resume', async ({ page }) => {
   await page.goto(appUrl);
   await page.getByRole('button', { name: /Practice this set/ }).click();
-  await expect(page.getByRole('heading', { name: '12 eligible cards' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: '12 cards match these sides' })).toBeVisible();
   await page.getByRole('button', { name: /Start practice/ }).click();
   const card = page.getByRole('article', { name: 'Practice card from Japanese essentials' });
   await expect(card).toContainText('水');
@@ -113,14 +113,60 @@ test('early Don’t know reveals, survives reload, then continues to Known and r
   await expect(page.getByRole('article', { name: 'Practice card from Japanese essentials' })).toContainText('駅');
 });
 
+test('the latest rating can be undone with U after a reload', async ({ page }) => {
+  await page.goto(appUrl);
+  await page.getByRole('button', { name: /Practice this set/ }).click();
+  await page.getByRole('button', { name: /Start practice/ }).click();
+  await page.getByRole('button', { name: /Known/ }).click();
+  await expect(page.getByText('Card 2 of 10 in this batch')).toBeVisible();
+  await page.reload();
+  await expect(page.getByRole('button', { name: /Undo last rating/ })).toBeVisible();
+
+  await page.keyboard.press('u');
+  const card = page.getByRole('article', { name: 'Practice card from Japanese essentials' });
+  await expect(card).toContainText('水');
+  await expect(page.getByText('Card 1 of 10 in this batch')).toBeVisible();
+  await expect(page.getByText('0 of 12 cards known')).toBeVisible();
+  await expect(page.getByRole('button', { name: /Undo last rating/ })).toHaveCount(0);
+});
+
+test('mobile study and folder controls stay separated and selected-folder Practice remains in view', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'mobile-chromium', 'Mobile control layout and sticky folder action');
+  await page.goto(appUrl);
+  const practiceSet = await page.getByRole('button', { name: /Practice this set/ }).boundingBox();
+  const viewCards = await page.getByRole('link', { name: 'View all cards' }).boundingBox();
+  expect(practiceSet).not.toBeNull();
+  expect(viewCards).not.toBeNull();
+  expect(viewCards?.y ?? 0).toBeGreaterThanOrEqual((practiceSet?.y ?? 0) + (practiceSet?.height ?? 0));
+
+  const folderHeading = await page.getByRole('heading', { name: 'All folders' }).boundingBox();
+  const inactiveAction = await page.getByRole('button', { name: 'Practice selected folders' }).boundingBox();
+  expect(folderHeading).not.toBeNull();
+  expect(inactiveAction).not.toBeNull();
+  expect(inactiveAction?.y ?? 0).toBeGreaterThanOrEqual((folderHeading?.y ?? 0) + (folderHeading?.height ?? 0));
+
+  await page.getByRole('checkbox', { name: 'Select Languages for practice' }).check();
+  const action = page.getByRole('button', { name: 'Practice selected folders' });
+  await expect(action).toBeEnabled();
+  await expect(page.getByText('1 folder selected. Subfolders are included.')).toBeVisible();
+  await expect(page.locator('.fc-folder-link').filter({ hasText: /^Languages/ })).toContainText('3 sets incl. subfolders');
+  const bounds = await action.boundingBox();
+  const viewport = page.viewportSize();
+  expect(bounds).not.toBeNull();
+  expect(viewport).not.toBeNull();
+  expect(bounds?.y ?? -1).toBeGreaterThanOrEqual(0);
+  expect((bounds?.y ?? 0) + (bounds?.height ?? 0)).toBeLessThanOrEqual((viewport?.height ?? 0) + 1);
+  await expectNoHorizontalOverflow(page);
+});
+
 test('recursive folder scope and related options expose the correct eligibility', async ({ page }) => {
   await page.goto(`${appUrl}?folder=languages`);
   await expect(page.getByRole('heading', { level: 1, name: 'Languages' })).toBeVisible();
   await expect(page.getByText('3 unique sets across this folder and all descendants.')).toBeVisible();
   await page.getByRole('button', { name: /Practice entire folder/ }).click();
   await expect(page).toHaveURL(/setup=1&folders=languages/);
-  await expect(page.getByRole('heading', { name: '12 eligible cards' })).toBeVisible();
-  await expect(page.getByText('12 cards do not contain every selected field.')).toBeVisible();
+  await expect(page.getByRole('heading', { name: '12 cards match these sides' })).toBeVisible();
+  await expect(page.getByText('Only cards containing every chosen field are included. Other cards are skipped without being changed.')).toBeVisible();
   await expect(page.getByRole('button', { name: /Start practice/ })).toBeEnabled();
 });
 
@@ -172,4 +218,88 @@ test('the editor grid contains its own overflow and remains accessible', async (
   await expectNoHorizontalOverflow(page);
   const results = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa']).analyze();
   expect(results.violations.map((violation) => violation.id)).toEqual([]);
+});
+
+test('long multilingual content wraps without overlap and keeps its own text direction', async ({ page }) => {
+  await page.setViewportSize({ width: 320, height: 900 });
+  const library = {
+    version: 1,
+    folders: [{ id: 'languages', name: 'اللغات والدراسة', parentId: null }],
+    sets: [{
+      id: 'extreme-content',
+      name: `بطاقات اللغة والثقافة ${'Wissenschaften '.repeat(12)}`,
+      createdAt: '2026-11-19T12:00:00.000Z',
+      updatedAt: '2026-11-19T12:00:00.000Z',
+      folderIds: ['languages'],
+      fields: [{ id: 'front', name: 'السؤال' }, { id: 'back', name: 'الإجابة' }],
+      cards: [{
+        id: 'card-1',
+        values: {
+          front: `مرحبا بالعالم 👋🏽 日本語 ${'UnbrokenContent'.repeat(24)}`,
+          back: 'الإجابة الطويلة محفوظة كما كتبها المتعلم، مع العربية والعبرية: שלום עולם، والصينية: 学习卡片。',
+        },
+      }],
+    }],
+  };
+  await page.addInitScript((saved) => window.localStorage.setItem('arc-flashcards-library-v1', JSON.stringify(saved)), library);
+  await page.goto(appUrl);
+
+  const preview = page.locator('.fc-paper-card');
+  const front = preview.locator('.fc-paper-card__front p');
+  await expect(front).toHaveAttribute('dir', 'auto');
+  expect(await front.evaluate((element) => getComputedStyle(element).direction)).toBe('rtl');
+  await expect(preview.locator('footer')).toContainText(library.sets[0].name);
+  const content = await preview.locator('.fc-paper-card__content').boundingBox();
+  const footer = await preview.locator('footer').boundingBox();
+  expect(content).not.toBeNull();
+  expect(footer).not.toBeNull();
+  expect((content?.y ?? 0) + (content?.height ?? 0)).toBeLessThanOrEqual((footer?.y ?? 0) + 1);
+  expect(await preview.evaluate((element) => element.scrollWidth <= element.clientWidth + 1)).toBe(true);
+  await expectNoHorizontalOverflow(page);
+
+  await page.getByRole('button', { name: /Practice this set/ }).click();
+  await page.getByRole('button', { name: /Start practice/ }).click();
+  await page.getByRole('button', { name: /Show answer/ }).click();
+  await expect(page.locator('.fc-practice-card__back')).toContainText('שלום עולם');
+  await expectNoHorizontalOverflow(page);
+});
+
+test('a 1,000-set library remains navigable without page overflow', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'desktop-chromium', 'Large-library stress coverage runs once');
+  const library = {
+    version: 1,
+    folders: [],
+    sets: Array.from({ length: 1000 }, (_, index) => ({
+      id: `set-${index}`,
+      name: `Set ${index + 1}`,
+      createdAt: new Date(Date.UTC(2026, 0, 1, 0, index)).toISOString(),
+      updatedAt: new Date(Date.UTC(2026, 0, 1, 0, index)).toISOString(),
+      folderIds: [],
+      fields: [],
+      cards: [],
+    })),
+  };
+  await page.addInitScript((saved) => window.localStorage.setItem('arc-flashcards-library-v1', JSON.stringify(saved)), library);
+  await page.goto(appUrl);
+  await page.getByRole('link', { name: 'Show all 1,000 sets' }).click();
+  await expect(page.locator('.fc-recent-list > li')).toHaveCount(1000);
+  await expect(page.locator('.fc-recent-list > li').first()).toContainText('Set 1000');
+  await expectNoHorizontalOverflow(page);
+});
+
+test('a quota failure explains the risk and offers an in-page retry', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'desktop-chromium', 'Storage failure coverage runs once');
+  await page.addInitScript(() => {
+    const original = Storage.prototype.setItem;
+    Storage.prototype.setItem = function setItem(key, value) {
+      if (key === 'arc-flashcards-library-v1') throw new DOMException('Quota reached', 'QuotaExceededError');
+      original.call(this, key, value);
+    };
+  });
+  await page.goto(appUrl);
+  const warning = page.getByRole('alert');
+  await expect(warning).toContainText('Browser storage is unavailable or full.');
+  await expect(warning).toContainText('lost if you close or reload');
+  await expect(page.getByRole('button', { name: 'Try saving again' })).toBeVisible();
+  await expectNoHorizontalOverflow(page);
 });

@@ -1,4 +1,5 @@
 import type { MouseEvent, ReactNode } from 'react';
+import { formatLedgerNumber, formatNumber } from '../intl';
 import { getFlashcardUrl, type FlashcardRoute } from './urlState';
 import type { FlashcardSet } from './types';
 
@@ -32,7 +33,7 @@ export function ArcLeafMark({ className = '' }: { className?: string }) {
 }
 
 export function ContentStack({ values, className = '' }: { values: string[]; className?: string }) {
-  return <div className={`fc-content-stack ${className}`}>{values.map((value, index) => <p key={`${index}-${value}`}>{value}</p>)}</div>;
+  return <div className={`fc-content-stack ${className}`}>{values.map((value, index) => <p key={`${index}-${value}`} dir="auto">{value}</p>)}</div>;
 }
 
 interface SetCardPreviewProps {
@@ -51,9 +52,11 @@ export function SetCardPreview({ set, frontFields, backFields, compact = false }
   const position = card ? set.cards.indexOf(card) + 1 : 0;
   return (
     <article className={`fc-paper-card${compact ? ' fc-paper-card--compact' : ''}`} aria-label={card ? `Preview of ${set.name}, card ${position}` : `${set.name}, empty set`}>
-      <div className="fc-paper-card__registration"><span>CARD {String(position).padStart(2, '0')} · PREVIEW</span><span aria-hidden="true">✦</span></div>
-      {card ? <><ContentStack values={front} className="fc-paper-card__front" /><ContentStack values={back} className="fc-paper-card__back" /></> : <p className="fc-paper-card__empty">No card contains every selected field yet.</p>}
-      <footer><span>{set.name}</span><span>{position} / {set.cards.length}</span></footer>
+      <div className="fc-paper-card__registration"><span>CARD {formatLedgerNumber(position)} · PREVIEW</span><span aria-hidden="true">✦</span></div>
+      <div className="fc-paper-card__content">
+        {card ? <><ContentStack values={front} className="fc-paper-card__front" /><ContentStack values={back} className="fc-paper-card__back" /></> : <p className="fc-paper-card__empty">No card contains every selected field yet.</p>}
+      </div>
+      <footer><span dir="auto">{set.name}</span><span>{formatNumber(position)} / {formatNumber(set.cards.length)}</span></footer>
     </article>
   );
 }

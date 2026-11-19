@@ -1,5 +1,6 @@
 import { ArrowLeft, ArrowRight, Folder, Play, Settings2, Trash2 } from 'lucide-react';
 import { Button } from '../components';
+import { formatLedgerNumber, formatNumber } from '../intl';
 import { RouteLink } from './ui';
 import type { FlashcardLibrary, FlashcardSet } from './types';
 import type { FlashcardRoute } from './urlState';
@@ -16,7 +17,7 @@ export function SetDetail({ library, set, onNavigate, onDelete }: SetDetailProps
     <div className="fc-set-detail">
       <nav className="fc-breadcrumbs" aria-label="Breadcrumb"><RouteLink route={{ view: 'home', showAll: false }} onNavigate={onNavigate}><ArrowLeft size={14} aria-hidden="true" />Study desk</RouteLink><span aria-current="page">{set.name}</span></nav>
       <header className="fc-page-heading">
-        <div><h1>{set.name}</h1><p>{set.cards.length} cards · Blank fields stay blank: each card uses only the part of the field vocabulary it needs.</p></div>
+        <div><h1 dir="auto">{set.name}</h1><p>{formatNumber(set.cards.length)} cards · Blank fields stay blank: each card uses only the part of the field vocabulary it needs.</p></div>
         <div className="fc-actions">
           <Button variant="secondary" onClick={() => onNavigate({ view: 'edit', setId: set.id })}><Settings2 size={16} aria-hidden="true" />Edit set</Button>
           <Button disabled={!set.cards.length} onClick={() => onNavigate({ view: 'setup', scope: { kind: 'set', setId: set.id } })}><Play size={16} aria-hidden="true" />Practice set<ArrowRight size={16} aria-hidden="true" /></Button>
@@ -35,10 +36,10 @@ export function SetDetail({ library, set, onNavigate, onDelete }: SetDetailProps
         <ol>
           {set.cards.map((card, index) => (
             <li key={card.id}>
-              <span className="fc-card-list__number" aria-label={`Card ${index + 1}`}>{String(index + 1).padStart(2, '0')}</span>
+              <span className="fc-card-list__number" aria-label={`Card ${index + 1}`}>{formatLedgerNumber(index + 1)}</span>
               <dl>{set.fields.map((field) => {
                 const value = card.values[field.id]?.trim();
-                return value ? <div key={field.id}><dt>{field.name}</dt><dd>{value}</dd></div> : null;
+                return value ? <div key={field.id}><dt dir="auto">{field.name}</dt><dd dir="auto">{value}</dd></div> : null;
               })}</dl>
             </li>
           ))}

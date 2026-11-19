@@ -108,6 +108,7 @@ export function SetEditor({ set, folders, defaultName, onSave, onCancel, onDirty
           placeholder={defaultName}
           hint={`Leave blank to use “${defaultName}”.`}
           autoComplete="off"
+          dir="auto"
         />
         <fieldset className="fc-membership">
           <legend>Folder membership <span>(optional; choose any number)</span></legend>
@@ -157,6 +158,7 @@ export function SetEditor({ set, folders, defaultName, onSave, onCancel, onDirty
             <div className="fc-editor-grid__number" role="columnheader">Card</div>
             {draft.fields.map((field, index) => {
               const used = draft.cards.some((card) => Boolean(card.values[field.id]?.trim()));
+              const deleteConstraintId = `delete-field-constraint-${field.id}`;
               return (
                 <div className="fc-editor-grid__field" role="columnheader" key={field.id}>
                   <TextInput
@@ -165,6 +167,7 @@ export function SetEditor({ set, folders, defaultName, onSave, onCancel, onDirty
                     value={field.name}
                     error={errors.fields[field.id]}
                     autoComplete="off"
+                    dir="auto"
                     onChange={(event) => {
                       const name = event.target.value;
                       setDraft((current) => ({ ...current, fields: current.fields.map((item) => item.id === field.id ? { ...item, name } : item) }));
@@ -175,8 +178,9 @@ export function SetEditor({ set, folders, defaultName, onSave, onCancel, onDirty
                     variant="quiet"
                     className="fc-delete-field"
                     disabled={used}
-                    title={used ? 'A field can be deleted only after every cell in it is blank.' : `Delete unused ${field.name || 'field'}`}
+                    title={used ? undefined : `Delete unused ${field.name || 'field'}`}
                     aria-label={`Delete unused field ${field.name || index + 1}`}
+                    aria-describedby={used ? deleteConstraintId : undefined}
                     onClick={() => setDraft((current) => ({
                       ...current,
                       fields: current.fields.filter((item) => item.id !== field.id),
@@ -187,6 +191,7 @@ export function SetEditor({ set, folders, defaultName, onSave, onCancel, onDirty
                       }),
                     }))}
                   ><Trash2 size={15} aria-hidden="true" /><span>Delete field</span></Button>
+                  {used && <p className="fc-delete-field__constraint" id={deleteConstraintId}>Clear this field in every card before deleting it.</p>}
                 </div>
               );
             })}
@@ -207,6 +212,7 @@ export function SetEditor({ set, folders, defaultName, onSave, onCancel, onDirty
                       className={`arc-input${error ? ' arc-input--invalid' : ''}`}
                       value={card.values[field.id] ?? ''}
                       autoComplete="off"
+                      dir="auto"
                       aria-invalid={error ? true : undefined}
                       aria-describedby={error ? `card-error-${card.id}` : undefined}
                       onKeyDown={(event) => onCellKeyDown(event, cardIndex, fieldIndex)}

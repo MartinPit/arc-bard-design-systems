@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 import { ArrowLeft, ArrowRight, Layers3, Play, Shuffle } from 'lucide-react';
 import { Button, Checkbox } from '../components';
+import { formatNumber } from '../intl';
 import { defaultPracticeOptions, isSimpleTwoFieldScope, practiceEligibility, scopeFieldNames, scopedSets } from './practice';
 import { RouteLink } from './ui';
 import type { FlashcardLibrary, PracticeOptions, PracticeScope } from './types';
@@ -47,12 +48,12 @@ export function PracticeSetup({ library, initialScope, onNavigate, onStart }: Pr
   return (
     <div className="fc-setup">
       <nav className="fc-breadcrumbs" aria-label="Breadcrumb"><RouteLink route={{ view: 'home', showAll: false }} onNavigate={onNavigate}><ArrowLeft size={14} aria-hidden="true" />Study desk</RouteLink><span aria-current="page">Practice setup</span></nav>
-      <header className="fc-page-heading"><div><h1>Set up practice.</h1><p>Only cards containing every selected front and back field join this session. Ineligible cards are skipped, never changed.</p></div></header>
+      <header className="fc-page-heading"><div><h1>Set up practice.</h1><p>Choose what to practise and what appears on each side of the card.</p></div></header>
 
       <div className="fc-setup__layout">
         <div className="fc-setup__form">
           <section className="fc-setup-section" aria-labelledby="scope-heading">
-            <div className="fc-section-title-row"><h2 id="scope-heading">01 · Scope</h2><span>{sets.length} unique {sets.length === 1 ? 'set' : 'sets'}</span></div>
+            <div className="fc-section-title-row"><h2 id="scope-heading">01 · What to practise</h2><span>{formatNumber(sets.length)} unique {sets.length === 1 ? 'set' : 'sets'}</span></div>
             {options.scope.kind === 'set' ? (
               <div className="fc-selected-scope"><Layers3 size={25} strokeWidth={1.3} aria-hidden="true" /><div><strong>{sets[0]?.name ?? 'This set is no longer available'}</strong><p>One set. Cards stay in editor order unless you shuffle them.</p></div></div>
             ) : (
@@ -72,7 +73,8 @@ export function PracticeSetup({ library, initialScope, onNavigate, onStart }: Pr
           </section>
 
           <section className="fc-setup-section" aria-labelledby="sides-heading">
-            <div className="fc-section-title-row"><h2 id="sides-heading">02 · Card sides</h2><span>{fields.length} vocabulary names in scope</span></div>
+            <div className="fc-section-title-row"><h2 id="sides-heading">02 · Fields available on these cards</h2><span>{formatNumber(fields.length)} {fields.length === 1 ? 'field' : 'fields'}</span></div>
+            <p className="fc-setup-hint">Only cards containing every chosen field are included. Other cards are skipped without being changed.</p>
             {simple && options.direction ? (
               <fieldset className="fc-direction-options"><legend>Two-field behaviour</legend>
                 <label><input type="radio" name="practice-direction" value="front-first" checked={options.direction === 'front-first'} onChange={() => setDirection('front-first')} /><span><strong>Front first</strong><small>{sets[0]?.fields[0]?.name} → {sets[0]?.fields[1]?.name}</small></span></label>
@@ -94,16 +96,15 @@ export function PracticeSetup({ library, initialScope, onNavigate, onStart }: Pr
 
           <section className="fc-setup-section" aria-labelledby="order-heading">
             <div className="fc-section-title-row"><h2 id="order-heading">03 · Order</h2></div>
-            <Checkbox label="Shuffle eligible cards" description="Off keeps editor order within each set and newest sets first across a folder scope." checked={options.shuffle} onChange={(event) => setOptions((current) => ({ ...current, shuffle: event.target.checked }))} />
+            <Checkbox label="Shuffle matching cards" description="Off keeps editor order within each set and puts newer sets first when practising folders." checked={options.shuffle} onChange={(event) => setOptions((current) => ({ ...current, shuffle: event.target.checked }))} />
             {!options.shuffle && <p className="fc-order-note"><Shuffle size={17} aria-hidden="true" />Editor order · newest sets first</p>}
           </section>
         </div>
 
         <aside className="fc-eligibility" aria-labelledby="eligibility-heading">
-          <h2 id="eligibility-heading">{eligible.length} eligible cards</h2>
-          <dl><div><dt>Eligible</dt><dd>{eligible.length}</dd></div><div><dt>Skipped</dt><dd>{skipped}</dd></div><div><dt>First batch</dt><dd>{Math.min(10, eligible.length)}</dd></div></dl>
-          <p>{skipped ? `${skipped} ${skipped === 1 ? 'card does' : 'cards do'} not contain every selected field.` : 'Every card in scope contains the selected fields.'}</p>
-          {!eligible.length && <p className="fc-form-error" role="alert">No cards qualify. Choose different fields or a broader scope before starting.</p>}
+          <h2 id="eligibility-heading">{formatNumber(eligible.length)} {eligible.length === 1 ? 'card matches' : 'cards match'} these sides</h2>
+          <dl><div><dt>Skipped</dt><dd>{formatNumber(skipped)}</dd></div><div><dt>First batch</dt><dd>{formatNumber(Math.min(10, eligible.length))}</dd></div></dl>
+          {!eligible.length && <p className="fc-form-error" role="alert">No cards match these sides. Choose different fields or more folders before starting.</p>}
           {!selectionValid && <p className="fc-form-error" role="alert">Choose at least one folder.</p>}
           <Button disabled={!eligible.length || !fieldsValid || !selectionValid} onClick={() => onStart(options)}><Play size={17} aria-hidden="true" />Start practice<ArrowRight size={17} aria-hidden="true" /></Button>
           <p className="fc-eligibility__note">Starting a new session will ask before replacing an existing paused session.</p>

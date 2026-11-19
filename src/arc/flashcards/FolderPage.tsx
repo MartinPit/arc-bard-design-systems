@@ -1,5 +1,6 @@
 import { ArrowRight, Folder as FolderIcon, Pencil, Play, Plus, Trash2 } from 'lucide-react';
 import { Button } from '../components';
+import { formatNumber } from '../intl';
 import { descendantFolderIds, scopedSets } from './practice';
 import { RouteLink } from './ui';
 import type { FlashcardFolder, FlashcardLibrary } from './types';
@@ -39,7 +40,7 @@ export function FolderPage({ library, folder, onNavigate, onNewFolder, onRenameF
         <span aria-current="page">{folder.name}</span>
       </nav>
       <header className="fc-page-heading">
-        <div><h1>{folder.name}</h1><p>{folderCount} {folderCount === 1 ? 'branch' : 'branches'} · {scoped.length} unique sets across this folder and all descendants. Multiple paths never duplicate a practice card.</p></div>
+        <div><h1 dir="auto">{folder.name}</h1><p>{formatNumber(folderCount)} {folderCount === 1 ? 'branch' : 'branches'} · {formatNumber(scoped.length)} unique sets across this folder and all descendants. Multiple paths never duplicate a practice card.</p></div>
         <div className="fc-actions">
           <Button variant="secondary" onClick={() => onNewFolder(folder.id)}><Plus size={16} aria-hidden="true" />New subfolder</Button>
           <Button disabled={!scoped.length} onClick={() => onNavigate({ view: 'setup', scope: { kind: 'folders', folderIds: [folder.id] } })}><Play size={16} aria-hidden="true" />Practice entire folder<ArrowRight size={16} aria-hidden="true" /></Button>
@@ -50,15 +51,15 @@ export function FolderPage({ library, folder, onNavigate, onNewFolder, onRenameF
         <div className="fc-actions"><Button variant="quiet" onClick={() => onRenameFolder(folder)}><Pencil size={15} aria-hidden="true" />Rename folder</Button><Button variant="quiet" className="fc-danger-action" disabled={!empty} title={!empty ? 'Move all direct sets and subfolders out before deleting this folder.' : 'Delete this empty folder'} onClick={() => onDeleteFolder(folder)}><Trash2 size={15} aria-hidden="true" />Delete empty folder</Button></div>
       </div>
       <section className="fc-folder-contents" aria-labelledby="subfolders-heading">
-        <div className="fc-section-title-row"><h2 id="subfolders-heading">Subfolders</h2><span>{children.length}</span></div>
+        <div className="fc-section-title-row"><h2 id="subfolders-heading">Subfolders</h2><span>{formatNumber(children.length)}</span></div>
         {children.length ? <ul className="fc-subfolder-list">{children.map((child) => {
           const count = scopedSets(library, { kind: 'folders', folderIds: [child.id] }).length;
-          return <li key={child.id}><RouteLink route={{ view: 'folder', folderId: child.id }} onNavigate={onNavigate}><FolderIcon size={20} strokeWidth={1.4} aria-hidden="true" /><span>{child.name}<small>{count} unique sets including descendants</small></span><ArrowRight size={16} aria-hidden="true" /></RouteLink></li>;
+          return <li key={child.id}><RouteLink route={{ view: 'folder', folderId: child.id }} onNavigate={onNavigate}><FolderIcon size={20} strokeWidth={1.4} aria-hidden="true" /><span>{child.name}<small>{formatNumber(count)} unique sets including descendants</small></span><ArrowRight size={16} aria-hidden="true" /></RouteLink></li>;
         })}</ul> : <p>No direct subfolders.</p>}
       </section>
       <section className="fc-folder-contents" aria-labelledby="direct-sets-heading">
-        <div className="fc-section-title-row"><h2 id="direct-sets-heading">Sets directly in {folder.name}</h2><span>{directSets.length}</span></div>
-        {directSets.length ? <ol className="fc-folder-set-list">{directSets.map((set) => <li key={set.id}><div><RouteLink route={{ view: 'set', setId: set.id }} onNavigate={onNavigate}>{set.name}</RouteLink><p>{set.cards.length} cards · {set.fields.map((field) => field.name).join(' + ')}</p></div><Button variant="quiet" disabled={!set.cards.length} onClick={() => onNavigate({ view: 'setup', scope: { kind: 'set', setId: set.id } })}>Practice<ArrowRight size={15} aria-hidden="true" /></Button></li>)}</ol> : <p>No sets are directly filed here. Descendant sets still appear in folder practice.</p>}
+        <div className="fc-section-title-row"><h2 id="direct-sets-heading">Sets directly in {folder.name}</h2><span>{formatNumber(directSets.length)}</span></div>
+        {directSets.length ? <ol className="fc-folder-set-list">{directSets.map((set) => <li key={set.id}><div><RouteLink route={{ view: 'set', setId: set.id }} onNavigate={onNavigate}>{set.name}</RouteLink><p>{formatNumber(set.cards.length)} cards · {set.fields.map((field) => field.name).join(' + ')}</p></div><Button variant="quiet" disabled={!set.cards.length} onClick={() => onNavigate({ view: 'setup', scope: { kind: 'set', setId: set.id } })}>Practice<ArrowRight size={15} aria-hidden="true" /></Button></li>)}</ol> : <p>No sets are directly filed here. Descendant sets still appear in folder practice.</p>}
       </section>
     </div>
   );

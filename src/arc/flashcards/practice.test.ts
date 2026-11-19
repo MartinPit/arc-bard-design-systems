@@ -152,4 +152,30 @@ describe('batched practice reducer', () => {
     expect(continued.earlyUnknown).toBe(false);
     expect(continued.revealed).toBe(false);
   });
+
+  it('undoes an early Unknown after Continue and restores repetition state', () => {
+    const library = createExampleLibrary();
+    const initial = createPracticeSession(library, defaultPracticeOptions(library, { kind: 'set', setId: 'japanese-essentials' }), NOW);
+    const marked = reducePractice(initial, 'unknown', NOW);
+    const continued = reducePractice(marked, 'continue', NOW);
+
+    expect(continued.repeated).toBe(1);
+    expect(continued.carry).toHaveLength(1);
+    expect(reducePractice(continued, 'undo', NOW)).toEqual(initial);
+  });
+
+  it('keeps the latest Known recoverable through the final summary until another rating', () => {
+    const library = fixture();
+    library.sets = [set('single', NOW, ['parent'], [{ f0: 'Only front', f1: 'Only back' }])];
+    const initial = createPracticeSession(library, { scope: { kind: 'set', setId: 'single' }, frontFields: ['Front'], backFields: ['Back'], shuffle: false }, NOW);
+    const rated = reducePractice(initial, 'known', NOW);
+    expect(rated.phase).toBe('checkpoint');
+    expect(rated.known).toBe(1);
+    expect(rated.batchKnown).toBe(1);
+
+    const complete = reducePractice(rated, 'continue', NOW);
+    expect(complete.phase).toBe('complete');
+    expect(complete.lastRating).not.toBeNull();
+    expect(reducePractice(complete, 'undo', NOW)).toEqual(initial);
+  });
 });

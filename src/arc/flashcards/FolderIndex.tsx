@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 import { ArrowRight, Folder, Play, Plus } from 'lucide-react';
 import { Button, Checkbox } from '../components';
+import { formatNumber } from '../intl';
 import { scopedSets } from './practice';
 import { RouteLink } from './ui';
 import type { FlashcardLibrary, PracticeSession } from './types';
@@ -28,7 +29,7 @@ export function FolderIndex({ library, session, onNavigate, onNewFolder, onResum
       <li key={id} className="fc-folder-node">
         <div className="fc-folder-node__line" style={{ '--fc-folder-depth': depth } as React.CSSProperties}>
           <RouteLink route={{ view: 'folder', folderId: id }} onNavigate={onNavigate} className="fc-folder-link">
-            <Folder size={15} strokeWidth={1.6} aria-hidden="true" /><span>{folder.name}</span><small>{recursiveCount}</small>
+            <Folder size={15} strokeWidth={1.6} aria-hidden="true" /><span>{folder.name}<small>{formatNumber(recursiveCount)} {recursiveCount === 1 ? 'set' : 'sets'} incl. subfolders</small></span>
           </RouteLink>
           <Checkbox
             className="fc-folder-select"
@@ -53,14 +54,14 @@ export function FolderIndex({ library, session, onNavigate, onNewFolder, onResum
         <section className="fc-resume" aria-labelledby="resume-heading">
           <h3 id="resume-heading">{session.title}</h3>
           <p>One paused session</p>
-          <p>{session.known} known · {session.repeated} repeated</p>
+          <p>{formatNumber(session.known)} known · {formatNumber(session.repeated)} repeated</p>
           <Button onClick={onResume}><Play size={16} aria-hidden="true" />Resume practice<ArrowRight size={16} aria-hidden="true" /></Button>
         </section>
       )}
       {roots.length ? <ul className="fc-folder-tree">{roots.map((folder) => renderFolder(folder.id, 0))}</ul> : <p className="fc-folder-index__empty">No folders. Sets can stay unfiled, or you can make a folder to begin.</p>}
-      <div className="fc-practice-selected">
+      <div className={`fc-practice-selected${selected.length ? ' is-active' : ''}`}>
         <Button disabled={!selected.length} onClick={() => onPracticeFolders(selected)}><Play size={16} aria-hidden="true" />Practice selected folders</Button>
-        <small>{selected.length ? `${selected.length} selected; descendants are included automatically.` : 'Use the checkboxes to combine folder scopes.'}</small>
+        <small aria-live="polite" aria-atomic="true">{selected.length ? `${formatNumber(selected.length)} ${selected.length === 1 ? 'folder' : 'folders'} selected. Subfolders are included.` : 'Choose folders to practise. Subfolders are included.'}</small>
       </div>
     </aside>
   );

@@ -54,7 +54,7 @@ export interface PracticeItem {
 
 export type PracticePhase = 'card' | 'checkpoint' | 'complete';
 
-export interface PracticeSession {
+export interface PracticeSessionState {
   version: 1;
   id: string;
   createdAt: string;
@@ -74,6 +74,11 @@ export interface PracticeSession {
   phase: PracticePhase;
   batchKnown: number;
   batchRepeated: number;
+}
+
+export interface PracticeSession extends PracticeSessionState {
+  /** The complete state before the latest rating, available until the next rating. */
+  lastRating: PracticeSessionState | null;
 }
 
 export interface FlashcardDraft {

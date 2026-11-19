@@ -35,6 +35,8 @@ describe('union-grid set editor', () => {
     renderEditor();
     fireEvent.change(screen.getByLabelText('Card 1, Front'), { target: { value: '水' } });
     expect(screen.getByRole('button', { name: 'Delete unused field Front' })).toBeDisabled();
+    expect(screen.getByRole('button', { name: 'Delete unused field Front' })).toHaveAccessibleDescription('Clear this field in every card before deleting it.');
+    expect(screen.getByText('Clear this field in every card before deleting it.')).toBeVisible();
     fireEvent.click(screen.getByRole('button', { name: 'Add field' }));
     expect(screen.getByLabelText('Card 1, Field 3')).toHaveValue('');
     fireEvent.change(screen.getByLabelText('Field 1 name'), { target: { value: 'Character' } });

@@ -1,4 +1,4 @@
-import { afterEach, beforeEach, describe, expect, it } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import * as axe from 'axe-core';
 import { Flashcards } from './Flashcards';
@@ -29,7 +29,7 @@ describe('Arc Flashcards app', () => {
     render(<Flashcards />);
     fireEvent.click(screen.getByRole('button', { name: /Practice this set/ }));
     expect(screen.getByRole('heading', { level: 1, name: 'Set up practice.' })).toBeInTheDocument();
-    expect(screen.getByRole('heading', { name: '12 eligible cards' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: '12 cards match these sides' })).toBeInTheDocument();
     fireEvent.click(screen.getByRole('button', { name: /Start practice/ }));
     fireEvent.click(screen.getByRole('button', { name: /Known/ }));
     fireEvent.click(screen.getByRole('button', { name: /Save & suspend/ }));
@@ -82,6 +82,49 @@ describe('Arc Flashcards app', () => {
     const dialog = await screen.findByRole('dialog', { name: 'Leave this unsaved draft?' });
     fireEvent.click(within(dialog).getByRole('button', { name: 'Cancel' }));
     expect(screen.getByLabelText('Card 1, Front')).toHaveValue('Do not lose this');
+  });
+
+  it('makes example replacement explicitly destructive', async () => {
+    render(<Flashcards />);
+    fireEvent.click(screen.getByRole('button', { name: 'Replace library with examples…' }));
+    const dialog = await screen.findByRole('dialog', { name: 'Replace your entire library with examples?' });
+    expect(dialog).toHaveTextContent('replaces your 9 sets');
+    const confirmation = within(dialog).getByRole('button', { name: 'Replace entire library' });
+    expect(confirmation).toHaveClass('fc-danger-action');
+    fireEvent.click(confirmation);
+    expect(screen.getByRole('status')).toHaveTextContent('Your library was replaced with the examples.');
+  });
+
+  it('reverses the latest rating with U and removes the spent undo action', () => {
+    render(<Flashcards />);
+    fireEvent.click(screen.getByRole('button', { name: /Practice this set/ }));
+    fireEvent.click(screen.getByRole('button', { name: /Start practice/ }));
+    fireEvent.click(screen.getByRole('button', { name: /Known/ }));
+    expect(screen.getByText('Card 2 of 10 in this batch')).toBeInTheDocument();
+    expect(screen.getByText('1 of 12 cards known')).toBeInTheDocument();
+
+    fireEvent.keyDown(window, { key: 'u' });
+    expect(screen.getByText('Card 1 of 10 in this batch')).toBeInTheDocument();
+    expect(screen.getByText('0 of 12 cards known')).toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: /Undo last rating/ })).not.toBeInTheDocument();
+  });
+
+  it('keeps a visible recovery action when browser storage fails, then clears it after a successful retry', async () => {
+    const write = vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => { throw new DOMException('Full', 'QuotaExceededError'); });
+    render(<Flashcards />);
+    expect(await screen.findByRole('alert')).toHaveTextContent('Browser storage is unavailable or full.');
+    expect(screen.getByRole('button', { name: 'Try saving again' })).toBeInTheDocument();
+    const interruptedUnload = new Event('beforeunload', { cancelable: true });
+    window.dispatchEvent(interruptedUnload);
+    expect(interruptedUnload.defaultPrevented).toBe(true);
+
+    write.mockRestore();
+    fireEvent.click(screen.getByRole('button', { name: 'Try saving again' }));
+    await waitFor(() => expect(screen.queryByRole('alert')).not.toBeInTheDocument());
+    expect(JSON.parse(window.localStorage.getItem(LIBRARY_STORAGE_KEY) ?? '{}').sets).toHaveLength(9);
+    const recoveredUnload = new Event('beforeunload', { cancelable: true });
+    window.dispatchEvent(recoveredUnload);
+    expect(recoveredUnload.defaultPrevented).toBe(false);
   });
 
   it('has no detectable axe accessibility violations in light mode', async () => {

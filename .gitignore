@@ -2,5 +2,6 @@ node_modules/
 dist/
 artifacts/
 .playwright/
+.playwright-browsers/
 *.local
 .DS_Store

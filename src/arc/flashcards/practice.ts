@@ -6,6 +6,7 @@ import type {
   PracticeOptions,
   PracticeScope,
   PracticeSession,
+  PracticeSessionState,
 } from './types';
 
 export const PRACTICE_BATCH_SIZE = 10;
@@ -134,6 +135,7 @@ export function createPracticeSession(
     phase: ordered.length ? 'card' : 'complete',
     batchKnown: 0,
     batchRepeated: 0,
+    lastRating: null,
   };
 }
 
@@ -152,9 +154,18 @@ function advance(session: PracticeSession, now: string): PracticeSession {
   }, now);
 }
 
-export type PracticeAction = 'reveal' | 'known' | 'unknown' | 'continue';
+export type PracticeAction = 'reveal' | 'known' | 'unknown' | 'continue' | 'undo';
+
+function ratingSnapshot(session: PracticeSession): PracticeSessionState {
+  const { lastRating, ...state } = session;
+  void lastRating;
+  return state;
+}
 
 export function reducePractice(session: PracticeSession, action: PracticeAction, now = new Date().toISOString()): PracticeSession {
+  if (action === 'undo') {
+    return session.lastRating ? touch({ ...session.lastRating, lastRating: null }, now) : session;
+  }
   if (session.phase === 'complete') return session;
   if (session.phase === 'checkpoint') {
     if (action !== 'continue') return session;
@@ -178,7 +189,7 @@ export function reducePractice(session: PracticeSession, action: PracticeAction,
   if (action === 'reveal' && !session.revealed) return touch({ ...session, revealed: true }, now);
   if (action === 'continue' && session.earlyUnknown) return advance(session, now);
   if (action === 'known' && !session.earlyUnknown) {
-    return advance({ ...session, known: session.known + 1, batchKnown: session.batchKnown + 1 }, now);
+    return advance({ ...session, known: session.known + 1, batchKnown: session.batchKnown + 1, lastRating: ratingSnapshot(session) }, now);
   }
   if (action === 'unknown' && !session.earlyUnknown) {
     const current = session.batch[session.currentIndex];
@@ -189,6 +200,7 @@ export function reducePractice(session: PracticeSession, action: PracticeAction,
       repeated: session.repeated + 1,
       batchRepeated: session.batchRepeated + 1,
       revealed: true,
+      lastRating: ratingSnapshot(session),
     };
     if (!session.revealed) return touch({ ...marked, earlyUnknown: true }, now);
     return advance(marked, now);

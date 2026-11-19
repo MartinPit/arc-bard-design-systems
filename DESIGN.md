@@ -25,7 +25,7 @@ The default home composition keeps the selected preview and all six set choices 
 - **Masthead:** Arc Flashcards identity, the persistent New set action, and a labelled Light/Dark theme control.
 - **Study stage:** selected-set heading and metadata, Edit and inventory actions, real-card preview, practice configuration and primary action, then recent sets.
 - **Folder index:** every folder and nested branch, practice-scope checkboxes, New folder, and an optional resumable-session region. Local-library maintenance stays separate below it.
-- **Practice:** one dominant card, explicit batch position and progress, visible Known/Don’t know/Show answer/Continue controls, and a restrained current-summary ledger. Early Don’t know reveals the answer and waits for Continue; checkpoints and the final session summary keep repetition understandable.
+- **Practice:** one dominant card, explicit batch position and progress, visible Known/Don’t know/Show answer/Continue controls, and a restrained current-summary ledger. Early Don’t know reveals the answer and waits for Continue; checkpoints and the final session summary keep repetition understandable. The latest rating offers a visible or U-key Undo until another rating replaces it.
 - **Editor:** persistent set details and folder memberships above a union grid. Every field has a visible name input; every card is numbered; populated fields cannot be deleted. Validation stays next to the affected draft.
 
 Set-detail and folder views use the same editorial measure, breadcrumbs, meaningful horizontal rules, and familiar controls. Destructive actions are isolated and confirmed. Empty states explain what can happen next instead of acting as decorative panels.
@@ -51,4 +51,8 @@ The initial finish review requested a functional six-set switcher within the des
 
 A fresh verdict pass scored every requested UI correction **resolved** and returned **DISPOSITION: ship**. Final development evidence is in `.impeccable/review/`: `desktop.png`, `dark.png`, `mobile.png`, `editor.png`, `editor-full.png`, and `practice.png`. These screenshots are review artifacts, not shipping assets. No rasters ship in the application.
 
-Final verification: **65 Vitest tests passed**, the strict TypeScript/Vite production build passed, and **145 Playwright checks passed** with one intentional mobile skip for a desktop-only first-viewport assertion.
+A follow-up trust-and-recovery pass made example-library replacement explicitly destructive, added single-rating Undo with keyboard and persistence support, kept folder selection and Practice together on mobile, clarified recursive counts and setup copy, and exposed the populated-field deletion constraint both visibly and programmatically. Desktop/mobile and light/dark rendered checks remained within the incumbent design world.
+
+A production-hardening pass added a persistent browser-storage failure warning with retry, stricter saved-library and practice-session validation, RTL-aware user content, locale-aware library and practice counters, and flow-based preview chrome that cannot overlap long content. Extreme-content, storage-failure, 320px, light/dark, and 1,000-set checks passed. Additional review captures are `hardening-desktop.png`, `hardening-dark.png`, `hardening-mobile-extreme.png`, `hardening-practice-extreme.png`, and `hardening-storage-error.png`; these are review artifacts, not shipping assets.
+
+Final verification: **73 Vitest tests passed**, the strict TypeScript/Vite production build passed, and **152 Playwright checks passed** with four intentional platform-specific skips. The Impeccable detector returned no findings.

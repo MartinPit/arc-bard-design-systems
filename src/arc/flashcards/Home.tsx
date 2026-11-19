@@ -1,6 +1,6 @@
 import { ArrowRight, FolderInput, Layers3, Play, Settings2 } from 'lucide-react';
 import { Button } from '../components';
-import { formatDate, formatNumber } from '../intl';
+import { formatDate, formatLedgerNumber, formatNumber } from '../intl';
 import { defaultPracticeOptions } from './practice';
 import { FolderIndex } from './FolderIndex';
 import { RouteLink, SetCardPreview } from './ui';
@@ -33,8 +33,8 @@ export function Home({ library, session, showAll, selectedSetId, onNavigate, onN
           <>
             <header className="fc-stage-heading">
               <div>
-                <h1 id="selected-set-heading">{selected.name}</h1>
-                <p>{selected.cards.length} {selected.cards.length === 1 ? 'card' : 'cards'} · {selected.fields.length} named fields{selected.folderIds.length ? ` · filed in ${selected.folderIds.length} ${selected.folderIds.length === 1 ? 'folder' : 'folders'}` : ' · unfiled'}</p>
+                <h1 id="selected-set-heading" dir="auto">{selected.name}</h1>
+                <p>{formatNumber(selected.cards.length)} {selected.cards.length === 1 ? 'card' : 'cards'} · {formatNumber(selected.fields.length)} named fields{selected.folderIds.length ? ` · filed in ${formatNumber(selected.folderIds.length)} ${selected.folderIds.length === 1 ? 'folder' : 'folders'}` : ' · unfiled'}</p>
               </div>
               <div className="fc-actions">
                 <RouteLink className="fc-button-link" route={{ view: 'edit', setId: selected.id }} onNavigate={onNavigate}><Settings2 size={16} aria-hidden="true" />Edit set</RouteLink>
@@ -78,18 +78,18 @@ export function Home({ library, session, showAll, selectedSetId, onNavigate, onN
             <ol className={showAll ? 'fc-recent-list' : 'fc-recent-switcher'}>
               {visibleSets.map((set, index) => showAll ? (
                 <li key={set.id}>
-                  <span className="fc-recent-list__number">{String(index + 1).padStart(2, '0')}</span>
+                  <span className="fc-recent-list__number">{formatLedgerNumber(index + 1)}</span>
                   <RouteLink route={{ view: 'home', showAll: true, selectedSetId: set.id }} onNavigate={onNavigate} className="fc-recent-list__name">{set.name}</RouteLink>
-                  <span className="fc-recent-list__meta">{set.cards.length} cards · {set.fields.length} fields</span>
+                  <span className="fc-recent-list__meta">{formatNumber(set.cards.length)} cards · {formatNumber(set.fields.length)} fields</span>
                   <time dateTime={set.createdAt}>{formatDate(set.createdAt, { day: 'numeric', month: 'short' })}</time>
                   <RouteLink route={{ view: 'edit', setId: set.id }} onNavigate={onNavigate} className="fc-quiet-link" aria-label={`Edit ${set.name}`}>Edit</RouteLink>
                 </li>
               ) : (
                 <li key={set.id} className={selected?.id === set.id ? 'is-selected' : undefined}>
                   <RouteLink route={{ view: 'home', showAll: false, selectedSetId: set.id }} onNavigate={onNavigate} className="fc-recent-choice" aria-current={selected?.id === set.id ? 'page' : undefined}>
-                    <span className="fc-recent-list__number"><span className="fc-sr-only">Set </span>{String(index + 1).padStart(2, '0')}</span>
-                    <strong>{set.name}</strong>
-                    <span className="fc-recent-list__meta">{set.cards.length} cards · {set.fields.length} fields</span>
+                    <span className="fc-recent-list__number"><span className="fc-sr-only">Set </span>{formatLedgerNumber(index + 1)}</span>
+                    <strong dir="auto">{set.name}</strong>
+                    <span className="fc-recent-list__meta">{formatNumber(set.cards.length)} cards · {formatNumber(set.fields.length)} fields</span>
                     <time dateTime={set.createdAt}>{formatDate(set.createdAt, { day: 'numeric', month: 'short' })}</time>
                   </RouteLink>
                 </li>
@@ -103,8 +103,8 @@ export function Home({ library, session, showAll, selectedSetId, onNavigate, onN
         <FolderIndex library={library} session={session} onNavigate={onNavigate} onNewFolder={onNewFolder} onResume={onResume} onPracticeFolders={onPracticeFolders} />
         <section className="fc-library-tools" aria-labelledby="library-tools-heading">
           <h2 id="library-tools-heading"><FolderInput size={18} aria-hidden="true" />Local library</h2>
-          <p>Saved in this browser only. Restore the examples or clear everything after confirmation.</p>
-          <div className="fc-actions"><Button variant="quiet" onClick={onClearLibrary}>Clear library</Button><Button variant="quiet" onClick={onRestoreLibrary}>Restore example library</Button></div>
+          <p>Saved in this browser only. Replace everything with examples or clear the library after confirmation.</p>
+          <div className="fc-actions"><Button variant="quiet" onClick={onClearLibrary}>Clear library</Button><Button variant="quiet" className="fc-danger-action" onClick={onRestoreLibrary}>Replace library with examples…</Button></div>
         </section>
       </div>
     </div>

@@ -29,7 +29,7 @@ A learner creates sets in a keyboard-friendly grid, organises them into nested f
 - Each set owns a named field vocabulary, while each card uses a flexible subset represented in a union-grid editor.
 - Every saved card has at least two populated fields. Empty editing rows are discarded.
 - Practice supports shuffled or deterministic order, disjoint front/back field selections, eligibility counts, and batches of at most ten cards.
-- Known removes a card from the active session. Don’t know carries it forward until known. Early Known advances immediately; early Don’t know reveals before continuing.
+- Known removes a card from the active session. Don’t know carries it forward until known. Early Known advances immediately; early Don’t know reveals before continuing. The latest rating can be undone until another rating replaces it.
 - The library and one active session persist in browser-local storage; seeded examples can be cleared or reset.
 - Only the current or final session summary is retained in the experience. Persistent history, statistics, accounts, backend sync, sharing, import/export, spaced repetition, and folder reparenting are excluded.
 - Starting another practice session asks before replacing the suspended active session.

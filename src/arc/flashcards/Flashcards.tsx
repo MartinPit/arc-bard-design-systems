@@ -36,6 +36,9 @@ export function Flashcards() {
   const [library, setLibrary] = useState(initialState.library);
   const [session, setSession] = useState(initialState.session);
   const [notice, setNotice] = useState(initialState.recovered ? 'Some saved Flashcards data could not be read. Safe example data was restored where needed.' : '');
+  const [persistenceErrors, setPersistenceErrors] = useState({ library: false, session: false });
+  const [storageRetry, setStorageRetry] = useState(0);
+  const persistenceFailed = persistenceErrors.library || persistenceErrors.session;
   const [editorDirty, setEditorDirty] = useState(false);
   const editorDirtyRef = useRef(false);
   const [confirmation, setConfirmation] = useState<Confirmation | null>(null);
@@ -45,18 +48,24 @@ export function Flashcards() {
   const [folderError, setFolderError] = useState('');
   const mainRef = useRef<HTMLElement>(null);
 
-  useEffect(() => { saveLibrary(library); }, [library]);
-  useEffect(() => { saveSession(session); }, [session]);
+  useEffect(() => {
+    const failed = !saveLibrary(library);
+    setPersistenceErrors((current) => current.library === failed ? current : { ...current, library: failed });
+  }, [library, storageRetry]);
+  useEffect(() => {
+    const failed = !saveSession(session);
+    setPersistenceErrors((current) => current.session === failed ? current : { ...current, session: failed });
+  }, [session, storageRetry]);
 
   useEffect(() => {
-    if (!editorDirty) return;
+    if (!editorDirty && !persistenceFailed) return;
     const warn = (event: BeforeUnloadEvent) => {
       event.preventDefault();
       event.returnValue = true;
     };
     window.addEventListener('beforeunload', warn);
     return () => window.removeEventListener('beforeunload', warn);
-  }, [editorDirty]);
+  }, [editorDirty, persistenceFailed]);
 
   const onDirtyChange = useCallback((dirty: boolean) => {
     editorDirtyRef.current = dirty;
@@ -228,7 +237,7 @@ export function Flashcards() {
   function clearLibrary() {
     setConfirmation({
       title: 'Clear your entire library?',
-      description: 'This removes every set, card, folder and paused practice session from this browser. Restore Example Library brings back only the seeded examples.',
+      description: 'This removes every set, card, folder and paused practice session from this browser. Replace library with examples brings back only the seeded examples.',
       confirmLabel: 'Clear library',
       danger: true,
       onConfirm: () => {
@@ -242,14 +251,15 @@ export function Flashcards() {
 
   function restoreLibrary() {
     setConfirmation({
-      title: 'Restore the example library?',
-      description: 'This replaces all current sets, folders and the paused practice session with the original realistic examples.',
-      confirmLabel: 'Restore examples',
+      title: 'Replace your entire library with examples?',
+      description: `This permanently replaces your ${library.sets.length} ${library.sets.length === 1 ? 'set' : 'sets'}, every card and folder, and any paused practice session in this browser with the example library. This cannot be undone.`,
+      confirmLabel: 'Replace entire library',
+      danger: true,
       onConfirm: () => {
         setLibrary(createExampleLibrary());
         setSession(null);
         commitNavigate({ view: 'home', showAll: false });
-        announce('The example library has been restored.');
+        announce('Your library was replaced with the examples.');
       },
     });
   }
@@ -285,7 +295,10 @@ export function Flashcards() {
         <p className="fc-tagline">Make a set. Keep what you know.</p>
         <div className="fc-masthead__actions"><ThemeToggle theme={theme} onToggle={toggleTheme} /><Button onClick={() => requestNavigate({ view: 'edit', setId: null })}><Plus size={17} aria-hidden="true" />New set</Button></div>
       </header>
-      <div className="fc-app-notices" aria-live="polite">{notice && <div className="fc-notice" role="status"><span>{notice}</span><button type="button" onClick={() => setNotice('')}>Dismiss</button></div>}</div>
+      <div className="fc-app-notices">
+        {persistenceFailed && <div className="fc-notice fc-notice--error" role="alert"><span>Browser storage is unavailable or full. Changes remain only in this tab and will be lost if you close or reload it. Allow site storage or free space, then try again.</span><button type="button" onClick={() => setStorageRetry((current) => current + 1)}>Try saving again</button></div>}
+        {notice && <div className="fc-notice" role="status"><span>{notice}</span><button type="button" onClick={() => setNotice('')}>Dismiss</button></div>}
+      </div>
       <main id="flashcards-main" className="fc-main" tabIndex={-1} ref={mainRef}>{content}</main>
 
       <Dialog open={Boolean(confirmation)} onOpenChange={(open) => { if (!open) setConfirmation(null); }} title={confirmation?.title ?? 'Confirm'} description={confirmation?.description}>
@@ -298,7 +311,7 @@ export function Flashcards() {
 
       <Dialog open={Boolean(folderForm)} onOpenChange={(open) => { if (!open) setFolderForm(null); }} title={folderForm?.mode === 'rename' ? 'Rename folder' : 'Create a folder'} description={folderForm?.mode === 'rename' ? 'Only the name changes. Its parent and nesting stay fixed.' : 'Choose a parent now. Nesting cannot be changed after creation.'}>
         <form className="fc-folder-form" onSubmit={saveFolder}>
-          <TextInput id="folder-name" label="Folder name" value={folderName} error={folderError || undefined} onChange={(event) => { setFolderName(event.target.value); setFolderError(''); }} autoComplete="off" required />
+          <TextInput id="folder-name" label="Folder name" value={folderName} error={folderError || undefined} onChange={(event) => { setFolderName(event.target.value); setFolderError(''); }} autoComplete="off" dir="auto" required />
           {folderForm?.mode === 'create' && <Select id="folder-parent" label="Parent folder" value={folderParent ?? ''} onChange={(event) => setFolderParent(event.target.value || null)}><option value="">No parent (top level)</option>{library.folders.map((folder) => <option key={folder.id} value={folder.id}>{folder.name}</option>)}</Select>}
           <div className="fc-dialog-actions"><Button variant="quiet" onClick={() => setFolderForm(null)}>Cancel</Button><Button type="submit">{folderForm?.mode === 'rename' ? 'Save name' : 'Create folder'}</Button></div>
         </form>
