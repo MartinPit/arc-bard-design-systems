@@ -82,6 +82,7 @@ h1 em { font-family: Georgia, 'Times New Roman', serif; font-weight: 400; }
 .system-entry > a > p { max-width: 32rem; margin: 10px 0 22px; color: var(--portal-muted); font-size: 0.9rem; line-height: 1.6; }
 .system-entry ul { display: flex; flex-wrap: wrap; gap: 8px 20px; margin: 0; padding: 16px 0 0; border-top: 1px solid var(--portal-rule); list-style: none; color: var(--portal-muted); font-family: monospace; font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.06em; }
 .system-entry > .portal-app-link { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 44px; margin-top: 16px; padding: 10px 0; border-bottom: 1px solid var(--portal-rule); color: var(--portal-muted); font-family: monospace; font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.06em; }
+.system-entry > .portal-app-link + .portal-app-link { margin-top: 0; }
 .portal-app-link > span:last-child { display: inline-flex; align-items: center; gap: 6px; color: var(--portal-text); font-weight: 600; }
 .portal-app-link svg { width: 14px; height: 14px; stroke-width: 1.5; }
 .portal-app-link:hover > span:last-child { color: var(--portal-arc-ink); }

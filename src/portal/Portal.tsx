@@ -151,6 +151,10 @@ export function Portal() {
               <span>App prototype</span>
               <span>Reading Room<ArrowUpRight aria-hidden="true" /></span>
             </a>
+            <a className="portal-app-link" href={`${baseUrl}arc/flashcards/`} aria-label="Open Arc Flashcards app prototype">
+              <span>App prototype</span>
+              <span>Flashcards<ArrowUpRight aria-hidden="true" /></span>
+            </a>
           </article>
 
           <article className="system-entry bard-entry">

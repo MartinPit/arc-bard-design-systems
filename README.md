@@ -5,16 +5,17 @@ Two independent React design systems translated from the visual language of two 
 - **Arc** — editorial, tactile, warm ivory and aubergine with print-inspired details and a marigold–magenta leaf gradient.
 - **Bard** — ethereal, intricate, mint/aqua/lilac with original guilloché artwork and restrained, fluid motion.
 
-The project contains four website entries:
+The project contains five website entries:
 
 | Entry | Development path | Purpose |
 | --- | --- | --- |
 | Portal | `/arc-bard-design-systems/` | Quiet index linking to the systems and Arc app |
 | Arc | `/arc-bard-design-systems/arc/` | Complete Arc design-system showcase |
 | Arc Reading Room | `/arc-bard-design-systems/arc/reading-room/` | Personal reading app built with Arc |
+| Arc Flashcards | `/arc-bard-design-systems/arc/flashcards/` | Flexible local flashcard authoring and practice app built with Arc |
 | Bard | `/arc-bard-design-systems/bard/` | Complete Bard design-system showcase |
 
-The Reading Room is a separate visit-local product prototype that consumes Arc's approved components and tokens without changing the showcase. There are no backend services, remote assets, or shared styled components. Arc and Bard were implemented independently by separate agents with disjoint file ownership. They demonstrate the same 19-component inventory without sharing component implementations, tokens, styles, or visual composition.
+Reading Room and Flashcards are separate product prototypes that consume Arc's approved components and tokens without changing the showcase. Reading Room is visit-local; Flashcards persists its library and one active practice session in browser-local storage. There are no backend services, remote assets, or shared styled components. Arc and Bard were implemented independently by separate agents with disjoint file ownership. They demonstrate the same 19-component inventory without sharing component implementations, tokens, styles, or visual composition.
 
 Each public component lives in its own TypeScript file with a colocated stylesheet and explicit style dependencies. `src/arc/components/index.ts` and `src/bard/components/index.ts` are the respective public entry points. System tokens and small private utilities may be shared within a system, but never across Arc and Bard.
 
@@ -40,7 +41,7 @@ Vite prints the local server address. Open `/arc-bard-design-systems/` from that
 
 ## Themes
 
-The Portal, Arc, and Bard each include a complete light and dark presentation. Each page follows the operating-system color scheme until its header theme toggle records an explicit choice. Preferences persist independently in `portal-theme`, `arc-theme`, and `bard-theme`; no visual implementation or theme state is shared between Arc and Bard.
+The Portal, Arc, and Bard each include a complete light and dark presentation. Each page follows the operating-system color scheme until its header theme toggle records an explicit choice. Preferences persist independently in `portal-theme`, `arc-theme`, and `bard-theme`; Arc prototypes share the approved Arc theme preference. No visual implementation or theme state is shared between Arc and Bard.
 
 ## Verify
 
@@ -67,8 +68,10 @@ Playwright runs against the production build using `vite preview`. Build before 
 ```text
 arc/index.html          Arc showcase entry only
 arc/reading-room/       Arc Reading Room app entry
+arc/flashcards/         Arc Flashcards app entry
 src/arc/                Arc components, tokens, artwork, styles, tests
 src/arc/reading-room/   Arc Reading Room app, artwork, styles, tests
+src/arc/flashcards/     Arc Flashcards app, styles, domain logic, tests
 bard/index.html         Bard entry only
 src/bard/               Bard components, tokens, artwork, styles, tests
 index.html              Portal entry
@@ -97,6 +100,8 @@ If the repository is renamed or moved, update `base` in `vite.config.ts` and `ba
 
 ## Project documents
 
+- [Product context](./PRODUCT.md)
+- [Arc Flashcards design record](./DESIGN.md)
 - [Glossary](./GLOSSARY.md)
 - [ADR 0001: Independent systems in one repository](./docs/adr/0001-independent-systems-in-one-repository.md)
 - [ADR 0002: Local component implementations](./docs/adr/0002-local-component-implementations.md)

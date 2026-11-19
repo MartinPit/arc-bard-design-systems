@@ -16,6 +16,7 @@ describe('Portal', () => {
     expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('One origin.Two visual languages.');
     expect(screen.getByRole('link', { name: 'Explore Arc design system' }).getAttribute('href')).toMatch(/\/arc\/$/);
     expect(screen.getByRole('link', { name: 'Open Arc Reading Room app prototype' }).getAttribute('href')).toMatch(/\/arc\/reading-room\/$/);
+    expect(screen.getByRole('link', { name: 'Open Arc Flashcards app prototype' }).getAttribute('href')).toMatch(/\/arc\/flashcards\/$/);
     expect(screen.getByRole('link', { name: 'Explore Bard design system' }).getAttribute('href')).toMatch(/\/bard\/$/);
   });
 
